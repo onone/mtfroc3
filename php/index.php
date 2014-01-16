@@ -20,11 +20,14 @@ try {
 }
 */
 
+echo phpversion();
+
 echo '<pre>';
 print_r($_SERVER);
 echo '</pre>';
 
 // initialize app
+/*
 $app = new \Slim\Slim();
 
 // handle GET requests for /articles
@@ -44,4 +47,4 @@ $app->get('/client', function () use ($app) {
 });
 
 // run
-$app->run();
+$app->run();*/
