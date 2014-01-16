@@ -1,13 +1,12 @@
 <?php
-die('sdfsdf');
 require 'vendor/autoload.php';
 
 
 // set up database connection
-//use RedBean_Facade as R;
-/*R::setup("mysql:host=mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/;dbname=php",'adminUyLCLuc','JWmWpswfQHYg');
+use RedBean_Facade as R;
+R::setup("mysql:host=mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/;dbname=php",'adminUyLCLuc','JWmWpswfQHYg');
 R::freeze(true);
-*/
+
 
 
 
@@ -26,9 +25,9 @@ $app = new \Slim\Slim();
 
 // handle GET requests for /articles
 $app->get('/client', function () use ($app) {  
-    echo 'hello';
+    echo 'client';
   
-  /*
+  
   // query database for all client
   $client = R::find('client'); 
   
@@ -37,7 +36,7 @@ $app->get('/client', function () use ($app) {
   
   // return JSON-encoded response body with query results
   echo json_encode(R::exportAll($client));
-  */
+  
 });
 
 // run
