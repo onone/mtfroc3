@@ -46,7 +46,7 @@ fi
 
 echo "Running composer install"
 
-cd $OPENSHIFT_REPO_DIR
+cd $OPENSHIFT_REPO_DIR/php
 
 php $OPENSHIFT_DATA_DIR/bin/composer install
 
