@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-require 'vendor/autoload.php';
+//error_reporting(E_ALL);
+//require 'vendor/autoload.php';
 
 
 // set up database connection
@@ -20,7 +20,10 @@ try {
 }
 */
 
+echo dirname(__FILE__);
+echo '<pre>';
 echo phpversion();
+echo '</pre>';
 
 echo '<pre>';
 print_r($_SERVER);
@@ -48,3 +51,4 @@ $app->get('/client', function () use ($app) {
 
 // run
 $app->run();*/
+?>
