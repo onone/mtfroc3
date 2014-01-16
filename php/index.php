@@ -2,6 +2,15 @@
 //error_reporting(E_ALL);
 //require 'vendor/autoload.php';
 
+//file_exists();
+var_dump(file_exists(__DIR__ . '/vendor/autoload.php'));
+if(file_exists(__DIR__ . '/vendor/autoload.php')){
+    try {
+        require 'vendor/autoload.php';
+    } catch (Exception $e ) {
+        echo $e->getMessage();
+    }
+}
 
 // set up database connection
 /*
@@ -11,7 +20,9 @@ try {
     if(strpos($_SERVER['SCRIPT_FILENAME'],'stickshift') !== FLASE){
         R::setup("mysql:host=" . $_SERVER['SERVER_ADDR'] . ";dbname=php;port=3306",'langeli','');
     }else{
-        R::setup("mysql:host=" . $OPENSHIFT_MYSQL_DB_HOST . ";dbname=php;port=$OPENSHIFT_MYSQL_DB_PORT",'adminUyLCLuc','JWmWpswfQHYg'); 
+        R::setup("mysql:host=" . $_SERVER['OPENSHIFT_MYSQL_DB_HOST'] . ";dbname=php;port=" . $_SERVER['OPENSHIFT_MYSQL_DB_PORT'] . ",
+        $_SERVER['OPENSHIFT_MYSQL_DB_USERNAME'],
+        $_SERVER['OPENSHIFT_MYSQL_DB_PASSWORD']); 
     }
     
     R::freeze(true);
@@ -20,7 +31,6 @@ try {
 }
 */
 
-echo dirname(__FILE__);
 echo '<pre>';
 echo phpversion();
 echo '</pre>';
