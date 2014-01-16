@@ -15,7 +15,7 @@ try {
         R::setup("mysql:host=" . $_SERVER['SERVER_ADDR'] . ";dbname=php;port=3306",'langeli','');
         //R::setup('sqlite:/tmp/dbfile.txt','user','password');
     }else{
-        R::setup("mysql:host=" . $_SERVER['OPENSHIFT_MYSQL_DB_HOST'] . ";dbname=php;port=" . $_SERVER['OPENSHIFT_MYSQL_DB_PORT'] . ",        $_SERVER['OPENSHIFT_MYSQL_DB_USERNAME'],        $_SERVER['OPENSHIFT_MYSQL_DB_PASSWORD']); 
+        R::setup("mysql:host=" . $_SERVER['OPENSHIFT_MYSQL_DB_HOST'] . ";dbname=php;port=" . $_SERVER['OPENSHIFT_MYSQL_DB_PORT'],        $_SERVER['OPENSHIFT_MYSQL_DB_USERNAME'],        $_SERVER['OPENSHIFT_MYSQL_DB_PASSWORD']); 
     }
     
     R::freeze(true);
