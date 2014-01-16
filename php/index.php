@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 
 
 // set up database connection
-
+/*
 use RedBean_Facade as R;
 try {
     //R::setup("mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']}",$config['username'], $config['password']);
@@ -18,11 +18,11 @@ try {
 } catch (Exception $e ) {
     echo $e->getMessage();
 }
+*/
 
-/*
 echo '<pre>';
 print_r($_SERVER);
-echo '</pre>';*/
+echo '</pre>';
 
 // initialize app
 $app = new \Slim\Slim();
