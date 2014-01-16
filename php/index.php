@@ -3,11 +3,28 @@ require 'vendor/autoload.php';
 
 
 // set up database connection
+
 use RedBean_Facade as R;
-R::setup("mysql:host=mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/;dbname=php",'adminUyLCLuc','JWmWpswfQHYg');
-R::freeze(true);
+try {
+    //R::setup("mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']}",$config['username'], $config['password']);
+    //R::setup("mysql:host=" . $_SERVER['SERVER_ADDR'] . ";dbname=php;port=3306",'langeli','');
+    R::setup("mysql:host=" . $OPENSHIFT_MYSQL_DB_HOST . ";dbname=php;port=$OPENSHIFT_MYSQL_DB_PORT",'adminUyLCLuc','JWmWpswfQHYg');
+    R::freeze(true);
+} catch (Exception $e ) {
+    echo $e->getMessage();
+}
 
 
+
+
+echo '<pre>';
+print_r(R::find('client'));
+echo '</pre>';
+
+$connessione = mysql_connect("127.9.24.129:3306", 'langeli')
+        or die("Connessione non riuscita: " . mysql_error());
+    print ("Connesso con successo");
+    mysql_close($connessione);
 
 
 

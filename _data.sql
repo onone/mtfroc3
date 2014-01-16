@@ -1,0 +1,1 @@
+INSERT INTO php.client (id, name, surname, birthdate, note, id_anamnesis, id_group, mobile_phone, phone) VALUES (NULL, 'Federico', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
