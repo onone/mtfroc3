@@ -2,9 +2,10 @@
 
 use RedBean_Facade as R;
 
-//if($app_mode == 'development'){
-if(strpos($_SERVER['SCRIPT_FILENAME'],'stickshift') === FALSE){
+if($app_mode == 'development'){
     define('BASE_URL','/php');
+}else{
+    define('BASE_URL','');
 }
 
 define('APP_PATH',dirname(__DIR__));
@@ -14,7 +15,17 @@ define('APP_PATH',dirname(__DIR__));
 $app->configureMode('production', function () use ($app) {
     
     include 'entities.php';
-    
+    $app->config(array(
+        'log.enable' => false,
+        'debug' => true,
+        'view' => new \Slim\Views\Twig(),
+        'cookies.secret_key'  => 'LUX_PEPPER',
+        'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
+        'cookies.cipher' => MCRYPT_RIJNDAEL_256,
+        'cookies.cipher_mode' => MCRYPT_MODE_CBC,
+        'templates.path' => APP_PATH .  '/views'
+        ));
+    /*
     $app->config(array(
         'log.enable' => true,
         'debug' => false,
@@ -24,14 +35,8 @@ $app->configureMode('production', function () use ($app) {
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH . '/views'
-        /*
-        'log.writer' => new \Slim\Extras\Log\DateTimeFileWriter(array(
-            'path' => './logs',
-            'name_format' => 'Y-m-d',
-            'message_format' => '%label% - %date% - %message%'
-        ))
-        */
     ));
+    */
 });
 
 // Only invoked if mode is "development"
@@ -68,7 +73,7 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
 
 // DB CONNECTION
 try {
-    if(strpos($_SERVER['SCRIPT_FILENAME'],'stickshift') === FALSE){
+    if($app_mode == 'development'){
         R::setup("mysql:host=" . $_SERVER['SERVER_ADDR'] . ";dbname=php;port=3306",'langeli','');
         R::freeze(true);
     }else{
