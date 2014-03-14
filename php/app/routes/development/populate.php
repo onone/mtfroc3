@@ -450,4 +450,48 @@ $app->get('/populate/memo', function () use ($app) {
     
 });
 
+
+$app->get('/populate/clients', function () use ($app) {
+    
+   $row = 1;
+    $handle = fopen(__DIR__ . "/csv/soggetti.csv","r");
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $num = count($data);
+        /*echo "<p> $num campi sulla linea $row: <br /></p>\n";
+        $row++;
+        for ($c=0; $c < $num; $c++) {
+            echo $data[$c] . "<br>\n";
+        }*/
+        
+        if($data[0] != '' && $data[0] != 'Nome'){
+            $client = R::dispense('client');
+            
+            $client->name = $data[0];
+            $client->surname = $data[1];
+            
+        
+            if($data[6] != ''){
+                
+                $anamnesis = R::dispense('anamnesis');
+                    $anamnesis->value = utf8_encode($data[6]);
+                    $anamnesis->creation_datetime = date( 'Y-m-d H:i:s');
+                $client->ownAnamnesis = array($anamnesis);
+                
+                /*$memos = R::dispense('memo',2);
+                foreach ($memos as $memo) {
+                    $memo->value = 'memo';
+                    $memo->type = 2;
+                    $memo->creation_datetime = date( 'Y-m-d H:i:s');
+                }
+                $client->ownMemo = $memos;*/
+            }
+            
+            R::store($client); 
+        }
+    }
+    fclose($handle);
+    echo 'Finito';
+    
+});
+
 ?>
