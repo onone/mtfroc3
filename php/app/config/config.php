@@ -2,7 +2,8 @@
 
 use RedBean_Facade as R;
 
-if($app_mode == 'development'){
+//if($app_mode == 'development'){
+if(strpos($_SERVER['SCRIPT_FILENAME'],'stickshift') === FALSE){
     define('BASE_URL','/php');
 }
 
@@ -22,8 +23,7 @@ $app->configureMode('production', function () use ($app) {
         'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
-        'templates.path' => APP_PATH . '/views',
-        //'entities' => $entities
+        'templates.path' => APP_PATH . '/views'
         /*
         'log.writer' => new \Slim\Extras\Log\DateTimeFileWriter(array(
             'path' => './logs',
@@ -49,7 +49,7 @@ $app->configureMode('development', function () use ($app) {
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH .  '/views',
         //'locales.path' => APP_PA TH .'/i18n/',
-        'entities' => $entities
+        //'entities' => $entities
         ));
 });
 
@@ -68,7 +68,7 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
 
 // DB CONNECTION
 try {
-    if($app_mode == 'development'){
+    if(strpos($_SERVER['SCRIPT_FILENAME'],'stickshift') === FALSE){
         R::setup("mysql:host=" . $_SERVER['SERVER_ADDR'] . ";dbname=php;port=3306",'langeli','');
         R::freeze(true);
     }else{

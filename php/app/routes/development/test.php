@@ -16,12 +16,23 @@ $app->get('/test', function () use ($app) {
     echo 'cococo';
     //print_r( $app->config('entities'));
     
-    
+    /*
     $request = $app->request();
     
     $url = $app->urlFor('test');
-    echo 'cococo';
+    echo 'cococo';*/
     //print_r($request->getRootUri() . $url);
+    
+    
+    
+    echo "<pre>";
+    print_r($_REQUEST);
+    echo "</pre>";
+    
+    
+    echo "<pre>";
+    print_r($_SERVER);
+    echo "</pre>";
     
    // $app->render('test.twig');
 })->name('test');
