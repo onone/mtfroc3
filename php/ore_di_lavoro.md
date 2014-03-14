@@ -38,6 +38,7 @@ GIT:
 ADD: git add .
 COMMIT: git commit -m 'first release'
 DEPLOY: usa tasto di C9
+URL DI ESEMPIO: http://php-mftr.rhcloud.com/test
 
 Da fare:
                     

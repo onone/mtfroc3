@@ -1,0 +1,37 @@
+  [REDIRECT_STATUS] => 200
+    [HTTP_HOST] => project-livec90ccebe4584.rhcloud.com
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36
+    [HTTP_ACCEPT_ENCODING] => gzip,deflate,sdch
+    [HTTP_ACCEPT_LANGUAGE] => it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4,de;q=0.2,fr;q=0.2
+    [HTTP_COOKIE] => optimizelyEndUserId=oeu1390221108194r0.6207147245295346; optimizelySegments=%7B%7D; optimizelyBuckets=%7B%7D; _sio=aa8b442544928c52----392006; ajs_group_id=null; ajs_user_id=%22392006%22; WRUID=2088957365.1085640682; __CT_Data=gpv%3D2%26apv_48230_www%3D2%26cpv_48230_www%3D1
+    [HTTP_X_FORWARDED_FOR] => 194.183.84.83, 23.236.52.112
+    [HTTP_X_FORWARDED_PROTO] => http
+    [HTTP_X_FORWARDED_PORT] => 80
+    [HTTP_X_REQUEST_START] => t=1394803267819314
+    [HTTP_X_CLIENT_IP] => 23.236.52.112
+    [HTTP_X_FORWARDED_HOST] => project-livec90ccebe4584.rhcloud.com
+    [HTTP_X_FORWARDED_SERVER] => localhost
+    [HTTP_CONNECTION] => Keep-Alive
+    [PATH] => /var/lib/stickshift/52d56e5150044671fd000005/app-root/data/.nada-nix-profile/bin:/var/lib/stickshift/52d56e5150044671fd000005/app-root/data/738526/node_modules/.bin:/var/lib/stickshift/52d56e5150044671fd000005/app-root/data/bin:/var/lib/stickshift/52d56e5150044671fd000005/app-root/data/lib/ruby/gems/bin:/usr/libexec/openshift/cartridges/c9-0.1/root/lib/ruby/gems/bin:/opt/rh/ruby193/root/usr/bin:/sbin:/usr/sbin:/bin:/usr/bin
+    [SERVER_SIGNATURE] => 
+Apache/2.2.15 (Red Hat) Server at mftr3-c9-langeli.c9.io Port 443
+
+
+    [SERVER_SOFTWARE] => Apache/2.2.15 (Red Hat)
+    [SERVER_NAME] => mftr3-c9-langeli.c9.io
+    [SERVER_ADDR] => 127.9.24.129
+    [SERVER_PORT] => 443
+    [REMOTE_ADDR] => 127.9.24.129
+    [DOCUMENT_ROOT] => /var/lib/stickshift/52d56e5150044671fd000005/app-root/data/738526
+    [SERVER_ADMIN] => root@localhost
+    [SCRIPT_FILENAME] => /var/lib/stickshift/52d56e5150044671fd000005/app-root/data/738526/php/index.php
+    [REMOTE_PORT] => 26574
+    [REDIRECT_URL] => /php/test
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [REQUEST_METHOD] => GET
+    [QUERY_STRING] => 
+    [REQUEST_URI] => /php/test
+    [SCRIPT_NAME] => /php/index.php
+    [PHP_SELF] => /php/index.php
