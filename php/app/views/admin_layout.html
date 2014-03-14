@@ -1,0 +1,311 @@
+{% extends "layout.html" %}
+
+{% block this_page_init_js %}
+    {{ parent() }}
+{% endblock %}
+
+{% block this_page_js %}{{ parent() }}
+    <script>
+        var entitiesConfiguration = $.parseJSON('{{ entitiesConfiguration | json_encode() | raw }}');
+        var urlTmpls = {
+            entityUI: '{{ urlFor('entityUI',{"entityName": "entityName", "pk": "pk"}) }}',
+            entityListUI: '{{ urlFor('entityListUI',{"entityName": "entityName"}) }}',
+            entityResource: '{{ urlFor('entityResource',{"entityName": "entityName"}) }}',
+            entityModal: '{{ urlFor('entityModal',{"entityName": "entityName"}) }}',
+            
+        };
+    </script>
+    <script src="{{constant('BASE_URL')}}/public/js/DefaultEntity.js"></script>
+    <script src="{{constant('BASE_URL')}}/public/js/DefaultDataTables.js"></script>
+    <script src="{{constant('BASE_URL')}}/public/js/UIModals.js"></script>
+{% endblock %}
+
+
+{% block menu %}
+<div class="navbar navbar-inverse navbar-fixed-top">
+			<!-- start: TOP NAVIGATION CONTAINER -->
+			<div class="container">
+				<div class="navbar-header">
+					<!-- start: RESPONSIVE MENU TOGGLER -->
+					<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+						<span class="clip-list-2"></span>
+					</button>
+					<!-- end: RESPONSIVE MENU TOGGLER -->
+					<!-- start: LOGO -->
+					<a class="navbar-brand" href="index.html" style="padding:0px">
+						<img src="{{constant('BASE_URL')}}/public/images/lalogo.png" height="40"/>
+					</a>
+					<!-- end: LOGO -->
+				</div>
+				<div class="navbar-tools">
+					<!-- start: TOP NAVIGATION MENU -->
+					<ul class="nav navbar-right">
+						<!-- start: USER DROPDOWN -->
+						<li>
+    						<a href="{{ urlFor('logout') }}">
+    							<i class="clip-exit"></i>
+    							&nbsp;Log Out
+    						</a>
+						</li>
+						<!-- end: USER DROPDOWN -->
+					</ul>
+					<!-- end: TOP NAVIGATION MENU -->
+				</div>
+			</div>
+			<!-- end: TOP NAVIGATION CONTAINER -->
+		</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="main-container">
+		<div class="navbar-content">
+			<!-- start: SIDEBAR -->
+			<div class="main-navigation navbar-collapse collapse">
+				<!-- start: MAIN MENU TOGGLER BUTTON -->
+				<div class="navigation-toggler">
+					<i class="clip-chevron-left"></i>
+					<i class="clip-chevron-right"></i>
+				</div>
+				<!-- end: MAIN MENU TOGGLER BUTTON -->
+				<!-- start: MAIN NAVIGATION MENU -->
+				<ul class="main-navigation-menu">
+					{#<li>
+						<a href="index.html"><i class="clip-home-3"></i>
+							<span class="title"> {{ role }} </span><span class="selected"></span>
+						</a>
+					</li>#}
+					
+					<li>
+						<a href="javascript:;">
+							<i class="clip-folder-open"></i>
+							<span class="title"> Entità </span><i class="icon-arrow"></i>
+							<span class="arrow "></span>
+						</a>
+						<ul class="sub-menu">
+							<li>
+							    {% for entityConfiguration in entitiesConfiguration %}
+							        <a href="{{ urlFor('entityListUI', {"entityName": entityConfiguration.entityName }) }}">
+							            {% if entityConfiguration.viewParameter.iconClass is defined %}<i class="{{ entityConfiguration.viewParameter.iconClass }}"></i>&nbsp;{% endif %}
+							            {{ entityConfiguration.plural_label|replace({"_": " "})|capitalize }}
+							        </a>
+							    {% endfor %}
+							</li>
+						</ul>
+					</li>
+					{% if role == "superadmin" %}
+					<li>
+						<a href="http://www.cliptheme.com/demo/clip-one/pages_user_profile.html">
+							Clip-one demo
+						</a>
+					</li>
+				    {% endif %}		
+				</ul>
+				<!-- end: MAIN NAVIGATION MENU -->
+			</div>
+			<!-- end: SIDEBAR -->
+		</div>
+		<!-- start: PAGE -->
+		<div class="main-content">
+			<!-- start: PANEL CONFIGURATION MODAL FORM -->
+			<div class="modal fade" id="panel-config" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								×
+							</button>
+							<h4 class="modal-title">Panel Configuration</h4>
+						</div>
+						<div class="modal-body">
+							Here will be a configuration form
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Close
+							</button>
+							<button type="button" class="btn btn-primary">
+								Save changes
+							</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<!-- end: SPANEL CONFIGURATION MODAL FORM -->
+			<div class="container" style="min-height: 773px;">
+				<!-- start: PAGE HEADER -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- start: STYLE SELECTOR BOX -->
+						<div id="style_selector" class="hidden-xs">
+							<div id="style_selector_container">
+								<div class="style-main-title">
+									Style Selector
+								</div>
+								<div class="box-title">
+									Choose Your Layout Style
+								</div>
+								<div class="input-box">
+									<div class="input">
+										<select name="layout">
+											<option value="default">Wide</option><option value="boxed">Boxed</option>
+										</select>
+									</div>
+								</div>
+								<div class="box-title">
+									Choose Your Header Style
+								</div>
+								<div class="input-box">
+									<div class="input">
+										<select name="header">
+											<option value="fixed">Fixed</option><option value="default">Default</option>
+										</select>
+									</div>
+								</div>
+								<div class="box-title">
+									Choose Your Footer Style
+								</div>
+								<div class="input-box">
+									<div class="input">
+										<select name="footer">
+											<option value="default">Default</option><option value="fixed">Fixed</option>
+										</select>
+									</div>
+								</div>
+								<div class="box-title">
+									Backgrounds for Boxed Version
+								</div>
+								<div class="images boxed-patterns">
+									<a id="bg_style_1" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/bg.png"></a>
+									<a id="bg_style_2" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/bg_2.png"></a>
+									<a id="bg_style_3" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/bg_3.png"></a>
+									<a id="bg_style_4" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/bg_4.png"></a>
+									<a id="bg_style_5" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/bg_5.png"></a>
+								</div>
+								<div class="box-title">
+									5 Predefined Color Schemes
+								</div>
+								<div class="images icons-color">
+									<a id="light" href="javascript:;"><img class="active" alt="" src="{{constant('BASE_URL')}}/public/images/co/lightgrey.png"></a>
+									<a id="dark" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/darkgrey.png"></a>
+									<a id="black_and_white" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/blackandwhite.png"></a>
+									<a id="navy" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/navy.png"></a>
+									<a id="green" href="javascript:;"><img alt="" src="{{constant('BASE_URL')}}/public/images/co/green.png"></a>
+								</div>
+								<div class="box-title">
+									Style it with LESS
+								</div>
+								<div class="images">
+									<div class="form-group">
+										<label>
+											Basic
+										</label>
+										<input type="text" value="#ffffff" class="color-base">
+										<div class="dropdown">
+											<a class="add-on dropdown-toggle" data-toggle="dropdown"><i style="background-color: rgb(255, 255, 255);"></i></a>
+											<ul class="dropdown-menu pull-right">
+												<li>
+													<div class="colorpalette bootstrap-colorpalette"><div><button type="button" class="btn-color" style="background-color:#000000" data-value="#000000" title="#000000"></button><button type="button" class="btn-color" style="background-color:#424242" data-value="#424242" title="#424242"></button><button type="button" class="btn-color" style="background-color:#636363" data-value="#636363" title="#636363"></button><button type="button" class="btn-color" style="background-color:#9C9C94" data-value="#9C9C94" title="#9C9C94"></button><button type="button" class="btn-color" style="background-color:#CEC6CE" data-value="#CEC6CE" title="#CEC6CE"></button><button type="button" class="btn-color" style="background-color:#EFEFEF" data-value="#EFEFEF" title="#EFEFEF"></button><button type="button" class="btn-color" style="background-color:#F7F7F7" data-value="#F7F7F7" title="#F7F7F7"></button><button type="button" class="btn-color" style="background-color:#FFFFFF" data-value="#FFFFFF" title="#FFFFFF"></button></div><div><button type="button" class="btn-color" style="background-color:#FF0000" data-value="#FF0000" title="#FF0000"></button><button type="button" class="btn-color" style="background-color:#FF9C00" data-value="#FF9C00" title="#FF9C00"></button><button type="button" class="btn-color" style="background-color:#FFFF00" data-value="#FFFF00" title="#FFFF00"></button><button type="button" class="btn-color" style="background-color:#00FF00" data-value="#00FF00" title="#00FF00"></button><button type="button" class="btn-color" style="background-color:#00FFFF" data-value="#00FFFF" title="#00FFFF"></button><button type="button" class="btn-color" style="background-color:#0000FF" data-value="#0000FF" title="#0000FF"></button><button type="button" class="btn-color" style="background-color:#9C00FF" data-value="#9C00FF" title="#9C00FF"></button><button type="button" class="btn-color" style="background-color:#FF00FF" data-value="#FF00FF" title="#FF00FF"></button></div><div><button type="button" class="btn-color" style="background-color:#F7C6CE" data-value="#F7C6CE" title="#F7C6CE"></button><button type="button" class="btn-color" style="background-color:#FFE7CE" data-value="#FFE7CE" title="#FFE7CE"></button><button type="button" class="btn-color" style="background-color:#FFEFC6" data-value="#FFEFC6" title="#FFEFC6"></button><button type="button" class="btn-color" style="background-color:#D6EFD6" data-value="#D6EFD6" title="#D6EFD6"></button><button type="button" class="btn-color" style="background-color:#CEDEE7" data-value="#CEDEE7" title="#CEDEE7"></button><button type="button" class="btn-color" style="background-color:#CEE7F7" data-value="#CEE7F7" title="#CEE7F7"></button><button type="button" class="btn-color" style="background-color:#D6D6E7" data-value="#D6D6E7" title="#D6D6E7"></button><button type="button" class="btn-color" style="background-color:#E7D6DE" data-value="#E7D6DE" title="#E7D6DE"></button></div><div><button type="button" class="btn-color" style="background-color:#E79C9C" data-value="#E79C9C" title="#E79C9C"></button><button type="button" class="btn-color" style="background-color:#FFC69C" data-value="#FFC69C" title="#FFC69C"></button><button type="button" class="btn-color" style="background-color:#FFE79C" data-value="#FFE79C" title="#FFE79C"></button><button type="button" class="btn-color" style="background-color:#B5D6A5" data-value="#B5D6A5" title="#B5D6A5"></button><button type="button" class="btn-color" style="background-color:#A5C6CE" data-value="#A5C6CE" title="#A5C6CE"></button><button type="button" class="btn-color" style="background-color:#9CC6EF" data-value="#9CC6EF" title="#9CC6EF"></button><button type="button" class="btn-color" style="background-color:#B5A5D6" data-value="#B5A5D6" title="#B5A5D6"></button><button type="button" class="btn-color" style="background-color:#D6A5BD" data-value="#D6A5BD" title="#D6A5BD"></button></div><div><button type="button" class="btn-color" style="background-color:#E76363" data-value="#E76363" title="#E76363"></button><button type="button" class="btn-color" style="background-color:#F7AD6B" data-value="#F7AD6B" title="#F7AD6B"></button><button type="button" class="btn-color" style="background-color:#FFD663" data-value="#FFD663" title="#FFD663"></button><button type="button" class="btn-color" style="background-color:#94BD7B" data-value="#94BD7B" title="#94BD7B"></button><button type="button" class="btn-color" style="background-color:#73A5AD" data-value="#73A5AD" title="#73A5AD"></button><button type="button" class="btn-color" style="background-color:#6BADDE" data-value="#6BADDE" title="#6BADDE"></button><button type="button" class="btn-color" style="background-color:#8C7BC6" data-value="#8C7BC6" title="#8C7BC6"></button><button type="button" class="btn-color" style="background-color:#C67BA5" data-value="#C67BA5" title="#C67BA5"></button></div><div><button type="button" class="btn-color" style="background-color:#CE0000" data-value="#CE0000" title="#CE0000"></button><button type="button" class="btn-color" style="background-color:#E79439" data-value="#E79439" title="#E79439"></button><button type="button" class="btn-color" style="background-color:#EFC631" data-value="#EFC631" title="#EFC631"></button><button type="button" class="btn-color" style="background-color:#6BA54A" data-value="#6BA54A" title="#6BA54A"></button><button type="button" class="btn-color" style="background-color:#4A7B8C" data-value="#4A7B8C" title="#4A7B8C"></button><button type="button" class="btn-color" style="background-color:#3984C6" data-value="#3984C6" title="#3984C6"></button><button type="button" class="btn-color" style="background-color:#634AA5" data-value="#634AA5" title="#634AA5"></button><button type="button" class="btn-color" style="background-color:#A54A7B" data-value="#A54A7B" title="#A54A7B"></button></div><div><button type="button" class="btn-color" style="background-color:#9C0000" data-value="#9C0000" title="#9C0000"></button><button type="button" class="btn-color" style="background-color:#B56308" data-value="#B56308" title="#B56308"></button><button type="button" class="btn-color" style="background-color:#BD9400" data-value="#BD9400" title="#BD9400"></button><button type="button" class="btn-color" style="background-color:#397B21" data-value="#397B21" title="#397B21"></button><button type="button" class="btn-color" style="background-color:#104A5A" data-value="#104A5A" title="#104A5A"></button><button type="button" class="btn-color" style="background-color:#085294" data-value="#085294" title="#085294"></button><button type="button" class="btn-color" style="background-color:#311873" data-value="#311873" title="#311873"></button><button type="button" class="btn-color" style="background-color:#731842" data-value="#731842" title="#731842"></button></div><div><button type="button" class="btn-color" style="background-color:#630000" data-value="#630000" title="#630000"></button><button type="button" class="btn-color" style="background-color:#7B3900" data-value="#7B3900" title="#7B3900"></button><button type="button" class="btn-color" style="background-color:#846300" data-value="#846300" title="#846300"></button><button type="button" class="btn-color" style="background-color:#295218" data-value="#295218" title="#295218"></button><button type="button" class="btn-color" style="background-color:#083139" data-value="#083139" title="#083139"></button><button type="button" class="btn-color" style="background-color:#003163" data-value="#003163" title="#003163"></button><button type="button" class="btn-color" style="background-color:#21104A" data-value="#21104A" title="#21104A"></button><button type="button" class="btn-color" style="background-color:#4A1031" data-value="#4A1031" title="#4A1031"></button></div></div>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="form-group">
+										<label>
+											Text
+										</label>
+										<input type="text" value="#555555" class="color-text">
+										<div class="dropdown">
+											<a class="add-on dropdown-toggle" data-toggle="dropdown"><i style="background-color: rgb(85, 85, 85);"></i></a>
+											<ul class="dropdown-menu pull-right">
+												<li>
+													<div class="colorpalette bootstrap-colorpalette"><div><button type="button" class="btn-color" style="background-color:#000000" data-value="#000000" title="#000000"></button><button type="button" class="btn-color" style="background-color:#424242" data-value="#424242" title="#424242"></button><button type="button" class="btn-color" style="background-color:#636363" data-value="#636363" title="#636363"></button><button type="button" class="btn-color" style="background-color:#9C9C94" data-value="#9C9C94" title="#9C9C94"></button><button type="button" class="btn-color" style="background-color:#CEC6CE" data-value="#CEC6CE" title="#CEC6CE"></button><button type="button" class="btn-color" style="background-color:#EFEFEF" data-value="#EFEFEF" title="#EFEFEF"></button><button type="button" class="btn-color" style="background-color:#F7F7F7" data-value="#F7F7F7" title="#F7F7F7"></button><button type="button" class="btn-color" style="background-color:#FFFFFF" data-value="#FFFFFF" title="#FFFFFF"></button></div><div><button type="button" class="btn-color" style="background-color:#FF0000" data-value="#FF0000" title="#FF0000"></button><button type="button" class="btn-color" style="background-color:#FF9C00" data-value="#FF9C00" title="#FF9C00"></button><button type="button" class="btn-color" style="background-color:#FFFF00" data-value="#FFFF00" title="#FFFF00"></button><button type="button" class="btn-color" style="background-color:#00FF00" data-value="#00FF00" title="#00FF00"></button><button type="button" class="btn-color" style="background-color:#00FFFF" data-value="#00FFFF" title="#00FFFF"></button><button type="button" class="btn-color" style="background-color:#0000FF" data-value="#0000FF" title="#0000FF"></button><button type="button" class="btn-color" style="background-color:#9C00FF" data-value="#9C00FF" title="#9C00FF"></button><button type="button" class="btn-color" style="background-color:#FF00FF" data-value="#FF00FF" title="#FF00FF"></button></div><div><button type="button" class="btn-color" style="background-color:#F7C6CE" data-value="#F7C6CE" title="#F7C6CE"></button><button type="button" class="btn-color" style="background-color:#FFE7CE" data-value="#FFE7CE" title="#FFE7CE"></button><button type="button" class="btn-color" style="background-color:#FFEFC6" data-value="#FFEFC6" title="#FFEFC6"></button><button type="button" class="btn-color" style="background-color:#D6EFD6" data-value="#D6EFD6" title="#D6EFD6"></button><button type="button" class="btn-color" style="background-color:#CEDEE7" data-value="#CEDEE7" title="#CEDEE7"></button><button type="button" class="btn-color" style="background-color:#CEE7F7" data-value="#CEE7F7" title="#CEE7F7"></button><button type="button" class="btn-color" style="background-color:#D6D6E7" data-value="#D6D6E7" title="#D6D6E7"></button><button type="button" class="btn-color" style="background-color:#E7D6DE" data-value="#E7D6DE" title="#E7D6DE"></button></div><div><button type="button" class="btn-color" style="background-color:#E79C9C" data-value="#E79C9C" title="#E79C9C"></button><button type="button" class="btn-color" style="background-color:#FFC69C" data-value="#FFC69C" title="#FFC69C"></button><button type="button" class="btn-color" style="background-color:#FFE79C" data-value="#FFE79C" title="#FFE79C"></button><button type="button" class="btn-color" style="background-color:#B5D6A5" data-value="#B5D6A5" title="#B5D6A5"></button><button type="button" class="btn-color" style="background-color:#A5C6CE" data-value="#A5C6CE" title="#A5C6CE"></button><button type="button" class="btn-color" style="background-color:#9CC6EF" data-value="#9CC6EF" title="#9CC6EF"></button><button type="button" class="btn-color" style="background-color:#B5A5D6" data-value="#B5A5D6" title="#B5A5D6"></button><button type="button" class="btn-color" style="background-color:#D6A5BD" data-value="#D6A5BD" title="#D6A5BD"></button></div><div><button type="button" class="btn-color" style="background-color:#E76363" data-value="#E76363" title="#E76363"></button><button type="button" class="btn-color" style="background-color:#F7AD6B" data-value="#F7AD6B" title="#F7AD6B"></button><button type="button" class="btn-color" style="background-color:#FFD663" data-value="#FFD663" title="#FFD663"></button><button type="button" class="btn-color" style="background-color:#94BD7B" data-value="#94BD7B" title="#94BD7B"></button><button type="button" class="btn-color" style="background-color:#73A5AD" data-value="#73A5AD" title="#73A5AD"></button><button type="button" class="btn-color" style="background-color:#6BADDE" data-value="#6BADDE" title="#6BADDE"></button><button type="button" class="btn-color" style="background-color:#8C7BC6" data-value="#8C7BC6" title="#8C7BC6"></button><button type="button" class="btn-color" style="background-color:#C67BA5" data-value="#C67BA5" title="#C67BA5"></button></div><div><button type="button" class="btn-color" style="background-color:#CE0000" data-value="#CE0000" title="#CE0000"></button><button type="button" class="btn-color" style="background-color:#E79439" data-value="#E79439" title="#E79439"></button><button type="button" class="btn-color" style="background-color:#EFC631" data-value="#EFC631" title="#EFC631"></button><button type="button" class="btn-color" style="background-color:#6BA54A" data-value="#6BA54A" title="#6BA54A"></button><button type="button" class="btn-color" style="background-color:#4A7B8C" data-value="#4A7B8C" title="#4A7B8C"></button><button type="button" class="btn-color" style="background-color:#3984C6" data-value="#3984C6" title="#3984C6"></button><button type="button" class="btn-color" style="background-color:#634AA5" data-value="#634AA5" title="#634AA5"></button><button type="button" class="btn-color" style="background-color:#A54A7B" data-value="#A54A7B" title="#A54A7B"></button></div><div><button type="button" class="btn-color" style="background-color:#9C0000" data-value="#9C0000" title="#9C0000"></button><button type="button" class="btn-color" style="background-color:#B56308" data-value="#B56308" title="#B56308"></button><button type="button" class="btn-color" style="background-color:#BD9400" data-value="#BD9400" title="#BD9400"></button><button type="button" class="btn-color" style="background-color:#397B21" data-value="#397B21" title="#397B21"></button><button type="button" class="btn-color" style="background-color:#104A5A" data-value="#104A5A" title="#104A5A"></button><button type="button" class="btn-color" style="background-color:#085294" data-value="#085294" title="#085294"></button><button type="button" class="btn-color" style="background-color:#311873" data-value="#311873" title="#311873"></button><button type="button" class="btn-color" style="background-color:#731842" data-value="#731842" title="#731842"></button></div><div><button type="button" class="btn-color" style="background-color:#630000" data-value="#630000" title="#630000"></button><button type="button" class="btn-color" style="background-color:#7B3900" data-value="#7B3900" title="#7B3900"></button><button type="button" class="btn-color" style="background-color:#846300" data-value="#846300" title="#846300"></button><button type="button" class="btn-color" style="background-color:#295218" data-value="#295218" title="#295218"></button><button type="button" class="btn-color" style="background-color:#083139" data-value="#083139" title="#083139"></button><button type="button" class="btn-color" style="background-color:#003163" data-value="#003163" title="#003163"></button><button type="button" class="btn-color" style="background-color:#21104A" data-value="#21104A" title="#21104A"></button><button type="button" class="btn-color" style="background-color:#4A1031" data-value="#4A1031" title="#4A1031"></button></div></div>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="form-group">
+										<label>
+											Elements
+										</label>
+										<input type="text" value="#007AFF" class="color-badge">
+										<div class="dropdown">
+											<a class="add-on dropdown-toggle" data-toggle="dropdown"><i style="background-color: rgb(0, 122, 255);"></i></a>
+											<ul class="dropdown-menu pull-right">
+												<li>
+													<div class="colorpalette bootstrap-colorpalette"><div><button type="button" class="btn-color" style="background-color:#000000" data-value="#000000" title="#000000"></button><button type="button" class="btn-color" style="background-color:#424242" data-value="#424242" title="#424242"></button><button type="button" class="btn-color" style="background-color:#636363" data-value="#636363" title="#636363"></button><button type="button" class="btn-color" style="background-color:#9C9C94" data-value="#9C9C94" title="#9C9C94"></button><button type="button" class="btn-color" style="background-color:#CEC6CE" data-value="#CEC6CE" title="#CEC6CE"></button><button type="button" class="btn-color" style="background-color:#EFEFEF" data-value="#EFEFEF" title="#EFEFEF"></button><button type="button" class="btn-color" style="background-color:#F7F7F7" data-value="#F7F7F7" title="#F7F7F7"></button><button type="button" class="btn-color" style="background-color:#FFFFFF" data-value="#FFFFFF" title="#FFFFFF"></button></div><div><button type="button" class="btn-color" style="background-color:#FF0000" data-value="#FF0000" title="#FF0000"></button><button type="button" class="btn-color" style="background-color:#FF9C00" data-value="#FF9C00" title="#FF9C00"></button><button type="button" class="btn-color" style="background-color:#FFFF00" data-value="#FFFF00" title="#FFFF00"></button><button type="button" class="btn-color" style="background-color:#00FF00" data-value="#00FF00" title="#00FF00"></button><button type="button" class="btn-color" style="background-color:#00FFFF" data-value="#00FFFF" title="#00FFFF"></button><button type="button" class="btn-color" style="background-color:#0000FF" data-value="#0000FF" title="#0000FF"></button><button type="button" class="btn-color" style="background-color:#9C00FF" data-value="#9C00FF" title="#9C00FF"></button><button type="button" class="btn-color" style="background-color:#FF00FF" data-value="#FF00FF" title="#FF00FF"></button></div><div><button type="button" class="btn-color" style="background-color:#F7C6CE" data-value="#F7C6CE" title="#F7C6CE"></button><button type="button" class="btn-color" style="background-color:#FFE7CE" data-value="#FFE7CE" title="#FFE7CE"></button><button type="button" class="btn-color" style="background-color:#FFEFC6" data-value="#FFEFC6" title="#FFEFC6"></button><button type="button" class="btn-color" style="background-color:#D6EFD6" data-value="#D6EFD6" title="#D6EFD6"></button><button type="button" class="btn-color" style="background-color:#CEDEE7" data-value="#CEDEE7" title="#CEDEE7"></button><button type="button" class="btn-color" style="background-color:#CEE7F7" data-value="#CEE7F7" title="#CEE7F7"></button><button type="button" class="btn-color" style="background-color:#D6D6E7" data-value="#D6D6E7" title="#D6D6E7"></button><button type="button" class="btn-color" style="background-color:#E7D6DE" data-value="#E7D6DE" title="#E7D6DE"></button></div><div><button type="button" class="btn-color" style="background-color:#E79C9C" data-value="#E79C9C" title="#E79C9C"></button><button type="button" class="btn-color" style="background-color:#FFC69C" data-value="#FFC69C" title="#FFC69C"></button><button type="button" class="btn-color" style="background-color:#FFE79C" data-value="#FFE79C" title="#FFE79C"></button><button type="button" class="btn-color" style="background-color:#B5D6A5" data-value="#B5D6A5" title="#B5D6A5"></button><button type="button" class="btn-color" style="background-color:#A5C6CE" data-value="#A5C6CE" title="#A5C6CE"></button><button type="button" class="btn-color" style="background-color:#9CC6EF" data-value="#9CC6EF" title="#9CC6EF"></button><button type="button" class="btn-color" style="background-color:#B5A5D6" data-value="#B5A5D6" title="#B5A5D6"></button><button type="button" class="btn-color" style="background-color:#D6A5BD" data-value="#D6A5BD" title="#D6A5BD"></button></div><div><button type="button" class="btn-color" style="background-color:#E76363" data-value="#E76363" title="#E76363"></button><button type="button" class="btn-color" style="background-color:#F7AD6B" data-value="#F7AD6B" title="#F7AD6B"></button><button type="button" class="btn-color" style="background-color:#FFD663" data-value="#FFD663" title="#FFD663"></button><button type="button" class="btn-color" style="background-color:#94BD7B" data-value="#94BD7B" title="#94BD7B"></button><button type="button" class="btn-color" style="background-color:#73A5AD" data-value="#73A5AD" title="#73A5AD"></button><button type="button" class="btn-color" style="background-color:#6BADDE" data-value="#6BADDE" title="#6BADDE"></button><button type="button" class="btn-color" style="background-color:#8C7BC6" data-value="#8C7BC6" title="#8C7BC6"></button><button type="button" class="btn-color" style="background-color:#C67BA5" data-value="#C67BA5" title="#C67BA5"></button></div><div><button type="button" class="btn-color" style="background-color:#CE0000" data-value="#CE0000" title="#CE0000"></button><button type="button" class="btn-color" style="background-color:#E79439" data-value="#E79439" title="#E79439"></button><button type="button" class="btn-color" style="background-color:#EFC631" data-value="#EFC631" title="#EFC631"></button><button type="button" class="btn-color" style="background-color:#6BA54A" data-value="#6BA54A" title="#6BA54A"></button><button type="button" class="btn-color" style="background-color:#4A7B8C" data-value="#4A7B8C" title="#4A7B8C"></button><button type="button" class="btn-color" style="background-color:#3984C6" data-value="#3984C6" title="#3984C6"></button><button type="button" class="btn-color" style="background-color:#634AA5" data-value="#634AA5" title="#634AA5"></button><button type="button" class="btn-color" style="background-color:#A54A7B" data-value="#A54A7B" title="#A54A7B"></button></div><div><button type="button" class="btn-color" style="background-color:#9C0000" data-value="#9C0000" title="#9C0000"></button><button type="button" class="btn-color" style="background-color:#B56308" data-value="#B56308" title="#B56308"></button><button type="button" class="btn-color" style="background-color:#BD9400" data-value="#BD9400" title="#BD9400"></button><button type="button" class="btn-color" style="background-color:#397B21" data-value="#397B21" title="#397B21"></button><button type="button" class="btn-color" style="background-color:#104A5A" data-value="#104A5A" title="#104A5A"></button><button type="button" class="btn-color" style="background-color:#085294" data-value="#085294" title="#085294"></button><button type="button" class="btn-color" style="background-color:#311873" data-value="#311873" title="#311873"></button><button type="button" class="btn-color" style="background-color:#731842" data-value="#731842" title="#731842"></button></div><div><button type="button" class="btn-color" style="background-color:#630000" data-value="#630000" title="#630000"></button><button type="button" class="btn-color" style="background-color:#7B3900" data-value="#7B3900" title="#7B3900"></button><button type="button" class="btn-color" style="background-color:#846300" data-value="#846300" title="#846300"></button><button type="button" class="btn-color" style="background-color:#295218" data-value="#295218" title="#295218"></button><button type="button" class="btn-color" style="background-color:#083139" data-value="#083139" title="#083139"></button><button type="button" class="btn-color" style="background-color:#003163" data-value="#003163" title="#003163"></button><button type="button" class="btn-color" style="background-color:#21104A" data-value="#21104A" title="#21104A"></button><button type="button" class="btn-color" style="background-color:#4A1031" data-value="#4A1031" title="#4A1031"></button></div></div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div style="height:25px;line-height:25px; text-align: center">
+									<a class="clear_style" href="javascript:;">
+										Clear Styles
+									</a>
+									<a class="save_style" href="javascript:;">
+										Save Styles
+									</a>
+								</div>
+							</div>
+							<div class="style-toggle close"></div>
+						</div>
+						<!-- end: STYLE SELECTOR BOX -->
+						<!-- start: PAGE TITLE & BREADCRUMB -->
+						{#<ol class="breadcrumb">
+							
+							{% for crumb in breadcrumb %}
+                             <li>
+								<i class="clip-file"></i>
+								<a href="javascript:;">
+									Pages
+								</a>
+							</li>
+							<li class="active">
+								Blank Page
+							</li>
+                            {% endfor %}
+							<li class="search-box">
+								<form class="sidebar-search">
+									<div class="form-group">
+										<input type="text" placeholder="Start Searching..." data-default="130">
+										<button class="submit">
+											<i class="clip-search-3"></i>
+										</button>
+									</div>
+								</form>
+							</li>
+						</ol>#}
+						<div class="page-header">
+							{% block page_header %}<h1>Blank Page <small>blank page</small></h1>{% endblock %}
+						</div>
+						<!-- end: PAGE TITLE & BREADCRUMB -->
+					</div>
+				</div>
+				<!-- end: PAGE HEADER -->
+				<!-- start: PAGE CONTENT -->
+				{% block admin_content %}
+				{% endblock %}
+				<!-- end: PAGE CONTENT-->
+			</div>
+		</div>
+		<!-- end: PAGE -->
+	</div>
+{% endblock %}
+
+{% block footer %}
+<!-- start: FOOTER -->
+<div class="footer clearfix">
+	<div class="footer-inner">
+		2014 &copy;
+	</div>
+	<div class="footer-items">
+		<span class="go-top"><i class="clip-chevron-up"></i></span>
+	</div>
+</div>
+<!-- end: FOOTER -->
+{% endblock %}
+        

@@ -1,0 +1,369 @@
+    1  ls -la
+    2  git clone ssh://52d6ed3e4382ec774900015b@php-mftr.rhcloud.com/~/git/php.git/ /
+    3  rm *.*
+    4  dir
+    5  git clone ssh://52d6ed3e4382ec774900015b@php-mftr.rhcloud.com/~/git/php.git/ /
+    6  ls -la
+    7  cd ..
+    8  ls -la
+    9  cd 738526/
+   10  git clone ssh://52d6ed3e4382ec774900015b@php-mftr.rhcloud.com/~/git/php.git/ .
+   11  git config --list
+   12  ls -la
+   13  git config --list
+   14  rm *.*
+   15  git clone ssh://52d70be5e0b8cdd7ca000208@php-mftr.rhcloud.com/~/git/php.git/ .
+   16  rm *.*
+   17  ls -la
+   18  rm -rf .git/
+   19  rm -rf libs/
+   20  rm -rf misc/
+   21  rm -rf .openshift/
+   22  rm -rf php/
+   23  ls -la
+   24  git clone ssh://52d70be5e0b8cdd7ca000208@php-mftr.rhcloud.com/~/git/php.git/ .
+   25  cd ..
+   26  ls -la
+   27  cd etc
+   28  dir
+   29  cd environment 
+   30  ls -la
+   31  cd ..
+   32  ls -l
+   33  cd ..
+   34  ls -la
+   35  cd data
+   36  cd 738526/
+   37  ls -la
+   38  cd php/
+   39  /vendor/
+   40  /logs/*
+   41  /templates/cache/*
+   42  .DS_STORE
+   43  php composer.phar install
+   44  curl -s https://getcomposer.org/installer | php
+   45  php composer.phar install
+   46  php composer.phar install
+   47  git add .
+   48  git commit -m 'after phar install'
+   49  git push
+   50  mysql
+   51  git add .
+   52  git commit -m 'after phar install'
+   53  git push
+   54  mysql-ctl start
+   55  mysql-ctl cli
+   56  cd ..
+   57  ls -l
+   58  mysql < _mftr.sql
+   59  mysql < _mftr.sql
+   60  mysql < _mftr.sql
+   61  mysql < _mftr.sql
+   62  mysql < _mftr.sql
+   63  mysql < _mftr.sql
+   64  mysql < _mftr.sql
+   65  mysql < _data.sql
+   66  mysql-ctl
+   67  start
+   68  exit
+   69  mysql-ctl status
+   70  mysql
+   71  netstat
+   72  curl ifconfig.me
+   73  ifconfig en0 | grep inet | grep -v inet6
+   74  ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1
+   75  mysql-ctl stop
+   76  mysql
+   77  git add .
+   78  git commit -m 'test db'
+   79  git push
+   80  git add .
+   81  git commit -m 'db test2'
+   82  git push
+   83  git add .
+   84  git commit -m 'db test2'
+   85  git add .
+   86  git commit -m 'db test2'
+   87  git push
+   88  git add .
+   89  git commit -m 'db test2'
+   90  git push
+   91  git add .
+   92  git add .
+   93  git commit -m 'dd'
+   94  git push
+   95  git add .
+   96  git add .
+   97  git add .
+   98  git commit -m 'dd'
+   99  git push
+  100  git add .
+  101  git commit -m 'dd'
+  102  git push
+  103  git add -A .
+  104  git commit -m 'all'
+  105  git add *
+  106  git commit -m 'all'
+  107  git push
+  108  git add *
+  109  git commit -m 'all'
+  110  ls -la
+  111  git add
+  112  git add php
+  113  git commit -m
+  114  git commit -m 'ddf'
+  115  git push -u origin master
+  116  git add
+  117  git commit -a
+  118  git push
+  119  git status
+  120  git status
+  121  git status
+  122  git status
+  123  cd php
+  124  cd vendor/
+  125  git add .
+  126  ls la
+  127  ls -la
+  128  cd ..
+  129  ls -la
+  130  vim .gitignore 
+  131  cd ..
+  132  git add .
+  133  git status
+  134  cd php/vendor/gabordemooij/redbean
+  135  ls -la
+  136  cd ..
+  137  cd ..
+  138  cd ..
+  139  cd ..
+  140  ls -la
+  141  cd php
+  142  vim .gitignore 
+  143  :q
+  144  ls -la
+  145  vim .gitignore
+  146  cd ..
+  147  git add .
+  148  git status
+  149  git commit -m 'speriamo'
+  150  git rm -r --cached .
+  151  git add .
+  152  git commit -m ".gitignore is now working"
+  153  ls -la
+  154  cd .openshift/
+  155  ls -la
+  156  cd action_hooks/
+  157  ls -la
+  158  vim pre_build
+  159  vim build
+  160  cp build deploy
+  161  rm build 
+  162  dir
+  163  ls -la
+  164  chmod +x deploy 
+  165  ls -la
+  166  cd ..
+  167  cd ..
+  168  cd ..
+  169  ls -la
+  170  cd .openshift/
+  171  ls -la
+  172  cd 7
+  173  cd ..
+  174  cd 738526/
+  175  cd .openshift/ && ls -la
+  176  cd action_hooks/
+  177  vim deploy 
+  178  cd ..
+  179  cd ..
+  180  git add .
+  181  git status
+  182  git commit -m 'action deploy'
+  183  ls -la
+  184  cd php
+  185  vim .gitignore 
+  186  cd ..
+  187   cd .openshift/action_hooks/
+  188  vim deploy 
+  189  cd ..
+  190  cd ..
+  191  git add .
+  192  git commit -m 'deploy 2'
+  193  mysql-ctl status
+  194  mysql
+  195  git add .
+  196  git commit -m 'deploy funziona'
+  197  git add .
+  198  git commit -m 'deploy funziona'
+  199  cd php
+  200  ls -la
+  201  wim .htaccess
+  202  vim .htaccess
+  203  php composer.phar install
+  204  php composer.phar update
+  205  vim .htaccess
+  206  ls -la
+  207  cd php
+  208  ls -la
+  209  vim .htaccess
+  210  vim .htaccess
+  211  cd vendor/
+  212  ls -la
+  213  cd ..
+  214  vim .htaccess
+  215  vim .htaccess
+  216  vim .htaccess
+  217  vim .htaccess
+  218  ls -la
+  219  cd php
+  220  vim .htaccess
+  221  vim .htaccess
+  222  bower search bootstrap
+  223  ls -la
+  224  cd php
+  225  ls -la
+  226  npm install -g bower
+  227  ls -la
+  228  cd public/js/
+  229  bower install jquery
+  230  ls -la
+  231  cd ..
+  232  cd ..
+  233  bower init
+  234  ls -la
+  235  vim .bowerrc
+  236  rm .bowerrc 
+  237  bower install bootstrap
+  238  cd bower_components/
+  239  cd bootstrap/
+  240  ls -la
+  241  cd ..
+  242  cd ..
+  243  bower install jquery
+  244  cd bower_components/jquery/
+  245  ls -la
+  246  cd ..
+  247  cd ..
+  248  bower search x-editable
+  249  vim .htaccess 
+  250  bower install x-editable
+  251  bower search fontawesomw
+  252  bower search fontawesome
+  253  bower search font
+  254  bower install font-awesome
+  255  ls -la
+  256  rm bower_components/
+  257  rm -f bower_components/
+  258  rm -rf bower_components/
+  259  cd php
+  260  bower install font-awesome
+  261  bower init
+  262  cd bower_components/
+  263  ls -la
+  264  php
+  265  cd php
+  266  bower search less
+  267  bower install less.js --save
+  268  cd bower_components/less.js/
+  269  ls -la
+  270  cd php
+  271  bower search iCheck
+  272  bower iCheck --save
+  273  bower install iCheck --save
+  274  bower install perfect-scrollbar --save
+  275  bower uninstall iCheck
+  276  bower install jquery-icheck --save
+  277  bower install respond --save
+  278  bower install blockui --save
+  279  bower uninstall iCheck --save
+  280  bower install jquery-cookie --save
+  281  cd php
+  282  bower install datatables --save
+  283  bower install datatables-bootstrap3 --save
+  284  bower install select2 --save
+  285  bower search mocka
+  286  bower search mockjax
+  287  bower search jquery-mockjax --save
+  288  mysql-ctl start
+  289   php
+  290  cd php
+  291  bower searc require
+  292  bower install requirejs --save
+  293  cd php
+  294  bower install momentjs --save
+  295  ls -la
+  296  mysql-ctl < _data.sql
+  297  mysql < _data.sql
+  298  mysql < _data.sql
+  299  mysql < _data.sql
+  300  mysql-ctl
+  301  mysql
+  302  ls -la
+  303  mysql < dbinit.sql 
+  304  mysql
+  305  cd php
+  306  ls -la
+  307  cd ..
+  308  ls -la
+  309  mysql < dbinit.sql 
+  310  mysql < dbinit.sql 
+  311  mysql < dbinit.sql 
+  312  mysql
+  313  mysql
+  314  mysql
+  315  bower --help
+  316  bower install smalot-bootstrap-datetimepicker
+  317  bower install smalot-bootstrap-datetimepicker -save
+  318  cd php
+  319  bower install smalot-bootstrap-datetimepicker -save
+  320  cd php
+  321  bower install bootstrap-modal -save
+  322  mysql
+  323  mysql
+  324  mysql
+  325  mysql
+  326  ls -la
+  327  mysql < dbinit.sql 
+  328  mysql
+  329  mysql < dbinit.sql 
+  330  mysql
+  331  mysql
+  332  mysql
+  333  mysql < dbinit.sql 
+  334  mysql
+  335  mysql
+  336  mysql < dbinit.sql 
+  337  mysql
+  338  mysql < dbinit.sql 
+  339  mysql < dbinit.sql 
+  340  mysql
+  341  mysql
+  342  mysql
+  343  mysql
+  344  mysql
+  345  mysql
+  346  mysql
+  347  mysql
+  348  mysql
+  349  mysql
+  350  mysql
+  351  mysql
+  352  mysql
+  353  ls -la
+  354  cd .openshift/
+  355  ls -la
+  356  cd action_hooks/
+  357  ls -la
+  358  cp deploy ../../php/deploy
+  359  cd ..
+  360  cd ..
+  361  ls -la
+  362  cd php
+  363  ls -la
+  364  cdc ..
+  365  cd ..
+  366  history | grep git
+  367  history
+  368* 
+  369  history > history.txt

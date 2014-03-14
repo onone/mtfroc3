@@ -1,0 +1,75 @@
+{% macro form(EC, entities,parentEntityName) %}
+    {#{ dump(entities) }#}
+    {% set fields = EC.fields %}
+    {% set entityLabel = EC.singular_label|replace({"_": " "})|capitalize %}
+    {% set fieldVisibleInList = [] %}
+    {% set relatedFields = [] %}
+
+    <table class="table table-striped table-bordered table-hover table-full-width  table-min-padding" id="{{ EC.entityName }}EntitiesTable">
+		<thead>
+			<tr>
+			    {% for fieldDBName,fieldData in fields  if (fieldData.visible is not defined or fieldData.visible != false) 
+			        and ( fieldData.visibleInList is not defined or fieldData.visibleInList != false ) 
+			        and ( 'own' not in fieldDBName ) 
+			        and  fieldDBName != (parentEntityName ~ '_id')
+			        %}
+			    
+			        {% set colHeader = fieldDBName|replace({"_": " "})|capitalize %}
+				    {% if fieldData.label is defined %}
+				        {% set colHeader = fieldData.label|replace({"_": " "})|capitalize %}
+				    {% endif %}
+			    
+    			    {% if '_id' in fieldDBName %}
+				        {% set fieldVisibleInList = fieldVisibleInList|merge([(fieldDBName|replace({"_id": ""}))]) %}
+        			{% else %}
+				        {% set fieldVisibleInList = fieldVisibleInList|merge([fieldDBName]) %}
+        			{% endif %}
+				    
+					<th id="{{ EC.entityName ~ fieldDBName }}">{{ colHeader }}</th>
+					
+                {% endfor %}
+                <th></th>
+			</tr>
+		</thead>
+	{% for relatedEntity in entities %}
+        <tr>
+		{%for fieldDBName in fieldVisibleInList %}
+			{% if attribute(relatedEntity,fieldDBName) is defined %}
+			    {% set fieldValue = attribute(relatedEntity,fieldDBName) %}
+			    {% if fieldDBName in relatedFields|keys and attribute(entitiesRepresentations,attribute(relatedFields, fieldDBName)) is defined %}
+			        {% set relatedEntityName = attribute(relatedFields, fieldDBName) %}
+			        {% set relatedEntityConfig = attribute(entitiesConfiguration,relatedEntityName) %}
+			        {% set entityRepresentation = attribute(entitiesRepresentations,relatedEntityName) %}
+			        
+                    <td>
+                        {% for relFieldName,relFieldData in relatedEntityConfig.fields %}
+    			            {% if relFieldName in entityRepresentation %}
+    			                {% set entityRepresentation = entityRepresentation|replace({ ("<<" ~ relFieldName ~ ">>"): (attribute(attribute(entity, attribute(relatedFields, fieldDBName)),relFieldName))}) %}
+    			            {% endif %}
+    			        {% endfor %}
+			        
+                        {{ entityRepresentation }}
+                        
+                        <a class="relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_{{ fieldDBName|replace({"_id":""}) }}{{fieldValue}}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
+                    </td>
+                {% else %}
+				    <td>
+				        {{ fieldValue }}
+				        
+				        {% if attribute(relatedEntity,(fieldDBName ~ "_id")) is defined %}
+				            <a class="relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName, "pk": (attribute(relatedEntity,fieldDBName ~ '_id'))}) }}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
+				        {% endif %}
+				    </td>
+                {% endif %}
+            {% endif %}
+		{% endfor %}
+			<td>
+			    {#<div class="btn-group pull-right">#}
+			        <a href="{{ urlFor('entityUI', {"entityName": EC.entityName, "pk": relatedEntity.id }) }}" target="_{{ EC.entityName }}{{fieldValue}}"  class="btn btn-default"><i class="clip-pencil-3"></i></a>
+			        {#<button  class="btn btn-bricky deleteEntityFromList" data-deleteurl="{{ urlFor('entityResource',{"entityName": EC.entityName, "pk": relatedEntity.id}) }}"><i class="fa fa-trash-o fa-white"></i></button>
+			    </div>#}
+		    </td>
+		</tr>
+    {% endfor %}
+	</table>
+{% endmacro %}

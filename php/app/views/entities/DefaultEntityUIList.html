@@ -1,0 +1,138 @@
+{% extends "admin_layout.html" %}
+
+
+{% set entityLabel = entityConfiguration.singular_label|replace({"_": " "})|capitalize %}
+{% set entitiesLabel = entityConfiguration.plural_label|replace({"_": " "})|capitalize %}
+
+{% block page_header %}
+{% set iconClass = 'fa fa-list-alt' %}
+            
+    <h1>{% if entityConfiguration.viewParameter.iconClass is defined %}<i class="{{ entityConfiguration.viewParameter.iconClass }}"></i>&nbsp;{% endif %}
+    {{entitiesLabel}}
+        <a class="relatedShow btn btn-green" href="{{ urlFor('entityUI',{"entityName": entityConfiguration.entityName, "pk": "new"}) }}" style="float:right"><i class="fa fa-plus"></i> Aggiungi {{ entityLabel }}</a>
+    </h1>
+{% endblock %}
+
+{% block this_page_js %}
+    {{ parent() }}
+    <script>
+    var DefaultTableData = function () {
+        var runDataTable = function (tableId) {
+            var oTable = $('#' + tableId).dataTable({
+                "aoColumnDefs": [{
+                    "aTargets": [0]
+                }],
+                "oLanguage": {
+                    "sLengthMenu": "Show _MENU_ Rows",
+                    "sSearch": "",
+                    "oPaginate": {
+                        "sPrevious": "",
+                        "sNext": ""
+                    }
+                },
+                "aaSorting": [
+                    [1, 'asc']
+                ],
+                "aLengthMenu": [
+                    [5, 10, 15, 20, -1],
+                    [5, 10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "iDisplayLength": 10,
+                "fnDrawCallback": function( oSettings ) {
+                 }
+            });
+            $('#' + tableId + '_wrapper .dataTables_filter input').addClass("form-control input-sm").attr("placeholder", "Search");
+            // modify table search input
+            $('#' + tableId + '_wrapper .dataTables_length select').addClass("m-wrap small");
+            // modify table per page dropdown
+            $('#' + tableId + '_wrapper .dataTables_length select').select2();
+            // initialzie select2 dropdown
+            $('#' + tableId + '_column_toggler input[type="checkbox"]').change(function () {
+                /* Get the DataTables object again - this is not a recreation, just a get of the object */
+                var iCol = parseInt($(this).attr("data-column"));
+                var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+                oTable.fnSetColumnVis(iCol, (bVis ? false : true));
+            });
+        };
+        return {
+            //main function to initiate template pages
+            init: function (tableId) {
+                runDataTable(tableId);
+            }
+        };
+    }();
+</script>
+   
+{% endblock %}
+
+
+{% block this_page_init_js %}
+    {{ parent() }}
+    DefaultTableData.init('{{ entityConfiguration.entityName }}EntitiesTable');
+{% endblock %}
+
+{% block admin_content %}
+    {{ parent() }}
+    
+    {% if entities %}
+    {% set fieldVisibleInList = [] %}
+    {% set relatedFields = [] %}
+
+        <table class="table table-striped table-bordered table-hover table-full-width table-min-padding" id="{{ entityConfiguration.entityName }}EntitiesTable">
+			<thead>
+				<tr>
+				    {%for fieldDBName,fieldData in entityConfiguration.fields if (fieldData.visible is not defined or fieldData.visible != false) and ( fieldData.visibleInList is not defined or fieldData.visibleInList != false ) and ( 'own' not in fieldDBName )%}
+                    {% set fieldVisibleInList = fieldVisibleInList|merge([fieldDBName]) %}
+                    {% if '_id' in fieldDBName %}
+                        {% set relatedFields = relatedFields|merge({(fieldDBName): fieldDBName|replace({"_id":""}) }) %}
+                    {% endif %}
+				    {% set colHeader = fieldDBName|replace({"_": " "})|capitalize %}
+				    {% if fieldData.label is defined %}
+				        {% set colHeader = fieldData.label|replace({"_": " "})|capitalize %}
+				    {% endif %}
+					<th>{{ colHeader }}</th>
+                    {% endfor %}
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			
+            {%for entity in entities %}
+    			<tr>
+    			{%for fieldDBName in fieldVisibleInList %}
+    			{% if attribute(entity,fieldDBName) is defined %}
+    			    {% set fieldValue = attribute(entity,fieldDBName) %}
+    			    {% if fieldDBName in relatedFields|keys and attribute(entitiesRepresentations,attribute(relatedFields, fieldDBName)) is defined %}
+    			        {% set relatedEntityName = attribute(relatedFields, fieldDBName) %}
+    			        {% set relatedEntityConfig = attribute(entitiesConfiguration,relatedEntityName) %}
+    			        {% set entityRepresentation = attribute(entitiesRepresentations,relatedEntityName) %}
+    			        
+                        <td>
+                            {% for relFieldName,relFieldData in relatedEntityConfig.fields %}
+        			            {% if relFieldName in entityRepresentation %}
+        			                {% set entityRepresentation = entityRepresentation|replace({ ("<<" ~ relFieldName ~ ">>"): (attribute(attribute(entity, attribute(relatedFields, fieldDBName)),relFieldName))}) %}
+        			            {% endif %}
+        			        {% endfor %}
+        			        
+                            {{ entityRepresentation }}
+                            
+                            <a class="relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_group{{fieldValue}}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
+                        </td>
+                    {% else %}
+    				    <td>{{ fieldValue }}</td>
+                    {% endif %}
+                {% endif %}
+    			{% endfor %}
+    				<td style="max-width:60px" class="text-center">
+        				<div class="btn-group">
+    				        <a href="{{ urlFor('entityUI', {"entityName": entityConfiguration.entityName, "pk": entity.id}) }}" target="_blank"  class="btn btn-default"><i class="clip-pencil-3"></i></a>
+    				        <button  class="btn btn-bricky deleteEntityFromList" data-deleteurl="{{ urlFor('entityResource',{"entityName": entityConfiguration.entityName, "pk": entity.id}) }}"><i class="fa fa-trash-o fa-white"></i></button>
+    				    </div>
+    				</td>
+    			</tr>
+            {% endfor %}
+			</tbody>
+		</table>
+    {% endif %}
+{% endblock %}

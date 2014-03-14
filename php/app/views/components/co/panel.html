@@ -1,0 +1,29 @@
+{# panel.html #}
+<div class="panel {% block panelClass %}panel-default{% endblock %}" id="{% block panelId %}{% endblock %}">
+	<div class="panel-heading">
+		{% block panelHeadingIcon %}<i class="fa fa-bullhorn"></i>{% endblock %}
+		{% block panelHeadingText %}Pannello{% endblock %}
+		<div class="panel-tools">
+			{% block panelCollapse %}<a class="btn btn-xs btn-link panel-collapse collapses" href="javascript:void(0);"></a>{% endblock %}
+			{% block panelConfig %}
+			    {#<a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
+				<i- class="fa fa-wrench"></i>#}
+			</a>{% endblock %}
+			{% block panelRefresh %}
+			    {#<a class="btn btn-xs btn-link panel-refresh" href="javascript:void(0);">
+				<i class="fa fa-refresh"></i>#}
+			</a>{% endblock %}
+			{% block panelExpand %}
+			    {#<a class="btn btn-xs btn-link panel-expand" href="javascript:void(0);">
+				<i class="fa fa-resize-full"></i>#}
+			</a>{% endblock %}
+			{% block panelClose %}<a class="btn btn-xs btn-link panel-close" href="javascript:void(0);">
+				<i class="fa fa-times"></i>
+			</a>{% endblock %}
+		</div>
+    </div>
+	<div class="panel-body {% block bodyClass %}{% endblock %}" style="{% block bodyStyle %}{% endblock %}">
+	{% block body %}
+	{% endblock %}
+	</div>
+</div>

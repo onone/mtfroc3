@@ -1,0 +1,125 @@
+{% extends "admin_layout.html" %}
+
+{% set entityLabel = entityConfiguration.singular_label|replace({"_": " "})|capitalize %}
+{% set entitiesLabel = entityConfiguration.plural_label|replace({"_": " "})|capitalize %}
+
+{% set entityRepresentation = entityLabel %}
+{% if entityConfiguration.representation is defined %}
+    {% set entityRepresentation = entityConfiguration.representation %}
+    {% for fieldName,relFieldData in entityConfiguration.fields %}
+        {% if fieldName in entityRepresentation %}
+            {% set entityRepresentation = entityRepresentation|replace({ ("<<" ~ fieldName ~ ">>"): attribute(entity,fieldName) }) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% block page_header %}<h1>{% if entityConfiguration.viewParameter.iconClass is defined %}<i class="{{ entityConfiguration.viewParameter.iconClass }}"></i>&nbsp;{% endif %}
+    {% if entity is not defined %}Nuovo/a {{entityLabel}}{% else %}{{ entityRepresentation }} <small>{{entityLabel}}</small>{% endif %}
+     <a class="relatedShow btn btn-purple" href="{{ urlFor('entityListUI',{"entityName": entityConfiguration.entityName}) }}" style="float:right">{{ entitiesLabel }} <i class="fa fa-arrow-circle-right"></i></a>
+</h1>
+{% endblock %}
+
+{% block this_page_js %}{{ parent() }}{% endblock %}
+
+{% block this_page_init_js %}
+    {{ parent() }}
+    //DefaultEntityParams = $.parseJSON('{{ jsXEditableEntityConfiguration | json_encode() | raw }}');
+    DefaultEntity.init(entitiesConfiguration.{{ entityConfiguration.entityName }});
+
+    {% for relatedEntityName,relatedEntityData in entityConfiguration.relations %}
+    
+        {#% if attribute(entity,'own' ~ (relatedEntityName | capitalize)) %}
+            {% set relatedEntityConfiguration = attribute(entitiesConfiguration,(entityAttributeName|replace({"own":""})|lower)) %}
+            
+            DefaultTableData.init('{{ relatedEntityConfiguration.entityName }}EntitiesTable');
+        {% endif %#}
+        
+        DefaultTableData.init('{{ relatedEntityName }}EntitiesTable');
+    {% endfor %}
+    
+    UIModals.init();
+    
+    
+{% endblock %}
+
+
+{% block admin_content %}
+
+{# -------------------------------------- PANNELLO ENTITA -------------------------------------- #}
+{% import "macro/entityForm.html" as entityForm %}
+{% if entityConfiguration is defined %}
+    {% set fields = entityConfiguration.fields %}
+    <div class="row">
+        <div class="col-md-6">
+        {% embed 'components/co/panel.html' %}
+            {% block panelHeadingIcon %}
+                {% set iconClass = 'fa fa-list-alt' %}
+                {% if entityConfiguration.viewParameter.iconClass is defined %}
+                    {% set iconClass = entityConfiguration.viewParameter.iconClass %}
+                {% endif %}
+                <i class="{{ iconClass }}"></i>
+            {% endblock %}
+            {% block panelClose %}{% endblock %}
+    		{% block panelHeadingText %}Dati {{ entityConfiguration.singular_label|replace({"_": " "})|capitalize }}{% endblock %}
+            {% block body %}
+                {{ entityForm.form(entityConfiguration,entity,ED) }}
+            {% endblock %}
+        {% endembed %}
+        </div>
+        {% block defaultEntityColDx %}
+        {% endblock %}
+    </div>
+{% endif %}
+
+
+{% if entity is defined %}
+{# -------------------------------------- TABELLE ENTITA CORRELATE -------------------------------------- #}
+{% import "macro/entityDataTable.html" as entityDataTable %}
+{% for relatedEntityName,relatedEntityData in entityConfiguration.relations %}
+
+    {% set relatedEntityConfiguration = attribute(entitiesConfiguration,relatedEntityName) %}
+    
+    
+    
+    {# -------------------------------------- PULSANTE AGGIUNGI ENTITA -------------------------------------- #}
+    
+    {% set anchorAddEntityAttributes = 'href="' ~  urlFor('entityUI',{"entityName": relatedEntityConfiguration.entityName, "pk": "new"}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '" target="_BLANK"' %}
+    {% if '_' in relatedEntityName %}
+        {#% set anchorAddEntityAttributes = 'href="#modalInsert' ~ relatedEntityConfiguration.singular_label ~ '" data-toggle="modal"' %#}
+        {% set anchorAddEntityAttributes = ' data-toggle="modal" data-entityname="' ~ relatedEntityName ~ '" id="modal_ajax_demo_btn" data-url="' ~ urlFor('entityModal',{"entityName": relatedEntityConfiguration.entityName}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '"' %}
+        {% set anchorAddEntityClass = ' ajaxModal' %}
+    {% endif %}
+    {# -------------------------------------- TABELLA ENTITA -------------------------------------- #}
+    
+    {% set relatedEntities = null %}
+    {% if attribute(entity,'own' ~ (relatedEntityName | capitalize)) %}
+        {% set relatedEntities = attribute(entity,'own' ~ (relatedEntityName | capitalize)) %}
+    {% endif %}
+    
+        {% embed 'components/co/panel.html' %}
+        {% block panelId %}{{ entityConfiguration.entityName }}_{{ relatedEntityName }}{% endblock %}
+        {% block panelHeadingIcon %}
+            {% set iconClass = 'fa fa-list-alt' %}
+            {% if relatedEntityConfiguration.viewParameter.iconClass is defined %}
+                {% set iconClass = relatedEntityConfiguration.viewParameter.iconClass %}
+            {% endif %}
+            <i class="{{ iconClass }}"></i>
+        {% endblock %}
+    	{% block panelHeadingText %}
+    	    {{ relatedEntityConfiguration.plural_label|replace({"_": " "})|capitalize }}
+    	{% endblock %}
+        {% block body %} 
+    
+        	<a {{ anchorAddEntityAttributes | raw }}  class="btn btn-success {{ anchorAddEntityClass }}" style="margin-bottom:8px">
+                <i class="fa fa-plus"></i> Aggiungi {{ relatedEntityConfiguration.singular_label|replace({"_": " "})|capitalize }}
+        	</a>
+            {{ entityDataTable.form(relatedEntityConfiguration,relatedEntities,entityConfiguration.entityName) }}
+   
+        {% endblock %}
+        {% endembed %}
+    {#% endif %#}
+{% endfor %}
+{% endif %}
+
+<div id="ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+{% endblock %}

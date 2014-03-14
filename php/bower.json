@@ -1,0 +1,34 @@
+{
+  "name": "mftr",
+  "version": "0.0.0",
+  "authors": [
+    "none"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.0.3",
+    "font-awesome": "~4.0.3",
+    "x-editable": "~1.5.1",
+    "less.js": "~1.6.1",
+    "perfect-scrollbar": "~0.4.6",
+    "jquery-icheck": "~1.0.1",
+    "respond": "~1.4.2",
+    "blockui": "*",
+    "jquery-cookie": "~1.4.0",
+    "datatables": "~1.9.4",
+    "datatables-bootstrap3": "*",
+    "select2": "~3.4.5",
+    "requirejs": "~2.1.10",
+    "momentjs": "~2.5.1",
+    "smalot-bootstrap-datetimepicker": "~2.2.0",
+    "bootstrap-modal": "~2.1.0"
+  }
+}

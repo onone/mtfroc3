@@ -1,0 +1,117 @@
+{% macro form(EC, entity, ED) %}
+
+    {% set fields = EC.fields %}
+    {% set entityLabel = EC.singular_label|replace({"_": " "})|capitalize %}
+    
+    <div id="{{ EC.entityName }}EntityMsg" class="alert hide"></div>
+    <div style="float: right; margin-bottom: 10px">
+        <label style="display: inline-block; margin-right: 50px"><input type="checkbox" id="{{ EC.entityName }}EntityAutoopen" style="vertical-align: baseline" {% if entity is null %}checked{% endif %}>&nbsp;Apri autom. campo successivo</label>
+        
+        <div class="btn-group">
+            <a id="{{ EC.entityName }}EntityEnable" class="btn btn-default {% if entity is null %}hide{% endif %}"><i class="clip-pencil-3"></i> Abilita / Disabilita Modifica</a>
+            {% set deletePK = "new" %}{% if entity is not null %}{% set deletePK = entity.id %}{% endif %}
+            <a id="{{ EC.entityName }}EntityDelete" class="btn btn-bricky {% if entity is null %}hide{% endif %}" href="javascript:;" data-deleteurl="{{ urlFor('entityResource',{"entityName": EC.entityName, "pk": deletePK}) }}"><i class="fa fa-trash-o fa-white"></i></a>
+		</div>
+    </div>
+    <table id="{{EC.entityName}}" class="table table-bordered table-striped">
+        <tbody>
+        {% for fieldName, fieldData in fields %}
+            {# ---------------------- DEFAULT ---------------------- #}
+            {% set label = fieldName|replace({"_": " "})|capitalize %}
+            {% set XEType = 'text' %}
+            {% set value = '' %}
+            {% set attributes = ' data-emptytext="Vuoto" ' %}
+            
+            {# ---------------------- VALUE ---------------------- #}
+            {#% if entity is not null and attribute(entity, fieldName) %}
+                {% set value = attribute(entity, fieldName) %}
+            {% else %}
+                {% if attribute(ED, fieldName) %}
+                    {% set value = attribute(ED, fieldName) %}
+                {% elseif fieldData.defaultValue %}
+                    {% set value = fieldData.defaultValue %}
+                {% endif %}
+            {% endif %#}
+            {% if entity is null and attribute(ED, fieldName)  %}
+                {% set value = attribute(ED, fieldName) %}
+            {% elseif fieldData.defaultValue %}
+                    {% set value = fieldData.defaultValue %}
+            {% else %}
+                {% set value = attribute(entity, fieldName) %}
+            {% endif %}
+            
+            
+            {# ---------------------- RELATED ENTITY ---------------------- #}
+            {% set relatedEntityShowUrl = '' %}
+            {% set relatedEntityShowUrlEmpty = "" %}
+            {% if '_id' in fieldName %}
+                {% if value %}
+                    {% set relatedEntityShowUrl = urlFor('entityUI',{"entityName": fieldName|replace({"_id":""}), "pk": value}) %}
+                {% endif %}
+                {% set relatedEntityShowUrlEmpty = urlFor('entityUI',{"entityName": fieldName|replace({"_id":""}), "pk": "[[ID]]"}) %}
+            {% endif %}
+            
+            {# ---------------------- FIELD LABEL ---------------------- #}
+            {% if fieldData.label is defined %}
+                {% set label = fieldData.label|replace({"_": " "})|capitalize %}
+            {% endif %}
+            
+            
+            {# ---------------------- CUSTOM CONFIG ---------------------- #}
+            {% if fieldData.customConfig is defined %}
+                {% set customConfig = fieldData.customConfig %}
+                {% if customConfig.xeditable is defined %}
+                    {% if customConfig.xeditable.type is defined %}
+                        {% set XEType = customConfig.xeditable.type %}
+                        
+                        {% if XEType == "select" %}
+                            {% set value = '' %}
+                            {% if entity is null and attribute(ED, fieldName)  %}
+                                {% set attributes = attributes ~ ' data-value="' ~ attribute(ED, fieldName) ~ '" ' %}
+                            {% elseif fieldData.defaultValue %}
+                                {% set attributes = attributes ~ ' data-value="' ~ fieldData.defaultValue ~ '" ' %}
+                            {% else %}
+                                {% set attributes = attributes ~ ' data-value="' ~ attribute(entity, fieldName) ~ '" ' %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    
+                    {% if customConfig.xeditable.otherAttribute is defined %}
+                        {% for attributName, attributeValue in customConfig.xeditable.otherAttribute %}
+                        
+                            {% if attribute(customConfig.xeditable.otherAttributeParam, attributName) is defined %}
+                                
+                                {% set AttributeParam = attribute(customConfig.xeditable.otherAttributeParam, attributName) %}
+                                
+                                {% if AttributeParam.toJson is defined %}
+                                        {% set attributeValue = attributeValue | json_encode() | raw | replace({'"': "'"}) %}
+                                {% endif %}
+                            {% endif %}
+                            {% set attributes = attributes ~ ' ' ~ attributName ~ '="' ~ attributeValue ~ '" ' %}
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if customConfig.xeditable.jsoptions is defined %}
+                        {% set attributes = attributes ~ ' data-jsoptions="true" ' %}
+                    {% endif %} 
+                {% endif %}
+            {% endif %}
+            
+            
+            {# ---------------------- HTML ---------------------- #}
+            <tr>      
+                <td width="30%">{{label}}</td>
+                <td width="55%">
+                    <a href="#" {{attributes|raw}} class="{% if fieldData.editable is not defined or fieldData.editable == true  %}{{EC.entityName}}Editable{% else %}notEditable{% endif %} {% if entity is null and not value %} editable-empty{% endif %}" id="{{EC.entityName}}_{{fieldName}}" data-type="{{XEType}}" {% if entity %}data-pk="{{entity.id}}"{% endif %} data-name="{{fieldName}}" data-original-title="Inserisci {{label}}">{{value}}</a>
+                     {% if relatedEntityShowUrlEmpty %}<a class="relatedShow btn btn-xs btn-purple {% if not relatedEntityShowUrl %}hide{% endif %}" href="{{relatedEntityShowUrl}}" data-entityurl="{{relatedEntityShowUrlEmpty}}" target="_blank" style="margin-left:40px">Apri <i class="fa fa-arrow-circle-right"></i></a>{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>
+    {% if entity is null %}
+        <button id="{{ EC.entityName }}EntitySave-btn" class="btn btn-primary pull-right">Inserisci {{entityLabel}}!</button>
+    {% endif %}
+    </div>
+{% endmacro %}

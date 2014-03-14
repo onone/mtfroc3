@@ -1,0 +1,6 @@
+{% extends "modal_layout.html" %}
+{% import "macro/entityForm.html" as entityForm %}
+
+{% block modalBody %}
+    {{ entityForm.form(entityConfiguration,null,ED) }}
+{% endblock %}
