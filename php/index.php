@@ -13,10 +13,11 @@ use RedBean_Facade as R;
 
 
 // MODALITA DI ESECUZIONE
-$app_mode = 'production';
+/*$app_mode = 'production';
 if(strpos($_SERVER['SCRIPT_FILENAME'],'stickshift') !== FALSE){ // VARIABILE PRESENTE SU CLOUD9
     $app_mode = 'development';
-}
+}*/
+$app_mode = 'development';
 
 // INIZIALIZZO  APP
 $app = new \Slim\Slim(array(

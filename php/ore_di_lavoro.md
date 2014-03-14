@@ -32,8 +32,12 @@ http://php-mftr.rhcloud.com/
 l12...@gmail.com
 manga..
 
-phpmyadmin: https://php-mftr.rhcloud.com/phpmyadmin/
-user:adminUyLCLuc pwd: JWmWpswfQHYg
+phpmyadmin: https://php-mftr.rhcloud.co
+
+GIT:
+ADD: git add .
+COMMIT: git commit -m 'first release'
+DEPLOY: usa tasto di C9
 
 Da fare:
                     

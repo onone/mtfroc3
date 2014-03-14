@@ -20,6 +20,7 @@ $app->get('/test', function () use ($app) {
     $request = $app->request();
     
     $url = $app->urlFor('test');
+    echo 'cococo';
     //print_r($request->getRootUri() . $url);
     
    // $app->render('test.twig');
