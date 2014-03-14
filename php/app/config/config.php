@@ -19,15 +19,17 @@ define('APP_PATH',dirname(__DIR__));
 $app->configureMode('production', function () use ($app) {
     
     include 'entities.php';
+    
     $app->config(array(
         'log.enable' => false,
         'debug' => true,
         'view' => new \Slim\Views\Twig(),
-        'cookies.secret_key'  => 'LUX_PEPPER',
+        'cookies.secret_key'  => 'LUX_PEPPER_PROD',
         'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
-        'templates.path' => APP_PATH .  '/views'
+        'templates.path' => APP_PATH .  '/views',
+        'entities' => $entities
         ));
     /*
     $app->config(array(
@@ -57,8 +59,7 @@ $app->configureMode('development', function () use ($app) {
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH .  '/views',
-        //'locales.path' => APP_PA TH .'/i18n/',
-        //'entities' => $entities
+        'entities' => $entities
         ));
 });
 

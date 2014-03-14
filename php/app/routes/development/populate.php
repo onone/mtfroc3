@@ -5,7 +5,7 @@ use RedBean_Facade as R;
 
 $app->get('/populate/all', function () use ($app) {
     /*
-    client groups rates grates ptype locations
+    clients groups rates grates ptype locations
     
     */
     
