@@ -4,8 +4,12 @@ use RedBean_Facade as R;
 
 if($app_mode == 'development'){
     define('BASE_URL','/php');
+    define('HTTP_HOST','https://mftr3-c9-langeli.c9.io');
+    
 }else{
     define('BASE_URL','');
+    define('HTTP_HOST','http://php-mftr.rhcloud.com');
+    
 }
 
 define('APP_PATH',dirname(__DIR__));
