@@ -57,7 +57,7 @@ $app->get('/entity/:entityName/:pk', $authAdmin('admin'), function ($entityName,
                                 
                                 $relatedEntityName = strtolower(str_replace('_id','',$fieldName2));
                                 
-                                if(!empty($fieldData2)){
+                                if(is_array($fieldData2) && !empty($fieldData2)){
                                     if($relatedEntityName != $entityName){
                                         if($counter == 1){
                                             $RBRelatedEntities = R::find($relatedEntityName);
@@ -132,8 +132,11 @@ $app->get('/entity/:entityName', $authAdmin('admin'), function ($entityName) use
         
         
         R::preload($RBEntities,$preloadEntities);
-        
-        $entities = R::exportAll($RBEntities);
+               foreach($RBEntities as $RBEntity){
+        $entities[] = $RBEntity->export();
+                             
+        }
+        //$entities = R::exportAll($RBEntities);
         
         $app->view()->setData(array(
             'entityConfiguration' => $entityConfiguration,

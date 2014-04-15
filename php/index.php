@@ -1,4 +1,8 @@
 <?php
+
+define('START_TIME',microtime(TRUE));
+$GLOBALS['timings'][] = array('start' => microtime(TRUE));
+
 // AUTOLOAD DI COMPOSER
 if(file_exists(__DIR__ . '/vendor/autoload.php')){
     try {
@@ -50,5 +54,12 @@ require APP_PATH . '/routes/development/populate.php'; // POPOLAZIONE DB
 
 // ESEGUO APP
 $app->run();
+
+$GLOBALS['timings'][] = array('End' . __LINE__ => (microtime(TRUE)-START_TIME));
+        foreach($GLOBALS['timings'] as $data){
+        foreach($data as $k => $v){
+        echo '<br>' . $k . ':' . $v;
+        }
+        }     
 
 ?>
