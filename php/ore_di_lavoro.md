@@ -39,13 +39,19 @@ ADD: git add .
 COMMIT: git commit -m 'first release'
 DEPLOY: usa tasto di C9
 URL DI ESEMPIO: http://php-mftr.rhcloud.com/test
+http://php-mftr.rhcloud.com/entity/client
 
 Da fare:
-                    
+CREAZIONE NUOVA ENTITA OKKIO _METHOD PUT
+PERFORMANCE RENDERING
+PERFOMRANCE REDBEAN
+
 Validazione non can campi tabella in output
 Ordinamento data vuota poi decrescente
 editing in line
 https://datatables.net/release-datatables/examples/api/highlight.html
+
+
 
 
 

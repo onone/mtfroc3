@@ -56,10 +56,13 @@ require APP_PATH . '/routes/development/populate.php'; // POPOLAZIONE DB
 $app->run();
 
 $GLOBALS['timings'][] = array('End' . __LINE__ => (microtime(TRUE)-START_TIME));
-        foreach($GLOBALS['timings'] as $data){
+
+if($app_mode == 'development'){
+    foreach($GLOBALS['timings'] as $data){
         foreach($data as $k => $v){
-        echo '<br>' . $k . ':' . $v;
+            echo '<br>' . $k . ':' . $v;
         }
-        }     
+    }
+}
 
 ?>

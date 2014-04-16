@@ -98,10 +98,9 @@ $twig->addGlobal('entitiesConfig', $app->config('entities'));
 date_default_timezone_set('Europe/Rome');
 
 // TWIG CONFIG
-
 $app->view()->parserOptions = array(
     'debug' => true,
-    //'cache' => dirname(__FILE__) . '/cache'
+    'cache' => dirname(dirname(dirname(__FILE__))) . '/cache'
 );
 $app->view()->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
