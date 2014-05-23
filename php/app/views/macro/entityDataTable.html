@@ -1,5 +1,8 @@
 {% macro form(EC, entities,parentEntityName) %}
-    {#{ dump(entities) }#}
+    {#
+    { dump(entities) }
+    #}
+    
     {% set fields = EC.fields %}
     {% set entityLabel = EC.singular_label|replace({"_": " "})|capitalize %}
     {% set fieldVisibleInList = [] %}
@@ -34,13 +37,15 @@
 	{% for relatedEntity in entities %}
         <tr>
 		{%for fieldDBName in fieldVisibleInList %}
+
 			{% if attribute(relatedEntity,fieldDBName) is defined %}
+
 			    {% set fieldValue = attribute(relatedEntity,fieldDBName) %}
 			    {% if fieldDBName in relatedFields|keys and attribute(entitiesRepresentations,attribute(relatedFields, fieldDBName)) is defined %}
 			        {% set relatedEntityName = attribute(relatedFields, fieldDBName) %}
 			        {% set relatedEntityConfig = attribute(entitiesConfiguration,relatedEntityName) %}
 			        {% set entityRepresentation = attribute(entitiesRepresentations,relatedEntityName) %}
-			        
+			        		
                     <td>
                         {% for relFieldName,relFieldData in relatedEntityConfig.fields %}
     			            {% if relFieldName in entityRepresentation %}
@@ -50,14 +55,14 @@
 			        
                         {{ entityRepresentation }}
                         
-                        <a class="relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_{{ fieldDBName|replace({"_id":""}) }}{{fieldValue}}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
+                        <a class="rr relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_{{ fieldDBName|replace({"_id":""}) }}{{fieldValue}}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
                     </td>
                 {% else %}
 				    <td>
 				        {{ fieldValue }}
 				        
-				        {% if attribute(relatedEntity,(fieldDBName ~ "_id")) is defined %}
-				            <a class="relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName, "pk": (attribute(relatedEntity,fieldDBName ~ '_id'))}) }}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
+				        {% if attribute(relatedEntity,(fieldDBName ~ "_id")) is defined and attribute(relatedEntity,(fieldDBName ~ "_id")) is not empty %}
+				            <a class="r relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName, "pk": (attribute(relatedEntity,fieldDBName ~ '_id'))}) }}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
 				        {% endif %}
 				    </td>
                 {% endif %}

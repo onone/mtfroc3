@@ -24,6 +24,7 @@ $app->get('/test', function () use ($app) {
     //print_r($request->getRootUri() . $url);
     
     
+    phpinfo();
     
     echo "<pre>";
     print_r($_REQUEST);

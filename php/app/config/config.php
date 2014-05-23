@@ -21,15 +21,15 @@ $app->configureMode('production', function () use ($app) {
     include 'entities.php';
     
     $app->config(array(
-        'log.enable' => false,
-        'debug' => true,
+        'log.enable' => true,
+        'debug' => false,
         'view' => new \Slim\Views\Twig(),
         'cookies.secret_key'  => 'LUX_PEPPER_PROD',
         'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH .  '/views',
-        'entities' => $entities
+        'entities' => $entities,
         ));
     /*
     $app->config(array(
@@ -52,7 +52,7 @@ $app->configureMode('development', function () use ($app) {
     
     $app->config(array(
         'log.enable' => false,
-        'debug' => true,
+        'debug' => false,
         'view' => new \Slim\Views\Twig(),
         'cookies.secret_key'  => 'LUX_PEPPER',
         'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
@@ -99,8 +99,9 @@ date_default_timezone_set('Europe/Rome');
 
 // TWIG CONFIG
 $app->view()->parserOptions = array(
-    'debug' => true,
-    'cache' => dirname(dirname(dirname(__FILE__))) . '/cache'
+    //'debug' => true,
+    'cache' => dirname(dirname(dirname(__FILE__))) . '/cache',
+    'optimizations' => 1
 );
 $app->view()->parserExtensions = array(
     new \Slim\Views\TwigExtension(),

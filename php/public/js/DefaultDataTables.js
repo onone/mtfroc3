@@ -24,6 +24,7 @@ var DefaultTableData = function () {
                 "fnDrawCallback": function( oSettings ) {
                  }
             });
+            /*
             $('#' + tableId + '_wrapper .dataTables_filter input').addClass("form-control input-sm").attr("placeholder", "Search");
             // modify table search input
             $('#' + tableId + '_wrapper .dataTables_length select').addClass("m-wrap small");
@@ -31,11 +32,11 @@ var DefaultTableData = function () {
             $('#' + tableId + '_wrapper .dataTables_length select').select2();
             // initialzie select2 dropdown
             $('#' + tableId + '_column_toggler input[type="checkbox"]').change(function () {
-                /* Get the DataTables object again - this is not a recreation, just a get of the object */
                 var iCol = parseInt($(this).attr("data-column"));
                 var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
                 oTable.fnSetColumnVis(iCol, (bVis ? false : true));
             });
+            */
         };
         return {
             //main function to initiate template pages

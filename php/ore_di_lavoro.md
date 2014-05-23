@@ -25,6 +25,12 @@
 05/03/2014 1: custom client
 10/03/2014 1: custom client
 13/03/2014 1: custom client
+15/04/2014 2: custom client
+16/04/2014 1: custom client
+29/04/2014 1: 
+30/04/2014 1: 
+16/05/2014 2
+16/05/2014 3
 
 
 OPEN SHIFT
@@ -41,13 +47,37 @@ DEPLOY: usa tasto di C9
 URL DI ESEMPIO: http://php-mftr.rhcloud.com/test
 http://php-mftr.rhcloud.com/entity/client
 
-Da fare:
-CREAZIONE NUOVA ENTITA OKKIO _METHOD PUT
-PERFORMANCE RENDERING
-PERFOMRANCE REDBEAN
+********************************************************************************
+!!! BUGS
+********************************************************************************
+https://mftr3-c9-langeli.c9.io/php/entity/memo
 
-Validazione non can campi tabella in output
-Ordinamento data vuota poi decrescente
+PERFOMRANCE REDBEAN FATTO 90%
+
+
+$app->response()->status(400);
+$app->response()->header('X-Status-Reason', $e->getMessage());
+!! SE DEBUG print_r ERRO
+
+
+
+
+
+********************************************************************************
+!!! BUGS RISOLTI
+********************************************************************************
+
+https://mftr3-c9-langeli.c9.io/php/entity/rate/3
+Tabella di relazione tariffe pacchetto manca il nome del group
+
+
+https://mftr3-c9-langeli.c9.io/php/entity/client/10
+https://mftr3-c9-langeli.c9.io/php/entity/client/5
+dati tabelle relazionate
+
+********************************************************************************
+!!! IMPLEMENTAZIONI
+********************************************************************************
 editing in line
 https://datatables.net/release-datatables/examples/api/highlight.html
 

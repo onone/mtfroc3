@@ -20,8 +20,12 @@ $app->get('/resources/xeditable/select/:entityName', $authAdmin('admin'), functi
         $REntity = R::find($entityName);  
         
         
-        $entities = R::exportAll($REntity);
+        //$entities = R::exportAll($REntity);
             
+        foreach ($REntity as $e) {
+            $p = $e->export();
+            $entities[$p['id']] = $p;
+        }
             
         $outputArray = array();
         foreach ($entities as $entity) {
@@ -97,8 +101,12 @@ $app->get('/resources/xeditable/select2/:entityName', $authAdmin('admin'), funct
         }
         
         
-        $entities = R::exportAll($REntity);
-            
+        //$entities = R::exportAll($REntity);
+              
+        foreach ($REntity as $e) {
+            $p = $e->export();
+            $entities[$p['id']] = $p;
+        }
             
         $outputArray = array();
         foreach ($entities as $entity) {

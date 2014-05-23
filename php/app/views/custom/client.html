@@ -71,7 +71,7 @@
             <div class="col-md-6">
             
             {# -------------------------------------- ANAMNESI -------------------------------------- #}
-            {% if entity.ownAnamnesis %}
+            
             {% embed 'components/co/panel.html' %}
             {% block panelHeadingIcon %}<i class="{{ entitiesConfiguration.anamnesis.viewParameter.iconClass }}"></i>{% endblock %}
     		{% block panelHeadingText %}
@@ -85,7 +85,8 @@
     		{% block bodyStyle %}height:300px{% endblock %}
             {% block body %}  
                 <ul class="activities"  id="anamnesisList">
-                    {% for a in entity.ownAnamnesis %}
+                {% if anamnesis %}
+                    {% for a in anamnesis %}
 					<li>
 						<a class="activity" href="javascript:void(0)">
 						    {#<i class="clip-upload-2 circle-icon circle-green"></i>#}
@@ -97,48 +98,50 @@
 						</a>
 					</li>
         			{% endfor %}
+                {% endif %}
 				</ul>
             {% endblock %}
             {% endembed %}
-            {% endif %}
             
             
             {# -------------------------------------- MEMO -------------------------------------- #}
-            {% if entity.ownMemo %}
+            
             {% embed 'components/co/panel.html' %}
-                {% block panelHeadingIcon %}<i class="{{ entitiesConfiguration.memo.viewParameter.iconClass }}"></i>{% endblock %}
-        		{% block panelHeadingText %}
-        		    Memo 
-        		    {% set anchorAddEntityAttributes = ' data-toggle="modal" data-entityname="memo" id="modal_ajax_demo_btn" data-url="' ~ urlFor('entityModal',{"entityName": "memo"}) ~ '?ED[client_id]=' ~ entity.id ~ '"' %}
-                    <a {{ anchorAddEntityAttributes | raw }}  class="ajaxModal" style="margin-bottom:8px">
-                        <i class="fa fa-plus"></i> Aggiungi
-                	</a>
-        		{% endblock %}
-        		{% block bodyClass %}panel-scroll ps-container messages{% endblock %}
-        		{% block bodyStyle %}height:100px{% endblock %}
-                {% block body %}  
+            {% block panelHeadingIcon %}<i class="{{ entitiesConfiguration.memo.viewParameter.iconClass }}"></i>{% endblock %}
+    		{% block panelHeadingText %}
+    		    Memo 
+    		    {% set anchorAddEntityAttributes = ' data-toggle="modal" data-entityname="memo" id="modal_ajax_demo_btn" data-url="' ~ urlFor('entityModal',{"entityName": "memo"}) ~ '?ED[client_id]=' ~ entity.id ~ '"' %}
+                <a {{ anchorAddEntityAttributes | raw }}  class="ajaxModal" style="margin-bottom:8px">
+                    <i class="fa fa-plus"></i> Aggiungi
+            	</a>
+    		{% endblock %}
+    		{% block bodyClass %}panel-scroll ps-container messages{% endblock %}
+    		{% block bodyStyle %}height:100px{% endblock %}
+            {% block body %}  
+            
                 
-                    
-                    <ul class="todo" id="memoList">
-                        {% for a in entity.ownMemo %}
-        				<li>
-        					<a class="todo-actions" href="javascript:void(0)">
-        					    <i class="fa fa-{% if a.type == 2 %}warning" style="color:#a94442{% elseif a.type == 1 %}bullhorn" style="color:#8a6d3b{% else %}info-circle" style="color:#31708f{% endif %}"></i>
-        						<span class="desc" style="opacity: 1; text-decoration: none;">{{ a.value }}</span>
-        						<span class="pull-right" style="opacity: 1;color:#888;"> {{ a.creation_datetime|date("m/d/Y")  }}</span>
-        					</a>
-        				</li>
-        			    {% endfor %}
-        			</ul>
-                    {% endblock %}
-                {% endembed %}
-            {% endif %}
+                <ul class="todo" id="memoList">
+                    {% if memo %}
+                    {% for a in memo %}
+    				<li>
+    					<a class="todo-actions" href="javascript:void(0)">
+    					    <i class="fa fa-{% if a.type == 2 %}warning" style="color:#a94442{% elseif a.type == 1 %}bullhorn" style="color:#8a6d3b{% else %}info-circle" style="color:#31708f{% endif %}"></i>
+    						<span class="desc" style="opacity: 1; text-decoration: none;">{{ a.value }}</span>
+    						<span class="pull-right" style="opacity: 1;color:#888;"> {{ a.creation_datetime|date("m/d/Y")  }}</span>
+    					</a>
+    				</li>
+    			    {% endfor %}
+    			    
+                    {% endif %}
+    			</ul>
+                {% endblock %}
+            {% endembed %}
                 
             
                 
             {# -------------------------------------- GROUP RATE -------------------------------------- #}
             
-            {% if group.ownGroup_rate %}
+            {% if rates %}
             {% embed 'components/co/panel.html' %}
                 {% block panelHeadingIcon %}<i class="fa fa-stethoscope"></i>{% endblock %}
         		{% block panelHeadingText %}Tariffe gruppo {{ group.name }}{% endblock %}
@@ -146,20 +149,10 @@
         		{% block bodyClass %}panel-scroll ps-container{% endblock %}
         		{% block bodyStyle %}height:100px{% endblock %}
         		
-                {% block body %}  
-                {#
-                <table class="table table-striped table-hover" >
-                    {% for r in group.ownGroup_rate %}
-					<tr>
-						<td>{{ rates[r.rate_id].name }} {% if  rates[r.rate_id].performance_number > 1 %}{{ rates[r.rate_id].performance_number }} Trattamenti {% endif %}</td>
-						<td><a class="btn btn-info pull-right" >{{ r.amount }} € <i class="fa fa-arrow-circle-right"></i></a></td>
-					</tr>
-        			{% endfor %}
-        		</table>
-        		#}
-        		{% for r in group.ownGroup_rate %}
-        		<a class="btn btn-info group-rates" data-numperformance="{{ rates[r.rate_id].performance_number }}" data-amount="{{ r.amount }}" data-clientid="{{ entity.id }}" data-name="{{ rates[r.rate_id].name }}">
-					{{ rates[r.rate_id].name }} {% if  rates[r.rate_id].performance_number > 1 %}{{ rates[r.rate_id].performance_number }} Trattamenti {% endif %}</i>
+                {% block body %}
+        		{% for r in rates %}
+        		<a class="btn btn-info group-rates" data-numperformance="{{ r.performance_number }}" data-amount="{{ r.amount }}" data-clientid="{{ entity.id }}" data-name="{{ r.name }}">
+					{{ r.name }} {% if  r.performance_number > 1 %}{{ r.performance_number }} Trattamenti {% endif %}</i>
 					| {{ r.amount }} €
 				</a>
         		{% endfor %}
@@ -192,10 +185,7 @@
 {% endif %}
 {# -------------------------------------- TABELLA ENTITA -------------------------------------- #}
 
-{% set relatedEntities = null %}
-{% if attribute(entity,'own' ~ (relatedEntityName | capitalize)) %}
-{% set relatedEntities = attribute(entity,'own' ~ (relatedEntityName | capitalize)) %}
-{% endif %}
+{% set relatedEntities = performance %}
 
 {% embed 'components/co/panel.html' %}
 {% block panelId %}{{ entityConfiguration.entityName }}_{{ relatedEntityName }}{% endblock %}
