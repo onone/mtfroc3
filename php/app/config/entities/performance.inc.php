@@ -43,7 +43,7 @@ $entities['performance'] =  array(
                         'validationFunctionNames'     => 'required',
                         'type'     => 'select',
                         'otherAttribute' => array(
-                            'data-source' => BASE_URL . '/resources/xeditable/select/client'
+                            'data-source' => BASE_URL . '/resources/xeditable/select/payment'
                         ),
                         /*'type'     => 'select2',
                         'otherAttribute' => array(
