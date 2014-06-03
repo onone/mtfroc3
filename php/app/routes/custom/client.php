@@ -227,7 +227,7 @@ $app->get('/client/:pk', $authAdmin('admin'), function ($pk) use ($app) {
       }
 
   
-});
+})->name('clientCustom');
 
 
 ?>

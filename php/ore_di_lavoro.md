@@ -38,7 +38,7 @@ http://php-mftr.rhcloud.com/
 l12...@gmail.com
 manga..
 
-phpmyadmin: https://php-mftr.rhcloud.co
+phpmyadmin: https://php-mftr.rhcloud.com/phpmyadmin/
 
 GIT:
 ADD: git add .
@@ -54,6 +54,8 @@ https://mftr3-c9-langeli.c9.io/php/entity/memo
 
 PERFOMRANCE REDBEAN FATTO 90%
 
+
+https://mftr3-c9-langeli.c9.io/php/entity/rate/10
 
 $app->response()->status(400);
 $app->response()->header('X-Status-Reason', $e->getMessage());

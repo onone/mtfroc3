@@ -6,6 +6,7 @@ $entities['group_rate'] =  array(
     'plural_label' => 'tariffe_pacchetto',
     'primary_key' => 'id',
     'representation' => '<<amount>>',
+    'hideLinkInMenu' => TRUE,
     'viewParameter' => array(
         'iconClass' => 'fa fa-money'
         ),

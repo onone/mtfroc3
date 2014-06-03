@@ -140,12 +140,15 @@ CREATE  TABLE IF NOT EXISTS php.payment (
     FOREIGN KEY (paymentform_id )
     REFERENCES php.paymentform (id )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON UPDATE NO ACTION
+    /*,
   CONSTRAINT bill_id
     FOREIGN KEY (bill_id )
     REFERENCES php.bill (id )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+    */
+    )
 ENGINE = InnoDB;
 
 

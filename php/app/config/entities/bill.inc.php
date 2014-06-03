@@ -9,6 +9,7 @@ $entities['bill'] =  array(
         'iconClass' => 'fa fa-file-text'
         ),
     'representation' => '<<date>> <<amount>>',
+    'hideLinkInMenu' => TRUE,
     'fields' => array( // Gli elementi verra visualizzati nell'ordine in cui compaiono nell'array
         // Tutti gli elemeni di default sono visibili (visible) ed editabili (editable)
         'id' => array(

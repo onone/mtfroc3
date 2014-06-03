@@ -6,6 +6,7 @@ $entities['performance_performancetype'] =  array(
     'plural_label' => 'trattamenti',
     'primary_key' => 'id',
     'representation' => '<<note>>',
+    'hideLinkInMenu' => TRUE,
     'viewParameter' => array(
         'iconClass' => 'fa fa-crosshairs'
         ),

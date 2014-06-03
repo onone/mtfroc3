@@ -4,8 +4,8 @@ use RedBean_Facade as R;
 
 $app->get('/entity/:entityName/:pk', $authAdmin('admin'), function ($entityName,$pk) use ($app) {  
     
-    $app->etag("/entity/{$entityName}/{$pk}");
-    $app->expires('+1 hour');
+    //$app->etag("/entity/{$entityName}/{$pk}");
+    //$app->expires('+1 hour');
     
     try{
         $entitiesConfiguration = $app->config('entities');
@@ -213,7 +213,7 @@ $app->get('/entity/:entityName/:pk', $authAdmin('admin'), function ($entityName,
 })->conditions(array(
     'entityName' => '[a-zA-Z]{3,}',
     'pk' => '(new|\d{1,4})',
-    ))->name('entityUI');;
+    ))->name('entityUI');
 
 $app->get('/entity/:entityName', $authAdmin('admin'), function ($entityName) use ($app) {  
     

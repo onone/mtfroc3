@@ -153,7 +153,7 @@
         		{% for r in rates %}
         		<a class="btn btn-info group-rates" data-numperformance="{{ r.performance_number }}" data-amount="{{ r.amount }}" data-clientid="{{ entity.id }}" data-name="{{ r.name }}">
 					{{ r.name }} {% if  r.performance_number > 1 %}{{ r.performance_number }} Trattamenti {% endif %}</i>
-					| {{ r.amount }} €
+					| {{ r.amount }} &euro;
 				</a>
         		{% endfor %}
                 {% endblock %}
@@ -177,7 +177,7 @@
 
 {# -------------------------------------- PULSANTE AGGIUNGI ENTITA -------------------------------------- #}
 
-{% set anchorAddEntityAttributes = 'href="' ~  urlFor('entityUI',{"entityName": relatedEntityConfiguration.entityName, "pk": "new"}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '" target="_BLANK"' %}
+{% set anchorAddEntityAttributes = 'href="' ~  urlFor('entityUI',{"entityName": relatedEntityConfiguration.entityName, "pk": "new"}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '" target="_' ~ relatedEntityConfiguration.entityName ~ '"' %}
 {% if '_' in relatedEntityName %}
 {#% set anchorAddEntityAttributes = 'href="#modalInsert' ~ relatedEntityConfiguration.singular_label ~ '" data-toggle="modal"' %#}
 {% set anchorAddEntityAttributes = ' data-toggle="modal" data-entityname="' ~ relatedEntityName ~ '" id="modal_ajax_demo_btn" data-url="' ~ urlFor('entityModal',{"entityName": relatedEntityConfiguration.entityName}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '"' %}
@@ -302,7 +302,7 @@
 			        {% else %}
 			            Non saldato
 			        {% endif %} - 
-			        Importo : {{ p.amount }} €
+			        Importo : {{ p.amount }} &euro;
 			        {% if totalNumOfPerformance[p.id] > 1 %}
 			            - 
 			            {{ performanceNUmber[relatedEntity.id] }} di {{ totalNumOfPerformance[p.id] }}

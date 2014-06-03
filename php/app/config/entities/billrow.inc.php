@@ -5,6 +5,7 @@ $entities['billrow'] =  array(
     'singular_label' => 'riga_fattura',
     'plural_label' => 'righe_fattura',
     'primary_key' => 'id',
+    'hideLinkInMenu' => TRUE,
     'viewParameter' => array(
         'iconClass' => 'fa fa-stack-overflow'
         ),

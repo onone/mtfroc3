@@ -38,13 +38,11 @@ $entities['client'] =  array(
         ),
         'indirizzo' => array(
             'label' => 'indirizzo',
-            'customConfig'=> array(
+            /*'customConfig'=> array(
                 'xeditable' => array(
                         'validationFunctionNames'     => 'required' //  nomi di funzioni contenute in validation.js.  Es. 'required,required'
                 )
-            ),
-            'RedBean' => array(
-            )
+            ),*/
         ),
         'note' => array(
             'customConfig'=> array(

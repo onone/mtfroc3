@@ -55,7 +55,7 @@
 			        
                         {{ entityRepresentation }}
                         
-                        <a class="rr relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_{{ fieldDBName|replace({"_id":""}) }}{{fieldValue}}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
+                        <a class="rr relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_{{ fieldDBName|replace({"_id":""}) }}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
                     </td>
                 {% else %}
 				    <td>
@@ -70,7 +70,12 @@
 		{% endfor %}
 			<td>
 			    {#<div class="btn-group pull-right">#}
-			        <a href="{{ urlFor('entityUI', {"entityName": EC.entityName, "pk": relatedEntity.id }) }}" target="_{{ EC.entityName }}{{fieldValue}}"  class="btn btn-default"><i class="clip-pencil-3"></i></a>
+    			    {% if EC.entityName == "client" %}
+			            {% set modUrl = urlFor('clientCustom', {"pk": relatedEntity.id }) %}
+			        {% else %}
+			            {% set modUrl = urlFor('entityUI', {"entityName": EC.entityName, "pk": relatedEntity.id }) %}
+    			    {% endif %}
+			        <a href="{{ modUrl }}" target="_{{ EC.entityName }}"  class="btn btn-default"><i class="clip-pencil-3"></i></a>
 			        {#<button  class="btn btn-bricky deleteEntityFromList" data-deleteurl="{{ urlFor('entityResource',{"entityName": EC.entityName, "pk": relatedEntity.id}) }}"><i class="fa fa-trash-o fa-white"></i></button>
 			    </div>#}
 		    </td>

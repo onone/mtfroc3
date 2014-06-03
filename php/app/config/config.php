@@ -100,8 +100,8 @@ date_default_timezone_set('Europe/Rome');
 // TWIG CONFIG
 $app->view()->parserOptions = array(
     //'debug' => true,
-    'cache' => dirname(dirname(dirname(__FILE__))) . '/cache',
-    'optimizations' => 1
+    //'cache' => dirname(dirname(dirname(__FILE__))) . '/cache',
+    //'optimizations' => 1
 );
 $app->view()->parserExtensions = array(
     new \Slim\Views\TwigExtension(),

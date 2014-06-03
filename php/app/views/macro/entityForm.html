@@ -103,7 +103,7 @@
                 <td width="30%">{{label}}</td>
                 <td width="55%">
                     <a href="#" {{attributes|raw}} class="{% if fieldData.editable is not defined or fieldData.editable == true  %}{{EC.entityName}}Editable{% else %}notEditable{% endif %} {% if entity is null and not value %} editable-empty{% endif %}" id="{{EC.entityName}}_{{fieldName}}" data-type="{{XEType}}" {% if entity %}data-pk="{{entity.id}}"{% endif %} data-name="{{fieldName}}" data-original-title="Inserisci {{label}}">{{value}}</a>
-                     {% if relatedEntityShowUrlEmpty %}<a class="relatedShow btn btn-xs btn-purple {% if not relatedEntityShowUrl %}hide{% endif %}" href="{{relatedEntityShowUrl}}" data-entityurl="{{relatedEntityShowUrlEmpty}}" target="_blank" style="margin-left:40px">Apri <i class="fa fa-arrow-circle-right"></i></a>{% endif %}
+                     {% if relatedEntityShowUrlEmpty %}<a class="relatedShow btn btn-xs btn-purple {% if not relatedEntityShowUrl %}hide{% endif %}" href="{{relatedEntityShowUrl}}" data-entityurl="{{relatedEntityShowUrlEmpty}}" target="_{{fieldName|replace({"_id":""})}}" style="margin-left:40px">Apri <i class="fa fa-arrow-circle-right"></i></a>{% endif %}
                 </td>
             </tr>
         {% endfor %}

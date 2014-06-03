@@ -13,6 +13,8 @@
     {% endfor %}
 {% endif %}
 
+{% block pageTitle %}{{entityLabel}}: {{entityRepresentation}}{% endblock %}
+
 {% block page_header %}<h1>{% if entityConfiguration.viewParameter.iconClass is defined %}<i class="{{ entityConfiguration.viewParameter.iconClass }}"></i>&nbsp;{% endif %}
     {% if entity is not defined %}Nuovo/a {{entityLabel}}{% else %}{{ entityRepresentation }} <small>{{entityLabel}}</small>{% endif %}
      <a class="relatedShow btn btn-purple" href="{{ urlFor('entityListUI',{"entityName": entityConfiguration.entityName}) }}" style="float:right">{{ entitiesLabel }} <i class="fa fa-arrow-circle-right"></i></a>
@@ -83,7 +85,7 @@
     
     {# -------------------------------------- PULSANTE AGGIUNGI ENTITA -------------------------------------- #}
     
-    {% set anchorAddEntityAttributes = 'href="' ~  urlFor('entityUI',{"entityName": relatedEntityConfiguration.entityName, "pk": "new"}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '" target="_BLANK"' %}
+    {% set anchorAddEntityAttributes = 'href="' ~  urlFor('entityUI',{"entityName": relatedEntityConfiguration.entityName, "pk": "new"}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '" target="_{{ relatedEntityConfiguration.entityName }}"' %}
     {% if '_' in relatedEntityName %}
         {#% set anchorAddEntityAttributes = 'href="#modalInsert' ~ relatedEntityConfiguration.singular_label ~ '" data-toggle="modal"' %#}
         {% set anchorAddEntityAttributes = ' data-toggle="modal" data-entityname="' ~ relatedEntityName ~ '" id="modal_ajax_demo_btn" data-url="' ~ urlFor('entityModal',{"entityName": relatedEntityConfiguration.entityName}) ~ '?ED[' ~ entityConfiguration.entityName ~ '_id]=' ~ entity.id ~ '"' %}

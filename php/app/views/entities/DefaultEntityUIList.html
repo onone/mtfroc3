@@ -4,6 +4,8 @@
 {% set entityLabel = entityConfiguration.singular_label|replace({"_": " "})|capitalize %}
 {% set entitiesLabel = entityConfiguration.plural_label|replace({"_": " "})|capitalize %}
 
+{% block pageTitle %}Elenco {{entitiesLabel}}{% endblock %}
+
 {% block page_header %}
 {% set iconClass = 'fa fa-list-alt' %}
             
@@ -117,7 +119,7 @@
         			        
                             {{ entityRepresentation }}
                             
-                            <a class="relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_group{{fieldValue}}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
+                            <a class="relatedShow btn btn-xs btn-purple" href="{{ urlFor('entityUI',{"entityName": fieldDBName|replace({"_id":""}), "pk": fieldValue}) }}" target="_{{ fieldDBName|replace({"_id":""}) }}" style="float:right">Apri <i class="fa fa-arrow-circle-right"></i></a>
                         </td>
                     {% else %}
     				    <td>{{ fieldValue }}</td>
@@ -126,7 +128,12 @@
     			{% endfor %}
     				<td style="max-width:60px" class="text-center">
         				<div class="btn-group">
-    				        <a href="{{ urlFor('entityUI', {"entityName": entityConfiguration.entityName, "pk": entity.id}) }}" target="_blank"  class="btn btn-default"><i class="clip-pencil-3"></i></a>
+        				    {% if entityConfiguration.entityName == "client" %}
+        			            {% set modUrl = urlFor('clientCustom', {"pk": entity.id }) %}
+        			        {% else %}
+        			            {% set modUrl = urlFor('entityUI', {"entityName": entityConfiguration.entityName, "pk": entity.id}) %}
+            			    {% endif %}
+    				        <a href="{{ modUrl }}" target="_{{ entityConfiguration.entityName }}"  class="btn btn-default"><i class="clip-pencil-3"></i></a>
     				        <button  class="btn btn-bricky deleteEntityFromList" data-deleteurl="{{ urlFor('entityResource',{"entityName": entityConfiguration.entityName, "pk": entity.id}) }}"><i class="fa fa-trash-o fa-white"></i></button>
     				    </div>
     				</td>

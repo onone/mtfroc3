@@ -70,36 +70,40 @@
 				<!-- end: MAIN MENU TOGGLER BUTTON -->
 				<!-- start: MAIN NAVIGATION MENU -->
 				<ul class="main-navigation-menu">
-					{#<li>
-						<a href="index.html"><i class="clip-home-3"></i>
-							<span class="title"> {{ role }} </span><span class="selected"></span>
+					{#
+					<li>
+						<a href="{{ urlFor('clientCustom', {"pk": entityConfiguration.entityName }) }}"><i class="clip-home-3"></i>
+							<span class="title"> CLienti </span><span class="selected"></span>
 						</a>
-					</li>#}
+					</li>
+					#}
 					
 					<li>
 						<a href="javascript:;">
 							<i class="clip-folder-open"></i>
-							<span class="title"> Entità </span><i class="icon-arrow"></i>
+							<span class="title"> Entit&agrave; </span><i class="icon-arrow"></i>
 							<span class="arrow "></span>
 						</a>
 						<ul class="sub-menu">
 							<li>
 							    {% for entityConfiguration in entitiesConfiguration %}
+							        {% if entityConfiguration.hideLinkInMenu is not defined %}
 							        <a href="{{ urlFor('entityListUI', {"entityName": entityConfiguration.entityName }) }}">
 							            {% if entityConfiguration.viewParameter.iconClass is defined %}<i class="{{ entityConfiguration.viewParameter.iconClass }}"></i>&nbsp;{% endif %}
 							            {{ entityConfiguration.plural_label|replace({"_": " "})|capitalize }}
 							        </a>
+							        {% endif %}
 							    {% endfor %}
 							</li>
 						</ul>
 					</li>
-					{% if role == "superadmin" %}
+					{# % if role == "superadmin" %}
 					<li>
 						<a href="http://www.cliptheme.com/demo/clip-one/pages_user_profile.html">
 							Clip-one demo
 						</a>
 					</li>
-				    {% endif %}		
+				    {% endif % #}		
 				</ul>
 				<!-- end: MAIN NAVIGATION MENU -->
 			</div>
