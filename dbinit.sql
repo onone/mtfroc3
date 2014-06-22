@@ -163,10 +163,10 @@ CREATE  TABLE IF NOT EXISTS php.performance (
   payment_id INT NULL ,
   datetime DATETIME NULL ,
   duration INT NULL COMMENT 'minutes' ,
-  reason VARCHAR(300) NULL ,
+  pre_note TEXT NULL ,
   performancetype_id INT NULL ,
   performancetype_note VARCHAR(300) NULL ,
-  note VARCHAR(300) NULL ,
+  post_note TEXT NULL ,
   executed INT NULL ,
   creation_datetime DATETIME NULL ,
   performancelocation_id INT NULL ,
@@ -177,12 +177,15 @@ CREATE  TABLE IF NOT EXISTS php.performance (
     FOREIGN KEY (client_id )
     REFERENCES php.client (id )
     ON DELETE CASCADE
-    ON UPDATE NO ACTION,
+    ON UPDATE NO ACTION
+    /*,
   CONSTRAINT payment_fk
     FOREIGN KEY (payment_id )
     REFERENCES php.payment (id )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+    */
+    )
 ENGINE = InnoDB;
 
 
@@ -289,6 +292,7 @@ CREATE  TABLE IF NOT EXISTS php.performance_performancetype (
   note TEXT NULL ,
   performance_id INT NULL ,
   performancetype_id INT NULL ,
+  position INT NULL,
   PRIMARY KEY (id) ,
   INDEX perf_fkk (performance_id ASC) ,
   INDEX perf_type_fkk (performancetype_id ASC) ,

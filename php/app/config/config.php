@@ -21,15 +21,16 @@ $app->configureMode('production', function () use ($app) {
     include 'entities.php';
     
     $app->config(array(
-        'log.enable' => true,
+        'log.enable' => false,
         'debug' => false,
         'view' => new \Slim\Views\Twig(),
         'cookies.secret_key'  => 'LUX_PEPPER_PROD',
-        'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
+        'cookies.lifetime' => time() + (10 * 24 * 60 * 60), // = 1 day
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH .  '/views',
         'entities' => $entities,
+        //'cookies.encrypt' => true
         ));
     /*
     $app->config(array(

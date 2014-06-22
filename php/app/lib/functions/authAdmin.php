@@ -9,6 +9,10 @@ $authAdmin = function  ( $role_requested = 'all') {
         $user = $app->getEncryptedCookie('user',false);
         $app->setEncryptedCookie('loginUrl','http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
 
+        echo "<pre>";
+        var_dump($_REQUEST);
+        var_dump($user);
+
         switch($user){
             case 'lux':
                     $role = 'admin';
@@ -22,8 +26,12 @@ $authAdmin = function  ( $role_requested = 'all') {
                 if(is_null($user)){
                     $app->flash('info', 'Dati inseriti incorretti');
                 }
-                $app->redirect($app->urlFor('login'));
+                echo "redirect($app->urlFor('login')";
+                //$app->redirect($app->urlFor('login'));
         }
+        
+        echo "<pre>";
+        var_dump($app->getEncryptedCookie('pwd',false));
         
         if($app->getEncryptedCookie('pwd',false) != $pwd){
             $app->setEncryptedCookie('loginUrl','http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);

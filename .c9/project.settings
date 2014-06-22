@@ -1,0 +1,44 @@
+{
+    "run": {
+        "@path": "/.c9/runners",
+        "configs": {
+            "json()": {
+                "PHP": {
+                    "runner": "Apache httpd (PHP, HTML)",
+                    "command": "",
+                    "name": "Apache & PHP",
+                    "default": true
+                },
+                "Apache & PHP": {
+                    "runner": "Apache httpd (PHP, HTML)",
+                    "command": "php hello_world.php",
+                    "name": "Apache & PHP",
+                    "default": true,
+                    "debug": true,
+                    "env": {},
+                    "cwd": "/"
+                }
+            },
+            "@inited": "true"
+        },
+        "@runner": "Apache httpd (PHP, HTML)"
+    },
+    "share": {
+        "@preview": false,
+        "@app": false
+    },
+    "ace": {
+        "@newLineMode": "unix",
+        "@tabSize": "4",
+        "@useSoftTabs": "true",
+        "@guessTabSize": "true"
+    },
+    "language": {
+        "@warnLevel": "info"
+    },
+    "build": {
+        "@path": "/.c9/builders",
+        "@saveall": true,
+        "@builder": "auto"
+    }
+}
