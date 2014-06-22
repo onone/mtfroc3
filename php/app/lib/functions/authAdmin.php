@@ -1,6 +1,6 @@
 <?php
 
-$authAdmin = function  ( $role_requested = 'all') {
+$authAdmin = function  ( $role = 'all') {
     return function () use ( $role ) {
         
         $app = \Slim\Slim::getInstance();

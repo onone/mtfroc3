@@ -14,16 +14,16 @@ $app->get('/logout', $authAdmin('admin'), function () use ($app) {
 $app->map('/login', function () use ($app) {
     // Test for Post & make a cheap security check, to get avoid from bots
     
-            echo 'isPost:' . ($app->request()->isPost()?'SI':'False');
-            echo '<br>$app->request->getMethod():' . $app->request->getMethod();
-    if($app->request()->isPost())
-    {
+    //$isPost = $app->request()->isPost();
+    $request = $app->request;
+    $method = $request->getMethod();
+    //if($isPost === TRUE)
+    if($method == 'POST')
         
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
-        $post = $app->request()->post();
         
-        print_r($post);
-
+        $post = $request->post();
+        
         if(isset($post['user']) && isset($post['password']))
         {
             $app->setEncryptedCookie('user',$post['user']);
@@ -34,21 +34,15 @@ $app->map('/login', function () use ($app) {
                 if($loginUrl == 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login')){
                     $loginUrl = 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client'));
                 }
-                echo 'redirect:' . $loginUrl;
-                die();
-                //$app->redirect($loginUrl);
+                $app->redirect($loginUrl);
             }else{
-                echo 'redirect:' .  'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client'));
-                die();
-                //$app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client')));
+                $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client')));
             }
             
             
         } 
         else
         {
-            //header('redirect from line:' . __LINE__);
-            die(__LINE__);
             $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'));
         }
     }
