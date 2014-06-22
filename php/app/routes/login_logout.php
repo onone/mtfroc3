@@ -23,7 +23,6 @@ $app->map('/login', function () use ($app) {
         $post = $app->request()->post();
         
         print_r($post);
-        die();
 
         if(isset($post['user']) && isset($post['password']))
         {
