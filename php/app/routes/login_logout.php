@@ -20,7 +20,7 @@ $app->map('/login', function () use ($app) {
     var_dump($app->request());
     
     var_dump($app);
-    
+    die(__LINE__);
     if($app->request()->isPost())// && sizeof($app->request()->post()) > 2
     {
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
@@ -29,6 +29,7 @@ $app->map('/login', function () use ($app) {
         var_dump($post);
         var_dump($post->user);
 
+    die(__LINE__);
         if(isset($post->user) && isset($post->password))
         {
             $app->setEncryptedCookie('user',$post->user);
