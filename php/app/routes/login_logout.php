@@ -19,7 +19,10 @@ $app->map('/login', function () use ($app) {
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
         $post = (object)$app->request()->post();
 
-        var_dump('$app->request()->isPost():' . $app->request()->isPost());
+        echo '$app->request()->isPost():<pre>';
+        var_dump($app->request()->isPost());
+        var_dump($post);
+        var_dump($post->user);
 
         if(isset($post->user) && isset($post->password))
         {
