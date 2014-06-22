@@ -29,7 +29,18 @@ $entities['payment'] =  array(
             )
         ),
         'client_id' => array(
-            'visible' => false
+            //'visible' => false
+            
+            'label' => 'cliente',
+            'customConfig'=> array(
+                'xeditable' => array(
+                        'validationFunctionNames'     => 'required',
+                        'type'     => 'select',
+                        'otherAttribute' => array(
+                            'data-source' => BASE_URL . '/resources/xeditable/select/client'
+                        )
+                )
+            ),
         ),
         'collection_date' => array(
             'label' => 'data_incasso',
@@ -42,7 +53,8 @@ $entities['payment'] =  array(
                             'data-viewformat' => 'MMM D, YYYY, HH:mm'
                         )
                 )
-            )
+            ),
+            'defaultValue' => date('Y-m-d')
         ),
         'paymentgroup_nominal_number_of_performance' => array(
             'label' => 'numero_di_trattamenti',

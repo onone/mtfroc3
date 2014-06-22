@@ -141,6 +141,12 @@ var DefaultEntity = function () {
                            $(this).removeClass('editable-unsaved');
                            //show messages
                            var msg = 'Nuovo ' + EC.singular_label + ' creato! Ora i campi sono editabili individualmente.';
+                           if(EC.entityName == 'client'){
+                               window.location = urlFor(urlTmpls,'clientCustom',{pk : data.id });
+                                //msg += '<a href="' + urlFor(urlTmpls,'clientCustom',{pk : data.id }) + '" class="btn btn-default">Vai pagina ' + EC.singular_label + '</a>';
+                           }else{
+                            msg += '<a href="' + urlFor(urlTmpls,'entityUI',{entityName : EC.entityName, pk : data.id }) + '" class="btn btn-default">Vai pagina ' + EC.singular_label + '</a>';
+                           }
                            $('#' +  EC.entityName + 'EntityMsg').addClass('alert-success').removeClass('alert-danger').removeClass('hide').html(msg).show();
                            $('#' +  EC.entityName + 'EntitySave-btn').hide(); 
                            $('#' +  EC.entityName + 'EntityDelete').data('pk',data.id);

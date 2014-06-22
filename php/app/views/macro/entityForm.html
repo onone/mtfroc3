@@ -79,6 +79,17 @@
                     {% if customConfig.xeditable.otherAttribute is defined %}
                         {% for attributName, attributeValue in customConfig.xeditable.otherAttribute %}
                         
+                        
+                                {% if attributeValue == "/php/resources/performancepaymentlist" %}
+                                    
+                                    {% if ED.client_id is defined %}
+                                        {% set attributeValue = attributeValue ~ '/' ~ ED.client_id %}
+                                    {% endif %}
+                                    
+                                    {% if entity.id is defined %}
+                                        {% set attributeValue = attributeValue ~ '/' ~ entity.client_id ~ '/' ~ entity.payment_id %}
+                                    {% endif %}
+                                {% endif %}
                             {% if attribute(customConfig.xeditable.otherAttributeParam, attributName) is defined %}
                                 
                                 {% set AttributeParam = attribute(customConfig.xeditable.otherAttributeParam, attributName) %}
@@ -86,6 +97,7 @@
                                 {% if AttributeParam.toJson is defined %}
                                         {% set attributeValue = attributeValue | json_encode() | raw | replace({'"': "'"}) %}
                                 {% endif %}
+                                
                             {% endif %}
                             {% set attributes = attributes ~ ' ' ~ attributName ~ '="' ~ attributeValue ~ '" ' %}
                         {% endfor %}

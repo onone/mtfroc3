@@ -69,27 +69,95 @@ $app->get('/client/:pk', $authAdmin('admin'), function ($pk) use ($app) {
                 }
             }
         }
-        /*
-        echo "<pre>";
-        print_r($rates);
-        die();
-        */
         
+        if(isset($rates)){
+            $app->view->appendData(array('rates' => $rates));
+        }
+        
+
+        
+        /****************************************************************** 
+        STATS
+        ******************************************************************/
+        $year = date('Y');
+        $timestampNow = time();
+        $year_in_seconds = 365 * 24 * 3600;
+        
+        $statData['all']['payed_number'] = 0;
+        $statData['all']['payed'] = 0;
+        $statData['all']['performance_number'] = 0;
+        $statData['this_year']['payed'] = 0;
+        $statData['this_year']['payed_number'] = 0;
+        $statData['this_year']['performance_number'] = 0;
+        $statData['last_365']['payed'] = 0;
+        $statData['last_365']['payed_number'] = 0;
+        $statData['last_365']['performance_number'] = 0;
+        $statData['all']['not_payed_number'] = 0;
+        $statData['all']['not_payed'] = 0;
+        $statData['this_year']['not_payed'] = 0;
+        $statData['this_year']['not_payed_number'] = 0;
+        $statData['last_365']['not_payed'] = 0;
+        $statData['last_365']['not_payed_number'] = 0;
         
         
         /****************************************************************** 
         Payment
         ******************************************************************/
+
+        
+        
         $RBPaymentEntity = R::find('payment',  'client_id =?', array($pk)); 
         
         if(is_array($RBPaymentEntity) && !empty($RBPaymentEntity)){
             foreach ($RBPaymentEntity as $e) {
                 $p = $e->export();
                 $payments[$p['id']] = $p;
+                
+                if(!is_null($p['collection_date'])){
+                    
+                    $timestampPay = strtotime($p['collection_date']);
+                    $phpDatetimePay = new DateTime($p['collection_date']);
+                }
+                    
+                    // DATI STATISTICI
+                    if($p['paymentstate_id'] == 1){
+                        
+                        if(!is_null($p['collection_date'])){
+                            if($year == $phpDatetimePay->format('Y')){
+                                $statData['this_year']['payed'] += $p['amount'];
+                                $statData['this_year']['payed_number']++;
+                            }
+                            
+                            if(($timestampNow - $timestampPay) <= $year_in_seconds){
+                                $statData['last_365']['payed'] += $p['amount'];
+                                $statData['last_365']['payed_number']++;
+                            }
+                        }
+                        
+                        $statData['all']['payed'] += $p['amount'];
+                        $statData['all']['payed_number']++;
+                        
+                    }else{
+                       if(!is_null($p['collection_date'])){
+                            if($year == $phpDatetimePay->format('Y')){
+                                $statData['this_year']['not_payed'] += $p['amount'];
+                                $statData['this_year']['not_payed_number']++;
+                            }
+                            
+                            if(($timestampNow - $timestampPay) <= $year_in_seconds){
+                                $statData['last_365']['not_payed'] += $p['amount'];
+                                $statData['last_365']['not_payed_number']++;
+                            }
+                       }
+                        
+                        $statData['all']['not_payed'] += $p['amount'];
+                        $statData['all']['not_payed_number']++;
+                        
+                    }
+                
             }
             $app->view->appendData(array('payments' => $payments));
         }
-            
             
         /****************************************************************** 
         PaymentFormula
@@ -139,7 +207,33 @@ $app->get('/client/:pk', $authAdmin('admin'), function ($pk) use ($app) {
             $paymentId = NULL;
             $counter = 1;
             foreach ($performanceRB as $e) {
+                
+                
+                
+                $t = $e->ownPerformancePerformancetype;
+                if(is_array($t) && !empty($t)){ 
+                    $t  = R::beansToArray($t);
+                    uasort($t, function($a,$b){
+                        if($a['position'] == ""){
+                            $a['position'] = 0;
+                        }
+                        if($b['position'] == ""){
+                            $b['position'] = 0;
+                        }
+                        if($a['position'] != $b['position']) {
+                            return ($a['position'] >= $b['position']?1:-1);
+                        }
+                        return 0;
+                    });
+                    
+                    $performancePT[$e->id] = $t;
+                }
+                
+                
                 $f = $e->export();
+                
+                
+                
                 $performance[$f['id']] = $f;
                 if($paymentId != $f['payment_id']){
                     $paymentId = $f['payment_id'];
@@ -148,9 +242,43 @@ $app->get('/client/:pk', $authAdmin('admin'), function ($pk) use ($app) {
                     $counter++;
                 }
                 $performanceNUmber[$f['id']] = $counter;
-                
                 $totalNumOfPerformance[$paymentId] = $counter;
+                
+                
+                if(!is_null($f['datetime'])){
+                    
+                    $timestampPay = strtotime($f['datetime']);
+                    $phpDatetimePay = new DateTime($f['datetime']);
+                }
+                    
+                    // DATI STATISTICI
+                    if($f['executed'] == 1){
+                        
+                        if(!is_null($f['datetime'])){
+                            if($year == $phpDatetimePay->format('Y')){
+                                $statData['this_year']['performance_number']++;
+                            }
+                            
+                            if(($timestampNow - $timestampPay) <= $year_in_seconds){
+                                $statData['last_365']['performance_number']++;
+                            }
+                        }
+                        $statData['all']['performance_number']++;
+                        
+                    }
+                
+                
             }
+            
+            
+            if(isset($performancePT) && is_array($performancePT) && !empty($performancePT)){ 
+                $app->view->appendData(array(
+                    'performancePT'       => $performancePT
+                ));
+            }
+            /*echo "<pre>";
+                print_r($performancePT);
+            die('ciao');*/
             
             $app->view->appendData(array(
                 'performance'       => $performance,
@@ -158,6 +286,12 @@ $app->get('/client/:pk', $authAdmin('admin'), function ($pk) use ($app) {
                 'totalNumOfPerformance' => $totalNumOfPerformance,
             ));
         }
+        
+        
+        
+        $app->view->appendData(array('statData' => $statData));
+            
+        
         
         /****************************************************************** 
         Anamnesis
@@ -200,11 +334,27 @@ $app->get('/client/:pk', $authAdmin('admin'), function ($pk) use ($app) {
             ));
         }
         
+        
+        /*
+        echo "<pre>";
+        print_r('<br>isset($entityConfiguration) ' . (isset($entityConfiguration)?'si':'no'));
+        print_r('<br>isset($group) ' . (isset($group)?'si':'no'));
+        print_r('<br>isset($entity) ' . (isset($entity)?'si':'no'));
+        print_r('<br>isset($rates) ' . (isset($rates)?'si':'no'));
+        print_r('<br>isset($performancetypes) ' . (isset($performancetypes)?'si':'no'));
+        print_r('<br>isset($paymentformulas) ' . (isset($paymentformulas)?'si':'no'));
+        print_r('<br>isset($paymentforms) ' . (isset($paymentforms)?'si':'no'));
+        print_r('<br>isset($paymentstates) ' . (isset($paymentstates)?'si':'no'));
+        
+        die();
+        */
+        
+        
         $app->view->appendData(array(
             'entityConfiguration' => $entityConfiguration,
             'group' => $group,
             'entity' => $entity,
-            'rates' => $rates,
+            //'rates' => $rates,
             'performancetypes' => $performancetypes,
             'paymentformulas' => $paymentformulas,
             'paymentforms' => $paymentforms,
@@ -223,6 +373,11 @@ $app->get('/client/:pk', $authAdmin('admin'), function ($pk) use ($app) {
         echo 'EntitiesNotInConfigException';
         
         $app->response()->status(400);
+        $app->response()->header('X-Status-Reason', $e->getMessage());
+      } catch (Exception $e) {
+        $app->response()->status(400);
+        echo '<pre>';
+        print_r($e);
         $app->response()->header('X-Status-Reason', $e->getMessage());
       }
 

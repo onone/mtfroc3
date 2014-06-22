@@ -45,6 +45,12 @@ $app->post('/resources/:entityName', $authAdmin('admin'), function ($entityName)
         $request = $app->request();
         $allPostVars = $request->post();
         
+        $paymentAutoGeneratePerformance = TRUE;
+        if(isset($allPostVars['paymentNoAutoGeneratePerformance'])){
+            $paymentAutoGeneratePerformance = FALSE;
+            unset($allPostVars['paymentNoAutoGeneratePerformance']);
+        }
+        
         if(isset($allPostVars['_METHOD'])){
             unset($allPostVars['_METHOD']);
         }
@@ -53,18 +59,65 @@ $app->post('/resources/:entityName', $authAdmin('admin'), function ($entityName)
         }
         
         $tableFields = R::getColumns($entityName);
-        
-        if(strpos($entityName,'_') !== FALSE){ // RELATION TABLE
+        if($entityName == 'performance_performancetype' && isset($allPostVars['query'])){
+            
+            unset($allPostVars['query']);
+            
+            $dataArray =  array();
+            foreach ($entityConfiguration['fields'] as $fieldName => $fieldData) {
+                
+                if(!array_key_exists($fieldName,$tableFields)){
+                    throw new DBFieldNotExistException(); 
+                }
+                if(array_key_exists($fieldName,$allPostVars)){
+                    $dataArray[$fieldName] = $allPostVars[$fieldName];
+                }
+                
+            }
+            
+            $pk = R::getCell( "SELECT Auto_increment FROM information_schema.tables WHERE table_name='performance_performancetype'" );
+            $qv = $pk;
+            $qv .= ',' . $dataArray['performance_id'];
+            $q = "INSERT INTO performance_performancetype (id,performance_id";
+            
+            if(isset($dataArray['position'])){
+                $q .= ',position';
+                $qv .= ',' . $dataArray['position'];
+            }
+            
+            if(isset($dataArray['note'])){
+                $q .= ',note';
+                $qv .= ",'" . $dataArray['note'] . "'";
+            }
+            
+            if(isset($dataArray['performancetype_id'])){
+                $q .= ',performancetype_id';
+                $qv .= ',' . $dataArray['performancetype_id'];
+            }
+            
+            $q .= " ) VALUES ( " . $qv . ")";
+            
+            R::exec( $q );
+            
+            
+            $export = R::exportAll(R::find($entityName,' id = ? ', 
+                array( $pk )));
+            $export = reset($export);
+            echo json_encode($export);
+            
+        }elseif(strpos($entityName,'_') !== FALSE){ // RELATION TABLE
             
             $relatedEntitiesArray = array();
             $relatedEntitiesNames = explode('_',$entityName);
             
             foreach ($relatedEntitiesNames as $relatedEntityName) {
                 $fieldName = $relatedEntityName . '_id';
-                if(!isset($allPostVars[$fieldName])) throw new DBFieldNotExistException(); 
-                $relatedEntities[$relatedEntityName] = R::load($relatedEntityName,$allPostVars[$fieldName]);
-                $relatedEntitiesArray[$fieldName] = $allPostVars[$fieldName];
-                unset($allPostVars[$fieldName]);
+                //if(!isset($allPostVars[$fieldName])) throw new DBFieldNotExistException();
+                //if(isset($allPostVars[$fieldName])){  
+                    $relatedEntities[$relatedEntityName] = R::load($relatedEntityName,$allPostVars[$fieldName]);
+                    $relatedEntitiesArray[$fieldName] = $allPostVars[$fieldName];
+                    unset($allPostVars[$fieldName]);
+                //}
             }
             
             // Dati addizionali
@@ -146,6 +199,38 @@ $app->post('/resources/:entityName', $authAdmin('admin'), function ($entityName)
                
             $pk = R::store($entity); 
             
+            
+            // CUSTOMIZATION
+            
+            switch($entityName){
+                case 'client':
+                 
+                    $paymentEntity = R::dispense('payment');
+                    
+                    $paymentEntity->setAttr('name','Gruppo prest. gratuite');
+                    $paymentEntity->setAttr('client_id',$pk);
+                    $paymentEntity->setAttr('paymentgroup_nominal_number_of_performance',99);
+                    $paymentEntity->setAttr('amount',0);
+                    $paymentEntity->setAttr('collection_date',date('Y-m-d'));
+                    $paymentEntity->setAttr('paymentstate_id',1);
+                    
+                    
+                    R::store($paymentEntity); 
+                    
+                break;
+                case 'payment':
+                    if($paymentAutoGeneratePerformance && $entity->paymentgroup_nominal_number_of_performance > 1) {
+                        for ($i = 0; $i < $entity->paymentgroup_nominal_number_of_performance; $i++) {
+                            $performanceEntity = R::dispense('performance');
+                            $performanceEntity->setAttr('client_id',$entity->client_id);
+                            $performanceEntity->setAttr('payment_id',$entity->id);
+                            R::store($performanceEntity); 
+                        }
+                    }
+                    
+                break;
+            }
+            
             //$export = R::exportAll($entity);
             $export = R::exportAll(R::find($entityName,' id = ? ', 
                 array( $pk )));
@@ -165,6 +250,9 @@ $app->post('/resources/:entityName', $authAdmin('admin'), function ($entityName)
   } catch (Exception $e) {
     $app->response()->status(400);
     $app->response()->header('X-Status-Reason', $e->getMessage());
+    
+    echo '<pre>';
+    print_r($e);
   }
   
 });
@@ -189,7 +277,8 @@ $resourceUri = $request->getResourceUri();
  
 
 
-$app->put('/resources/:entityName(/:pk)', $authAdmin('admin'), function ($entityName, $pk = NULL) use ($app) {  
+$app->put('/resources/:entityName(/:pk)', function ($entityName, $pk = NULL) use ($app) {  
+//$app->put('/resources/:entityName(/:pk)', $authAdmin('admin'), function ($entityName, $pk = NULL) use ($app) { 
     try {
         $entitiesConfiguration = $app->config('entities');
         

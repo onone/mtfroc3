@@ -1,0 +1,94 @@
+{% extends "entities/DefaultEntityUI.html" %}
+
+{% block page_header %}<h1>{{ entity.name }} {{ entity.surname }} <small>{{entityLabel}}</small></h1>{% endblock %}
+
+{% block this_page_js %}
+    {{ parent() }}
+	 <script src="{{constant('BASE_URL')}}/public/js/highchart.js"></script>
+{% endblock %}
+
+{% block this_page_init_js %}
+    /*Highcharts.setOptions({
+        colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+    });*/
+    
+    $(function () {
+        $('#container').highcharts({
+            title: {
+                text: 'Incassi',
+                x: -20 //center
+            },
+            xAxis: {
+                //categories: {{ months|json_encode() }}
+                categories: ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC']
+            },
+            yAxis: {
+                title: {
+                    text: 'Euro'
+                }
+            },
+            tooltip: {
+                valueSuffix: '\u20AC'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'bottom',
+                verticalAlign: 'bottom',
+                borderWidth: 0
+            },
+            series:[
+            {% for d in data %}
+                {
+                   name: '{{d.name}}',
+                   data: {{ d.data|json_encode() }}
+                },
+            {% endfor %}
+            ]
+        });
+    });
+    
+$(function () {
+    $('#containerSenzaDate').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Pagamenti senza data'
+        },
+        tooltip: {
+    	    pointFormat: '\u20AC {point.y} - <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: \u20AC {point.y} - {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Pagamenti senza data',
+            data: [
+                ['Pagato',   {{dataWithoutDate.payed}}],
+                ['Non pagato',       {{dataWithoutDate.notPayed}}]
+            ]
+        }]
+    });
+});
+{% endblock %}
+
+{% block admin_content %}
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<hr>
+<div id="containerSenzaDate" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+{% endblock %}
+     

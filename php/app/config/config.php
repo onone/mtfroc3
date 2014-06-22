@@ -37,7 +37,7 @@ $app->configureMode('production', function () use ($app) {
         'debug' => false,
         'view' => new \Slim\Views\Twig(),
         'cookies.secret_key'  => 'LUX_PEPPER_PROD',
-        'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
+        'cookies.lifetime' => time() + (10 * 24 * 60 * 60), // = 1 day
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH . '/views'
@@ -55,7 +55,7 @@ $app->configureMode('development', function () use ($app) {
         'debug' => false,
         'view' => new \Slim\Views\Twig(),
         'cookies.secret_key'  => 'LUX_PEPPER',
-        'cookies.lifetime' => time() + (1 * 24 * 60 * 60), // = 1 day
+        'cookies.lifetime' => time() + (10 * 24 * 60 * 60), // = 1 day
         'cookies.cipher' => MCRYPT_RIJNDAEL_256,
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH .  '/views',
@@ -96,6 +96,7 @@ $twig->addGlobal('entitiesConfig', $app->config('entities'));
 */
 
 date_default_timezone_set('Europe/Rome');
+
 
 // TWIG CONFIG
 $app->view()->parserOptions = array(

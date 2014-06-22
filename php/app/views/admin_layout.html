@@ -12,7 +12,7 @@
             entityListUI: '{{ urlFor('entityListUI',{"entityName": "entityName"}) }}',
             entityResource: '{{ urlFor('entityResource',{"entityName": "entityName"}) }}',
             entityModal: '{{ urlFor('entityModal',{"entityName": "entityName"}) }}',
-            
+            clientCustom: '{{ urlFor('clientCustom',{"pk": "pk"}) }}'
         };
     </script>
     <script src="{{constant('BASE_URL')}}/public/js/DefaultEntity.js"></script>
@@ -58,6 +58,16 @@
 
 
 {% block content %}
+<style>
+    textarea.form-control.input-large{
+        width:500px;
+        height:400px;
+    }
+    
+    .dataTable td{
+        vertical-align:top!important;
+    }
+</style>
 <div class="main-container">
 		<div class="navbar-content">
 			<!-- start: SIDEBAR -->
@@ -103,7 +113,13 @@
 							Clip-one demo
 						</a>
 					</li>
-				    {% endif % #}		
+				    {% endif % #}	
+				    
+				    <li>
+						<a href="{{ urlFor('revenuesStat') }}">
+							Statistiche pagamenti
+						</a>
+					</li>
 				</ul>
 				<!-- end: MAIN NAVIGATION MENU -->
 			</div>
@@ -146,6 +162,7 @@
 						<!-- start: STYLE SELECTOR BOX -->
 						<div id="style_selector" class="hidden-xs">
 							<div id="style_selector_container">
+							{% block styleSelector %}
 								<div class="style-main-title">
 									Style Selector
 								</div>
@@ -254,6 +271,7 @@
 										Save Styles
 									</a>
 								</div>
+								{% endblock %}
 							</div>
 							<div class="style-toggle close"></div>
 						</div>

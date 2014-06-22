@@ -49,26 +49,29 @@ $app->get('/entity/:entityName/:pk', $authAdmin('admin'), function ($entityName,
                            break;
                        case 'many-to-many':
                                 $RBRE = R::related($RBEntity,$rEntityName);
-                                
-                                $t = reset($RBRE);
-                                $linkTable = $t->ownGroupRate;
-                                /*
-                                echo "<pre>";
-                                print_r(R::beansToArray($linkTable));
-                                */
-                                
-                                $REA = R::beansToArray($RBRE);
-                                
-                                $entity['own' . ucfirst($rEntityName)] = $REA;
-                                /*
-                                echo "<pre>";
-                                print_r($REA);
-                                */
-                                /*foreach ($RBRatesEntity as $e) {
-                                
-                                    $p = $e->export();
-                                    $rates[$p['id']] = $p;
-                                }*/
+                                if(is_array($RBRE)){
+                                    $t = reset($RBRE);
+                                    if(is_object($t)){
+                                        $linkTable = $t->ownGroupRate;
+                                        /*
+                                        echo "<pre>";
+                                        print_r(R::beansToArray($linkTable));
+                                        */
+                                        
+                                        $REA = R::beansToArray($RBRE);
+                                        
+                                        $entity['own' . ucfirst($rEntityName)] = $REA;
+                                        /*
+                                        echo "<pre>";
+                                        print_r($REA);
+                                        */
+                                        /*foreach ($RBRatesEntity as $e) {
+                                        
+                                            $p = $e->export();
+                                            $rates[$p['id']] = $p;
+                                        }*/
+                                    }
+                                }
                            break;
                    
                    }
@@ -109,7 +112,7 @@ $app->get('/entity/:entityName/:pk', $authAdmin('admin'), function ($entityName,
                                                 }
                                                 
                                                  $entity[$fieldName][$id1][$relatedEntityName] = '';
-                                                 if($fieldData2[$fieldName2] != ''){
+                                                 if(isset($fieldData2[$fieldName2]) && $fieldData2[$fieldName2] != '' && isset($representationsOf[$relatedEntityName][$fieldData2[$fieldName2]])){
                                                     $entity[$fieldName][$id1][$relatedEntityName] = $representationsOf[$relatedEntityName][$fieldData2[$fieldName2]]['representation'];
                                                  }
                                             }
@@ -142,12 +145,16 @@ $app->get('/entity/:entityName/:pk', $authAdmin('admin'), function ($entityName,
                                                 if(is_array($RBRelatedEntities) &&  !empty($RBRelatedEntities)){
                                                     $representationsOf[$relatedEntityName] = entityRepresentation($RBRelatedEntities,$entitiesConfiguration[$relatedEntityName]);
                                                     //print_r(entityRepresentation($RBRelatedEntities,$entitiesConfiguration[$relatedEntityName]));
+                                                    
                                                 }
                                             }
+                                            
                                              $entity[$fieldName][$id1][$relatedEntityName] = '';
-                                             if($fieldData2[$fieldName2] != '' && isset($representationsOf[$relatedEntityName][$fieldData2[$fieldName2]])){
+                                             if(isset($fieldData2[$fieldName2]) && $fieldData2[$fieldName2] != '' && isset($representationsOf[$relatedEntityName][$fieldData2[$fieldName2]])){
                                                 $entity[$fieldName][$id1][$relatedEntityName] = $representationsOf[$relatedEntityName][$fieldData2[$fieldName2]]['representation'];
                                              }
+                                             
+                                             
                                         }
                                     }
                                 }
@@ -162,6 +169,7 @@ $app->get('/entity/:entityName/:pk', $authAdmin('admin'), function ($entityName,
             echo "<pre>";
             print_r($entity);
             die();
+            
             */
         $GLOBALS['timings'][] = array('Line: ' . __LINE__ => (microtime(TRUE)-START_TIME));
             /*

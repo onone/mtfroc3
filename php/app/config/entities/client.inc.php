@@ -28,6 +28,18 @@ $entities['client'] =  array(
         'surname' => array(
             'label' => 'cognome',
         ),
+        'group_id' => array(
+            'label' => 'gruppo',
+            'customConfig'=> array(
+                'xeditable' => array(
+                        'validationFunctionNames'     => 'required',
+                        'type'     => 'select',
+                        'otherAttribute' => array(
+                            'data-source' => BASE_URL . '/resources/xeditable/select/group'
+                        )
+                )
+            )
+        ),
         'birthdate' => array(
             'label' => 'data_di_nascita',
             'customConfig'=> array(
@@ -50,18 +62,6 @@ $entities['client'] =  array(
                         'type'     => 'email'
                 )
             )),
-        'group_id' => array(
-            'label' => 'gruppo',
-            'customConfig'=> array(
-                'xeditable' => array(
-                        'validationFunctionNames'     => 'required',
-                        'type'     => 'select',
-                        'otherAttribute' => array(
-                            'data-source' => BASE_URL . '/resources/xeditable/select/group'
-                        )
-                )
-            )
-        ),
         'email' => array(
             'label' => 'email',
             'customConfig'=> array(

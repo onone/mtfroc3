@@ -47,6 +47,14 @@ $entities['performance_performancetype'] =  array(
                     'type'     => 'textarea'
                 )
             )
+        ),
+        'position' => array(
+            'label' => 'posizione',
+            'customConfig'=> array(
+                'xeditable' => array(
+                    'type'     => 'number'
+                )
+            )
         )
     )
 );

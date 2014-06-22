@@ -32,7 +32,8 @@
 16/05/2014 2
 16/05/2014 3
 03/06/2014 1:
-
+12/06/2014 6
+17/06/2014 6
 
 OPEN SHIFT
 http://php-mftr.rhcloud.com/
@@ -51,16 +52,7 @@ http://php-mftr.rhcloud.com/entity/client
 ********************************************************************************
 !!! BUGS
 ********************************************************************************
-https://mftr3-c9-langeli.c9.io/php/entity/memo
-
-PERFOMRANCE REDBEAN FATTO 90%
-
-
-https://mftr3-c9-langeli.c9.io/php/entity/rate/10
-
-$app->response()->status(400);
-$app->response()->header('X-Status-Reason', $e->getMessage());
-!! SE DEBUG print_r ERRO
+report
 
 
 
@@ -103,6 +95,12 @@ cancellazione entita
 
 
 
+COMANDI
+sudo a2enmod rewrite
+sudo mysql --user=langeli
+sudo mysql --user=langeli php
+sudo mysql --user=langeli < dbinit.sql 
+
 UTILS
 echo "<pre>";
 print_r();
@@ -114,3 +112,13 @@ die();
 <pre>
 {{ dump(entityConfiguration) }}
 </pre>
+
+
+
+POPULATE
+https://mftr3-c9-langeli.c9.io/php/populate/clients
+https://mftr3-c9-langeli.c9.io/php/populate/groups
+https://mftr3-c9-langeli.c9.io/php/populate/rates
+https://mftr3-c9-langeli.c9.io/php/populate/grates
+https://mftr3-c9-langeli.c9.io/php/populate/ptype
+https://mftr3-c9-langeli.c9.io/php/populate/locations

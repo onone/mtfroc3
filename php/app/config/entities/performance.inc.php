@@ -5,7 +5,7 @@ $entities['performance'] =  array(
     'singular_label' => 'prestazione',
     'plural_label' => 'prestazioni',
     'primary_key' => 'id',
-    'representation' => '<<reason>>',
+    'representation' => '<<datetime>>',
     'viewParameter' => array(
         'iconClass' => 'fa fa-user-md'
         ),
@@ -23,6 +23,7 @@ $entities['performance'] =  array(
                         'otherAttribute' => array(
                             'data-source' => BASE_URL . '/resources/xeditable/select/client'
                         ),
+                        
                         /*'type'     => 'select2',
                         'otherAttribute' => array(
                             'data-source' => BASE_URL . '/resources/xeditable/select2/client'
@@ -40,11 +41,15 @@ $entities['performance'] =  array(
             'label' => 'pagamento',
             'customConfig'=> array(
                 'xeditable' => array(
-                        'validationFunctionNames'     => 'required',
+                        //'validationFunctionNames'     => 'required',
                         'type'     => 'select',
                         'otherAttribute' => array(
-                            'data-source' => BASE_URL . '/resources/xeditable/select/payment'
+                            'data-source' => BASE_URL . '/resources/performancepaymentlist'
                         ),
+                        /*'type'     => 'select',
+                        'otherAttribute' => array(
+                            'data-source' => BASE_URL . '/resources/xeditable/select/payment'
+                        ),*/
                         /*'type'     => 'select2',
                         'otherAttribute' => array(
                             'data-source' => BASE_URL . '/resources/xeditable/select2/payment'
@@ -67,7 +72,8 @@ $entities['performance'] =  array(
                             'data-source' => BASE_URL . '/resources/xeditable/select/performancelocation'
                         )
                 )
-            )
+            ),
+            'defaultValue' => 1
         ),
         'datetime' => array(
             'label' => 'data',
@@ -76,7 +82,8 @@ $entities['performance'] =  array(
                     'validationFunctionNames'     => 'required',
                     'type'     => 'combodate'
                 )
-            )
+            ),
+            'defaultValue' => date('Y-m-d')
         ),
         'duration' => array(
             'label' => 'durata (min)',
@@ -86,16 +93,16 @@ $entities['performance'] =  array(
                 )
             )
         ),
-        'reason' => array(
-            'label' => 'motivazione',
+        'pre_note' => array(
+            'label' => 'bilancio pre',
             'customConfig'=> array(
                 'xeditable' => array(
                     'type'     => 'textarea'
                 )
             )
         ),
-        'note' => array(
-            'label' => 'annotazione',
+        'post_note' => array(
+            'label' => 'bilancio post',
             'customConfig'=> array(
                 'xeditable' => array(
                     'type'     => 'textarea'
@@ -116,7 +123,8 @@ $entities['performance'] =  array(
                             ),
                     )
                 )
-            )
+            ),
+            'defaultValue' => 1
         ),
         'creation_datetime' => array(
             'label' => 'data_di_creazione',
