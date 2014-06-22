@@ -4,16 +4,22 @@ $authAdmin = function  ( $role_requested = 'all') {
     return function () use ( $role ) {
         
         $app = \Slim\Slim::getInstance();
+        $request = $app->request();
+        $allPostVars = $request->post();
         // Check for password in the cookie
-        
-        $user = $app->getEncryptedCookie('user',false);
-        $app->setEncryptedCookie('loginUrl','http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
-
+        $userSended = $app->getEncryptedCookie('user',false);
+        $pwdSended = $app->getEncryptedCookie('pwd',false);
+        $app->setEncryptedCookie('loginUrl','https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+/*
         echo "<pre>";
         var_dump($_REQUEST);
-        var_dump($user);
+        var_dump($userSended);
 
-        switch($user){
+echo 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        die($_SERVER['REQUEST_URI']);
+        */
+        
+        switch($userSended){
             case 'lux':
                     $role = 'admin';
                     $pwd = 'lux';
@@ -23,18 +29,18 @@ $authAdmin = function  ( $role_requested = 'all') {
                     $pwd = 'slfe';
                 break;
             default:
-                if(is_null($user)){
+                if(is_null($userSended)){
                     $app->flash('info', 'Dati inseriti incorretti');
                 }
-                echo "redirect($app->urlFor('login')";
-                //$app->redirect($app->urlFor('login'));
+                $app->redirect($app->urlFor('login'));
         }
-        
+        /*
         echo "<pre>";
         var_dump($app->getEncryptedCookie('pwd',false));
+        */
         
-        if($app->getEncryptedCookie('pwd',false) != $pwd){
-            $app->setEncryptedCookie('loginUrl','http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+        if($pwdSended != $pwd){
+            $app->setEncryptedCookie('loginUrl','https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
             $app->flash('info', 'Dati inseriti incorretti');
             $app->redirect($app->urlFor('login'));
         }else{

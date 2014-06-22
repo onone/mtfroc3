@@ -18,17 +18,23 @@ $app->map('/login', function () use ($app) {
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
         $post = (object)$app->request()->post();
 
+
         if(isset($post->user) && isset($post->password))
         {
             $app->setEncryptedCookie('user',$post->user);
             $app->setEncryptedCookie('pwd',$post->password);
             
             $loginUrl = $app->getEncryptedCookie('loginUrl',false);
-            if(!is_null($loginUrl)){
+            if($loginUrl){
+                if($loginUrl == 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login')){
+                    $loginUrl = 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client'));
+                }
                 $app->redirect($loginUrl);
+            }else{
+                $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client')));
             }
             
-            $app->redirect($app->urlFor('entityListUI',array('entityName' => 'client')));
+            
         } 
         else
         {
