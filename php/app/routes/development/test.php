@@ -4,7 +4,8 @@ use RedBean_Facade as R;
 
 $app->get('/test', function () use ($app) {
     // send response header for JSON content type
-    
+    echo "<pre>";
+    print_r($_POST);
     
      //$app->flash('info', 'devi essere loggato');
             //$app->flashNow('info', 'devi essere loggato');
