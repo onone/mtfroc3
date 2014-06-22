@@ -10,14 +10,7 @@ $authAdmin = function  ( $role_requested = 'all') {
         $userSended = $app->getEncryptedCookie('user',false);
         $pwdSended = $app->getEncryptedCookie('pwd',false);
         $app->setEncryptedCookie('loginUrl','https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
-/*
-        echo "<pre>";
-        var_dump($_REQUEST);
-        var_dump($userSended);
 
-echo 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-        die($_SERVER['REQUEST_URI']);
-        */
         
         switch($userSended){
             case 'lux':
@@ -34,10 +27,7 @@ echo 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
                 }
                 $app->redirect($app->urlFor('login'));
         }
-        /*
-        echo "<pre>";
-        var_dump($app->getEncryptedCookie('pwd',false));
-        */
+
         
         if($pwdSended != $pwd){
             $app->setEncryptedCookie('loginUrl','https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
@@ -46,12 +36,6 @@ echo 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         }else{
             $app->setEncryptedCookie('role',$role);
             $app->view()->getEnvironment()->addGlobal('role', $role);
-            /*
-            if($app->getEncryptedCookie('role',false) != $role_requested){
-                $app->flash('info', 'Non hai i permessi per accedere alla risorsa');
-                $app->redirect('login');
-            }
-            */
         }
         
         

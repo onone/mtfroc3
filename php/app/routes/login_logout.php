@@ -13,14 +13,19 @@ $app->get('/logout', $authAdmin('admin'), function () use ($app) {
 
 $app->map('/login', function () use ($app) {
     // Test for Post & make a cheap security check, to get avoid from bots
-    var_dump('$app->request()->isPost():' . $app->request()->isPost());
+    
+    echo '$app->request()->isPost():<pre>';
+    var_dump($app->request()->isPost());
+    
+    var_dump($app->request());
+    
+    var_dump($app);
+    
     if($app->request()->isPost())// && sizeof($app->request()->post()) > 2
     {
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
         $post = (object)$app->request()->post();
 
-        echo '$app->request()->isPost():<pre>';
-        var_dump($app->request()->isPost());
         var_dump($post);
         var_dump($post->user);
 
