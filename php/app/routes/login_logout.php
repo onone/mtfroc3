@@ -19,15 +19,20 @@ $app->map('/login', function () use ($app) {
     $method = $request->getMethod();
     
     $app->setEncryptedCookie('time',time());
+    $app->setEncryptedCookie('method',$method);
+    $app->setEncryptedCookie('request',json_encode($request));
     //if($isPost === TRUE)
     if($method == 'POST'){
         
+        $app->setEncryptedCookie('line',__LINE__);
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
         
         $post = $request->post();
         
         if(isset($post['user']) && isset($post['password']))
         {
+            
+            $app->setEncryptedCookie('line',__LINE__);
             $app->setEncryptedCookie('user',$post['user']);
             $app->setEncryptedCookie('pwd',$post['password']);
             
