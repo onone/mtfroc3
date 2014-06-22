@@ -7,8 +7,10 @@ $authAdmin = function  ( $role_requested = 'all') {
         $request = $app->request();
         $allPostVars = $request->post();
         // Check for password in the cookie
-        $userSended = $app->getEncryptedCookie('user',false);
-        $pwdSended = $app->getEncryptedCookie('pwd',false);
+        //$userSended = $app->getEncryptedCookie('user',false);
+        //$pwdSended = $app->getEncryptedCookie('pwd',false);
+        $userSended = $app->getEncryptedCookie('user');
+        $pwdSended = $app->getEncryptedCookie('pwd');
         $app->setEncryptedCookie('loginUrl','https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
 
         

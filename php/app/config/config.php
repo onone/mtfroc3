@@ -30,7 +30,7 @@ $app->configureMode('production', function () use ($app) {
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH .  '/views',
         'entities' => $entities,
-        'cookies.encrypt' => true
+        //'cookies.encrypt' => true
         ));
     /*
     $app->config(array(
@@ -61,7 +61,7 @@ $app->configureMode('development', function () use ($app) {
         'cookies.cipher_mode' => MCRYPT_MODE_CBC,
         'templates.path' => APP_PATH .  '/views',
         'entities' => $entities,
-        'cookies.encrypt' => true
+        //'cookies.encrypt' => true
         ));
 });
 
