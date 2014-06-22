@@ -14,26 +14,17 @@ $app->get('/logout', $authAdmin('admin'), function () use ($app) {
 $app->map('/login', function () use ($app) {
     // Test for Post & make a cheap security check, to get avoid from bots
     
-    echo '$app->request()->isPost():<pre>';
-    var_dump($app->request()->isPost());
-    
-    var_dump($app->request());
-    
-    var_dump($app);
-    die(__LINE__);
-    if($app->request()->isPost())// && sizeof($app->request()->post()) > 2
+            header('isPost:' . ($app->request()->isPost()?'SI':'False'));
+    if($app->request()->isPost())
     {
+        
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
-        $post = (object)$app->request()->post();
+        $post = $app->request()->post();
 
-        var_dump($post);
-        var_dump($post->user);
-
-    die(__LINE__);
-        if(isset($post->user) && isset($post->password))
+        if(isset($post['user']) && isset($post['password'])))
         {
-            $app->setEncryptedCookie('user',$post->user);
-            $app->setEncryptedCookie('pwd',$post->password);
+            $app->setEncryptedCookie('user',$post['user']));
+            $app->setEncryptedCookie('pwd',$post['password']);
             
             $loginUrl = $app->getEncryptedCookie('loginUrl',false);
             if($loginUrl){
@@ -53,6 +44,7 @@ $app->map('/login', function () use ($app) {
         } 
         else
         {
+            header('redirect from line:' . __LINE__);
             $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'));
         }
     }
