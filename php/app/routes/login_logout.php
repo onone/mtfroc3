@@ -13,11 +13,13 @@ $app->get('/logout', $authAdmin('admin'), function () use ($app) {
 
 $app->map('/login', function () use ($app) {
     // Test for Post & make a cheap security check, to get avoid from bots
+    var_dump('$app->request()->isPost():' . $app->request()->isPost());
     if($app->request()->isPost())// && sizeof($app->request()->post()) > 2
     {
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
         $post = (object)$app->request()->post();
 
+        var_dump('$app->request()->isPost():' . $app->request()->isPost());
 
         if(isset($post->user) && isset($post->password))
         {
@@ -29,16 +31,20 @@ $app->map('/login', function () use ($app) {
                 if($loginUrl == 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login')){
                     $loginUrl = 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client'));
                 }
-                $app->redirect($loginUrl);
+                echo 'redirect:' . $loginUrl;
+                die();
+                //$app->redirect($loginUrl);
             }else{
-                $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client')));
+                echo 'redirect:' .  'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client'));
+                die();
+                //$app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client')));
             }
             
             
         } 
         else
         {
-            $app->redirect($app->urlFor('login'));
+            $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'));
         }
     }
     // render login
