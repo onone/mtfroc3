@@ -23,6 +23,7 @@ $app->map('/login', function () use ($app) {
         $post = $app->request()->post();
         
         print_r($post);
+        die();
 
         if(isset($post['user']) && isset($post['password']))
         {
@@ -48,6 +49,7 @@ $app->map('/login', function () use ($app) {
         else
         {
             //header('redirect from line:' . __LINE__);
+            die(__LINE__);
             $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'));
         }
     }
