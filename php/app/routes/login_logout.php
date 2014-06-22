@@ -17,8 +17,10 @@ $app->map('/login', function () use ($app) {
     //$isPost = $app->request()->isPost();
     $request = $app->request;
     $method = $request->getMethod();
+    
+    $app->setEncryptedCookie('time',time());
     //if($isPost === TRUE)
-    if($method == 'POST')
+    if($method == 'POST'){
         
         // Don't forget to set the correct attributes in your form (name="user" + name="password")
         
