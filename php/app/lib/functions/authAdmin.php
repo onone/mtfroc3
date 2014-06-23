@@ -43,7 +43,7 @@ $authAdmin = function  ( $role = 'all') {
             $app->redirect($app->urlFor('login'));
         }else{
             //$app->setEncryptedCookie('role',$role);
-            $_SESSION['user'] = $role;
+            $_SESSION['role'] = $role;
             $app->view()->getEnvironment()->addGlobal('role', $role);
         }
         
