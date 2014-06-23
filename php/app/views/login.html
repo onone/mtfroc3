@@ -16,7 +16,7 @@
 			<!-- start: LOGIN BOX -->
 			<div class="box-login">
 				<h3>Credenziali</h3>
-				<form class="form-login" role="form" action="{{ urlFor('login') }}" method="POST">
+				<form class="form-login" role="form" action="{{ urlFor('login-send') }}" method="GET">
 					{% for type, msg in flash %}
                       <div class="alert alert-{{type}} alert-dismissable">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

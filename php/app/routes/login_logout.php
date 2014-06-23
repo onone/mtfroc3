@@ -24,9 +24,9 @@ $app->get('/login', function () use ($app) {
     $app->render('login.html');
 })->name('login');
 
-$app->post('/login', function () use ($app) {
+$app->get('/login/send', function () use ($app) {
     $request = $app->request;
-    $post = $request->post();
+    $post = $request->get();
         
     if(isset($post['user']) && isset($post['password']))
     {
@@ -60,6 +60,6 @@ $app->post('/login', function () use ($app) {
         $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'),302);
     }
 
-});
+})->name('login-send');
 
 ?>
