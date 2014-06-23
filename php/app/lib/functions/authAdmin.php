@@ -34,7 +34,7 @@ $authAdmin = function  ( $role = 'all') {
                 if(is_null($sessionUser)){
                     $app->flash('info', 'Dati inseriti incorretti');
                 }
-                $app->redirect($app->urlFor('login'));
+                $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'),302);
         }
 
         

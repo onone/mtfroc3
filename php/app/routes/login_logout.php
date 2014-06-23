@@ -37,22 +37,25 @@ $app->post('/login', function () use ($app) {
         $_SESSION['pwd'] = $post['password'];
         
         //$loginUrl = $app->getEncryptedCookie('loginUrl',false);
-        $loginUrl = $_SESSION['loginUrl'];
+        $loginUrl = '';
+        if(isset($_SESSION['loginUrl'])){
+            $loginUrl = $_SESSION['loginUrl'];
+        }
         
         
         if($loginUrl){
             if($loginUrl == 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login')){
                 $loginUrl = 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client'));
             }
-            $app->redirect($loginUrl);
+            $app->redirect($loginUrl,302);
         }else{
-            $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client')));
+            $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client')),302);
         }
         
     } 
     else
     {
-        $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'));
+        $app->redirect('https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login'),302);
     }
 
 });
