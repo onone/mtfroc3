@@ -8,9 +8,7 @@ $app->get('/logout', $authAdmin('admin'), function () use ($app) {
     $app->setEncryptedCookie('pwd','');
     */
     
-    unset($_SESSION['user']);
-    unset($_SESSION['pwd']);
-    unset($_SESSION['loginUrl']);
+    session_unset();
     
     
     $app->flash('info', 'Log out effettuato');
@@ -20,6 +18,9 @@ $app->get('/logout', $authAdmin('admin'), function () use ($app) {
 
 $app->get('/login', function () use ($app) {
     // render login
+    echo "<pre>";
+    print_r($_SESSION);
+    echo "</pre>";
     $app->render('login.html');
 })->name('login');
 
@@ -41,10 +42,11 @@ $app->post('/login', function () use ($app) {
         if(isset($_SESSION['loginUrl'])){
             $loginUrl = $_SESSION['loginUrl'];
         }
-        
+        session_write_close();
         
         if($loginUrl){
-            if($loginUrl == 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login')){
+            if($loginUrl == 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('login')
+            || $loginUrl == 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('logout')){
                 $loginUrl = 'https://' . $_SERVER['SERVER_NAME'] . $app->urlFor('entityListUI',array('entityName' => 'client'));
             }
             $app->redirect($loginUrl,302);
