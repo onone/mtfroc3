@@ -65,7 +65,7 @@ $app->configureMode('development', function () use ($app) {
         ));
 });
 
-
+/*
 $app->add(new \Slim\Middleware\SessionCookie(array(
     'expires' => '20 minutes',
     'path' => '/',
@@ -77,6 +77,7 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
     'cipher' => MCRYPT_RIJNDAEL_256,
     'cipher_mode' => MCRYPT_MODE_CBC
 )));
+*/
 
 // DB CONNECTION
 try {

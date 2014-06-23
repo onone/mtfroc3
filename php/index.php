@@ -1,5 +1,7 @@
 <?php
 
+session_cache_limiter(false);
+session_start();
 
 define('START_TIME',microtime(TRUE));
 $GLOBALS['timings'][] = array('start' => microtime(TRUE));

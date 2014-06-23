@@ -7,14 +7,21 @@ $authAdmin = function  ( $role = 'all') {
         $request = $app->request();
         $allPostVars = $request->post();
         // Check for password in the cookie
-        //$userSended = $app->getEncryptedCookie('user',false);
-        //$pwdSended = $app->getEncryptedCookie('pwd',false);
-        $userSended = $app->getEncryptedCookie('user');
-        $pwdSended = $app->getEncryptedCookie('pwd');
+        /*
+        $sessionUser = $app->getEncryptedCookie('user',false);
+        $pwdSended = $app->getEncryptedCookie('pwd',false);
         $app->setEncryptedCookie('loginUrl','https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+        */
+        $_SESSION['loginUrl'] = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        
+        $sessionUser = '';
+        if(isset($_SESSION['user'])){
+            $sessionUser = $_SESSION['user'];
+            $sessionPassword = $_SESSION['pwd'];
+        }
 
         
-        switch($userSended){
+        switch($sessionUser){
             case 'lux':
                     $role = 'admin';
                     $pwd = 'lux';
@@ -24,19 +31,19 @@ $authAdmin = function  ( $role = 'all') {
                     $pwd = 'slfe';
                 break;
             default:
-                if(is_null($userSended)){
+                if(is_null($sessionUser)){
                     $app->flash('info', 'Dati inseriti incorretti');
                 }
                 $app->redirect($app->urlFor('login'));
         }
 
         
-        if($pwdSended != $pwd){
-            $app->setEncryptedCookie('loginUrl','https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+        if($sessionPassword != $pwd){
             $app->flash('info', 'Dati inseriti incorretti');
             $app->redirect($app->urlFor('login'));
         }else{
-            $app->setEncryptedCookie('role',$role);
+            //$app->setEncryptedCookie('role',$role);
+            $_SESSION['user'] = $role;
             $app->view()->getEnvironment()->addGlobal('role', $role);
         }
         
