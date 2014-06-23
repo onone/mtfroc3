@@ -18,9 +18,9 @@ $app->get('/logout', $authAdmin('admin'), function () use ($app) {
 
 $app->get('/login', function () use ($app) {
     // render login
-    echo "<pre>";
+    /*echo "<pre>";
     print_r($_SESSION);
-    echo "</pre>";
+    echo "</pre>";*/
     $app->render('login.html');
 })->name('login');
 
