@@ -132,7 +132,7 @@ $app->get('/populate/grates', function () use ($app) {
         
     }
     die('finito');
-});
+})->name('Pgrates');
 
 $app->get('/populate/rates', function () use ($app) {
 
@@ -190,7 +190,7 @@ $app->get('/populate/rates', function () use ($app) {
         
     }
     die('finito');
-});
+})->name('Prates');
 
 $app->get('/populate/groups', function () use ($app) {
     
@@ -219,7 +219,7 @@ $app->get('/populate/groups', function () use ($app) {
         
     }
     die('finito');
-});
+})->name('Pgroups');
 
 $app->get('/populate/ptype', function () use ($app) {
     
@@ -248,7 +248,7 @@ $app->get('/populate/ptype', function () use ($app) {
         
     }
     die('finito');
-});
+})->name('Pptype');
 
 $app->get('/populate/locations', function () use ($app) {
     
@@ -289,7 +289,7 @@ $app->get('/populate/locations', function () use ($app) {
         
     }
     die('finito');
-});
+})->name('Plocations');
 
 $app->get('/populate/client/:id', function ($id) use ($app) {
     R::exec( 'delete from performance_performancetype' );
@@ -421,7 +421,7 @@ $app->get('/populate/anamnesis', function () use ($app) {
         R::store($entity); 
     }
     
-});
+})->name('Panamnesis');
 
 $app->get('/populate/memo', function () use ($app) {
     
@@ -447,7 +447,7 @@ $app->get('/populate/memo', function () use ($app) {
         R::store($entity); 
     }
     
-});
+})->name('Pmemo');
 
 $app->get('/populate/clients', function () use ($app) {
     try{
@@ -495,6 +495,6 @@ $app->get('/populate/clients', function () use ($app) {
         print_r($e);
         $app->response()->header('X-Status-Reason', $e->getMessage());
       }
-});
+})->name('Pclients');
 
 ?>

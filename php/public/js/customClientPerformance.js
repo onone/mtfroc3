@@ -483,8 +483,8 @@ var PerformanceCustom = function () {
         }
         
         var el = '<li ' +  (data.positon == null?'':'data-position="' + data.positon + '"') + '  data-id="' + data.id + '" id="PT' + data.id + '">' +
-                    // <a href="#" data-emptytext="Vuoto" {% if pt.performancetype_id is defined %}data-value="{{ pt.performancetype_id }}"{% endif %} data-source="/php/resources/xeditable/select/performancetype" class="performancePTEditable ptTitle" id="performance_performancelocation_id" data-type="select" data-pk="{{ pt.id  }}"  data-name="performancetype_id">{% if pt.performancetype_id is defined %}{{ performancetypes[pt.performancetype_id] }}{% endif %}</a>
-    				'<a href="#" data-emptytext="Vuoto" class="performancePTEditable ptTitle" data-type="select" data-pk="' +  data.id + '" data-source="/php/resources/xeditable/select/performancetype" ' +  (data.performancetype_id == null?'':' data-value="' + data.performancetype_id + '"') + ' data-name="performancetype_id"></a>' +
+                    // <a href="#" data-emptytext="Vuoto" {% if pt.performancetype_id is defined %}data-value="{{ pt.performancetype_id }}"{% endif %} data-source="' + BASE_URL  + '/resources/xeditable/select/performancetype" class="performancePTEditable ptTitle" id="performance_performancelocation_id" data-type="select" data-pk="{{ pt.id  }}"  data-name="performancetype_id">{% if pt.performancetype_id is defined %}{{ performancetypes[pt.performancetype_id] }}{% endif %}</a>
+    				'<a href="#" data-emptytext="Vuoto" class="performancePTEditable ptTitle" data-type="select" data-pk="' +  data.id + '" data-source="' + BASE_URL  + '/resources/xeditable/select/performancetype" ' +  (data.performancetype_id == null?'':' data-value="' + data.performancetype_id + '"') + ' data-name="performancetype_id"></a>' +
     			    //'<a href="#" data-emptytext="Vuoto" class="performancePTEditable ptTitle" data-type="text" data-pk="' +  data.id + '" data-name="performancetype_id">' +  (data.performancetype_id == null?'':data.performancetype_id) + '</a>' +
     			    '<a href="#" data-emptytext="Vuoto" class="performancePTEditable ptNote" data-type="textarea" data-pk="' +  data.id + '" data-name="note">' +  (data.note == null?'':data.note) + '</a>' +
 		          '</li>';
@@ -511,7 +511,7 @@ var PerformanceCustom = function () {
           {
           $.ajax({
               type: "POST",
-              url: '/php/resources/performance_performancetype/' + id,
+              url: BASE_URL  + '/resources/performance_performancetype/' + id,
               data: { _METHOD: "DELETE" },
               success: function(data){
                   if(typeof li != "undefined"){

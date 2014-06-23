@@ -400,7 +400,7 @@
 		            <ul class="sortable sortablePT">
 		            {% for pt in performancePT[relatedEntity.id]  %}
 						<li data-position="{{pt.position}}"  data-id="{{pt.id}}">
-    						<a href="#" data-emptytext="Vuoto" {% if pt.performancetype_id is defined %}data-value="{{ pt.performancetype_id }}"{% endif %} data-source="/php/resources/xeditable/select/performancetype" class="performancePTEditable ptTitle" id="performance_performancelocation_id" data-type="select" data-pk="{{ pt.id  }}"  data-name="performancetype_id">{% if pt.performancetype_id is defined %}{{ performancetypes[pt.performancetype_id] }}{% endif %}</a>
+    						<a href="#" data-emptytext="Vuoto" {% if pt.performancetype_id is defined %}data-value="{{ pt.performancetype_id }}"{% endif %} data-source="{{constant('BASE_URL')}}/resources/xeditable/select/performancetype" class="performancePTEditable ptTitle" id="performance_performancelocation_id" data-type="select" data-pk="{{ pt.id  }}"  data-name="performancetype_id">{% if pt.performancetype_id is defined %}{{ performancetypes[pt.performancetype_id] }}{% endif %}</a>
     						<a href="#" data-emptytext="Vuoto" class="performancePTEditable ptNote" data-type="textarea" data-pk="{{ pt.id  }}" data-name="note">{% if pt.note is defined %}{{ pt.note }}{% endif %}</a>
 		                </li>
 		            {% endfor %}
@@ -423,7 +423,7 @@
 
 		    </td>
     		<td>
-    		    <a href="#" data-emptytext="Vuoto" data-value="{{relatedEntity.payment_id}}" data-source="/php/resources/performancepaymentlist/{{relatedEntity.client_id}}{% if relatedEntity.payment_id%}/{{relatedEntity.payment_id}}{% endif %}" class="performanceEditable" id="performance_payment_id" data-type="select" data-pk="{{ relatedEntity.id  }}" data-name="payment_id" data-original-title="Inserisci Pagamento"></a>
+    		    <a href="#" data-emptytext="Vuoto" data-value="{{relatedEntity.payment_id}}" data-source="{{constant('BASE_URL')}}/resources/performancepaymentlist/{{relatedEntity.client_id}}{% if relatedEntity.payment_id%}/{{relatedEntity.payment_id}}{% endif %}" class="performanceEditable" id="performance_payment_id" data-type="select" data-pk="{{ relatedEntity.id  }}" data-name="payment_id" data-original-title="Inserisci Pagamento"></a>
 		        {#% if relatedEntity.payment_id is defined %}
 		            {% if payments[relatedEntity.payment_id] is defined %}
                         {% set p = payments[relatedEntity.payment_id] %}
@@ -625,10 +625,10 @@
 		        {% endif %}
 		    </td>
     		<td>
-    		    <a href="#" data-emptytext="Vuoto" data-value="{{ relatedEntity.paymentformula_id  }}" data-source="/php/resources/xeditable/select/paymentformula" class="paymentEditable" data-type="select" data-pk="{{ relatedEntity.id  }}"></a>
+    		    <a href="#" data-emptytext="Vuoto" data-value="{{ relatedEntity.paymentformula_id  }}" data-source="{{constant('BASE_URL')}}/resources/xeditable/select/paymentformula" class="paymentEditable" data-type="select" data-pk="{{ relatedEntity.id  }}"></a>
 		    </td>
     		<td>
-        		<a href="#" data-emptytext="Vuoto" data-value="{{ relatedEntity.paymentform_id  }}" data-source="/php/resources/xeditable/select/paymentform" class="paymentEditable"  data-type="select" data-pk="{{ relatedEntity.id  }}" data-name="paymentform_id"></a>
+        		<a href="#" data-emptytext="Vuoto" data-value="{{ relatedEntity.paymentform_id  }}" data-source="{{constant('BASE_URL')}}/resources/xeditable/select/paymentform" class="paymentEditable"  data-type="select" data-pk="{{ relatedEntity.id  }}" data-name="paymentform_id"></a>
 		    </td>
 		    
 		    

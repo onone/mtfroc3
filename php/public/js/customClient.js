@@ -371,7 +371,7 @@ function performanceInsertInTable(data,paymentDetail){
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="number" data-pk="' + data.id + '" data-name="duration" data-original-title="Inserisci durata">' + (data.duration?data.duration:'') + '</a>');
             tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + data.executed + '" data-source="' + "[{'text':'Si','value':1},{'text':'No','value':0}]"  + '" class="performanceEditable" id="performance_executed" data-type="select" data-pk="' + data.id + '" data-name="executed" data-original-title="Inserisci Eseguita">' + 
             '</a>');
-            tableFields.push(' <a href="#" data-emptytext="Vuoto" data-value="' + (data.payment_id?data.payment_id:'') + '" data-source="/php/resources/performancepaymentlist/' + (data.client_id?data.client_id:'')  + (data.payment_id?'/' + data.payment_id:'') + '" class="performanceEditable" id="performance_payment_id" data-type="select" data-pk="' + data.id + '" data-name="payment_id"></a>'); //paymentDetail
+            tableFields.push(' <a href="#" data-emptytext="Vuoto" data-value="' + (data.payment_id?data.payment_id:'') + '" data-source="' + BASE_URL  + '/p/resources/performancepaymentlist/' + (data.client_id?data.client_id:'')  + (data.payment_id?'/' + data.payment_id:'') + '" class="performanceEditable" id="performance_payment_id" data-type="select" data-pk="' + data.id + '" data-name="payment_id"></a>'); //paymentDetail
 
             tableFields.push('<a href="' + urlFor(urlTmpls,'entityUI',{entityName : 'performance',pk: data.id}) + '" class="btn btn-default"><i class="clip-pencil-3"></i></a>' + 
     '<button  class="btn btn-bricky deleteEntityFromList" data-deleteurl="' + urlFor(urlTmpls,'entityResource',{entityName : 'performance',pk: data.id}) + '"><i class="fa fa-trash-o fa-white"></i></button>'
@@ -421,14 +421,14 @@ function paymentInsertInTable(data){
        }else{
             tableFields.push('');
        }
-        tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + data.paymentformula_id + '" data-source="/php/resources/xeditable/select/paymentformula" class="paymentEditable"  data-type="select" data-pk="' + data.id + '" data-name="paymentformula_id"></a>');
+        tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + data.paymentformula_id + '" data-source="' + BASE_URL  + '/resources/xeditable/select/paymentformula" class="paymentEditable"  data-type="select" data-pk="' + data.id + '" data-name="paymentformula_id"></a>');
        
        /*if(data.paymentformula_id){
             tableFields.push(paymentformulas[data.paymentformula_id].name);
        }else{
             tableFields.push('');
        }*/
-        tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + data.paymentform_id + '" data-source="/php/resources/xeditable/select/paymentform" class="paymentEditable"  data-type="select" data-pk="' + data.id + '" data-name="paymentform_id"></a>');
+        tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + data.paymentform_id + '" data-source="' + BASE_URL  + '/resources/xeditable/select/paymentform" class="paymentEditable"  data-type="select" data-pk="' + data.id + '" data-name="paymentform_id"></a>');
        
        /*
        if(data.paymentform_id){
