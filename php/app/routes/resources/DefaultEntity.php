@@ -90,7 +90,7 @@ $app->post('/resources/:entityName', $authAdmin('admin'), function ($entityName)
                 $qv .= ",'" . $dataArray['note'] . "'";
             }
             
-            if(isset($dataArray['performancetype_id'])){
+            if(isset($dataArray['performancetype_id']) && $dataArray['performancetype_id'] != ''){
                 $q .= ',performancetype_id';
                 $qv .= ',' . $dataArray['performancetype_id'];
             }

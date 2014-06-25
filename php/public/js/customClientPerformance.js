@@ -1,7 +1,9 @@
 var PerformanceCustom = function () {
     
-    var PTCopied = [];
-    var PTCopiedData = [];
+    var PTCopied = new Array();
+    var PTCopiedData = new Array();
+    var clickBinded = false;
+    var justRefreshed = new Array();
     
     var eo = {
              //https://mftr3-c9-langeli.c9.io/php/resources/performance_performancetype FUNZIONA
@@ -94,13 +96,12 @@ var PerformanceCustom = function () {
         return h;
     }
     
-    var justRefreshed = new Array();
-    
     var refreshPaymentData = function(idNew){
         if(justRefreshed.indexOf(idNew) == -1){
             var h = generatePaymentHtml($('#' + idNew));
             var els = $('#performanceEntitiesTable').find('.' + idNew);
             var elsLenght = els.length;
+            console.log(els.length);
             if(elsLenght){
                 els.each(function(index){
                     var i = (parseInt(index) + 1);
@@ -110,10 +111,8 @@ var PerformanceCustom = function () {
                         t.append('<div class="lbl"></div>');
                         e = t.find('.lbl');
                     }
-                    
-                    i
-                    
                     e.html((elsLenght > 1?i + ' di ' + elsLenght + '<br>':'') + h);
+                    
                 });
             }
             
@@ -232,7 +231,6 @@ var PerformanceCustom = function () {
         
     }
     
-    
     var udpatePTAjax = function(data,li){
         data = $.extend(data,{_METHOD:'PUT'});
         return $.ajax({
@@ -263,7 +261,6 @@ var PerformanceCustom = function () {
             PTCopied.push(id);
             if(typeof data != "undefined"){
                 PTCopiedData['ID' + id] = data;
-                console.log(data);
             }
             drawCopiedCnt();
         }
@@ -320,9 +317,9 @@ var PerformanceCustom = function () {
         drawCopiedCnt();
     }
     
-    
     var initPTButtonsClickBinding = function(){
-        
+        if(clickBinded === true) return;
+        clickBinded = true;
         
         var ss = $('#PTCopiedCnt');
         
@@ -332,8 +329,6 @@ var PerformanceCustom = function () {
         ss.on('click', '#PTCopyRemoveAll', function (event) {
             removeAllCopied();
         });
-        
-        
         
         var t = $('#performanceEntitiesTable');
         
@@ -351,7 +346,6 @@ var PerformanceCustom = function () {
         });
         
         t.on('click', '.PTPaste', function (event) {
-            
             
             var t = $(this);
             if(!t.hasClass('PTPasteCnt')){
@@ -380,18 +374,7 @@ var PerformanceCustom = function () {
                     }
                     ajaxCalls.push(insertPTAjax(data,td,li));
                 });
-                /*ul.find('li').each(function(index){
-                    var li = $(this);
-                    
-                    if(li.data('position') != index){
-                        var data = {
-                            position:index,
-                            pk:li.data('id')
-                        };
-                        
-                        ajaxCalls.push(udpatePTAjax(data,li));
-                    }
-                });*/
+                
                 if(ajaxCalls.length){
                     $.when.apply(null, ajaxCalls).then( 
                         function() {
@@ -432,6 +415,9 @@ var PerformanceCustom = function () {
         t.on('click', '.PTCopySingle', function (event) {
             var li = $(this).parent().parent();
             var ptid = li.find('a.ptTitle');
+            console.log(ptid);
+            console.log(ptid.data('pk'));
+            console.log(ptid.data('value'));
             var data = {
                 type: ptid.html(),
                 note: li.find('a.ptNote').html(),
@@ -460,7 +446,6 @@ var PerformanceCustom = function () {
         
         
     };
-    
     
     var insertPTAjax = function(data,td,li){
         data = $.extend(data,{query:1});
@@ -537,7 +522,8 @@ var PerformanceCustom = function () {
         initTD:initTD,
         PTCopied:PTCopied,
         PTCopiedData:PTCopiedData,
-        refreshPaymentData:refreshPaymentData
+        refreshPaymentData:refreshPaymentData,
+        justRefreshed:justRefreshed
     }
     
 }();

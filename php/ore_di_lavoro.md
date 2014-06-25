@@ -53,6 +53,8 @@ http://php-mftr.rhcloud.com/entity/client
 !!! BUGS
 ********************************************************************************
 url delle risorse senza php
+paginazione - > non aggiorna il dettaglio pagamenti
+paginazione se faccio + ne mette 4
 report
 
 

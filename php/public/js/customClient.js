@@ -139,11 +139,27 @@ var CustomClient = function () {
                 // set the initial value
                 "iDisplayLength": 10,
                 "fnDrawCallback": function( oSettings ) {
+                    PerformanceCustom.justRefreshed = new Array();
+                    console.log('fnDrawCallback');
                     initPerformanceEditable();
+                    PerformanceCustom.init();
+                    /*
+                    $('.performanceEditable:not(.editable)').each(function( index ) {
+                        var eoCustom = eoP;
+                        var that = $(this);
+                        if(typeof that.data('jsoptions') != "undefined") {
+                            $.extend(eoCustom, EC.fields[that.data('name')].customConfig.xeditable.jsoptions);
+                        }
+                        that.editable(eoCustom);
+                    })
+                    */
                  },
                  "fnRowCallback": function(nRow, aaData, iDisplayIndex) {
+                    //console.log('fnRowCallback');
                     PerformanceCustom.initTD($('td:eq(3)', nRow),aaData);
                     initPaymentTD($('td:eq(7)', nRow),aaData);
+                    //console.log($('td:eq(7)', nRow));
+                    //console.log(aaData);
                     return nRow;
                 }
             });
@@ -164,6 +180,7 @@ var CustomClient = function () {
     var initPaymentTD = function(td,data){
         var td = $(td);
         var value = td.find('a').data('value');
+        console.log(value);
         if(value){
             td.addClass("PP" + value);
             PerformanceCustom.refreshPaymentData("PP" + value);
@@ -196,7 +213,7 @@ var CustomClient = function () {
                     [5, 10, 15, 20, "All"] // change per page values here
                 ],
                 // set the initial value
-                "iDisplayLength": 10,
+                "iDisplayLength": 20,
                 "fnDrawCallback": function( oSettings ) {
                     initPaymentEditable();
                  },
@@ -363,7 +380,7 @@ function performanceInsertInTable(data,paymentDetail){
        if(dataTable.length > 0){
             var tableFields = [];
             tableFields.push(data.id);
-            tableFields.push('<a href="#" data-emptytext="Vuoto" class="performanceEditable" data-value="' +  moment().format("MM/DD/YYYY") + '" date-format="DD/MM/YYYY" data-template="DD/MM/YYYY" data-viewformat="DD/MM/YYYY" data-smartDays="true" id="performance_datetime" data-type="combodate" data-pk="' + data.id + '" data-name="datetime" data-original-title="Inserisci Data"></a>');
+            tableFields.push('<a href="#" data-emptytext="Vuoto" class="performanceEditable" date-format="DD/MM/YYYY" data-template="DD/MM/YYYY" data-viewformat="DD/MM/YYYY" data-smartDays="true" id="performance_datetime" data-type="combodate" data-pk="' + data.id + '" data-name="datetime" data-original-title="Inserisci Data"></a>');
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="textarea" data-pk="' + data.id + '" data-name="pre_note">' + (data.pre_note?data.pre_note:'') + '</a>');
             tableFields.push('');
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="textarea" data-pk="' + data.id + '" data-name="post_note">' + (data.post_note?data.post_note:'') + '</a>');
@@ -371,7 +388,7 @@ function performanceInsertInTable(data,paymentDetail){
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="number" data-pk="' + data.id + '" data-name="duration" data-original-title="Inserisci durata">' + (data.duration?data.duration:'') + '</a>');
             tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + data.executed + '" data-source="' + "[{'text':'Si','value':1},{'text':'No','value':0}]"  + '" class="performanceEditable" id="performance_executed" data-type="select" data-pk="' + data.id + '" data-name="executed" data-original-title="Inserisci Eseguita">' + 
             '</a>');
-            tableFields.push(' <a href="#" data-emptytext="Vuoto" data-value="' + (data.payment_id?data.payment_id:'') + '" data-source="' + BASE_URL  + '/p/resources/performancepaymentlist/' + (data.client_id?data.client_id:'')  + (data.payment_id?'/' + data.payment_id:'') + '" class="performanceEditable" id="performance_payment_id" data-type="select" data-pk="' + data.id + '" data-name="payment_id"></a>'); //paymentDetail
+            tableFields.push(' <a href="#" data-emptytext="Vuoto" data-value="' + (data.payment_id?data.payment_id:'') + '" data-source="' + BASE_URL  + '/resources/performancepaymentlist/' + (data.client_id?data.client_id:'')  + (data.payment_id?'/' + data.payment_id:'') + '" class="performanceEditable" id="performance_payment_id" data-type="select" data-pk="' + data.id + '" data-name="payment_id"></a>'); //paymentDetail
 
             tableFields.push('<a href="' + urlFor(urlTmpls,'entityUI',{entityName : 'performance',pk: data.id}) + '" class="btn btn-default"><i class="clip-pencil-3"></i></a>' + 
     '<button  class="btn btn-bricky deleteEntityFromList" data-deleteurl="' + urlFor(urlTmpls,'entityResource',{entityName : 'performance',pk: data.id}) + '"><i class="fa fa-trash-o fa-white"></i></button>'

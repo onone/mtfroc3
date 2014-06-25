@@ -15,20 +15,6 @@
         var paymentforms = $.parseJSON('{{ paymentforms | json_encode() | raw }}');
         var paymentstates = $.parseJSON('{{ paymentstates | json_encode() | raw }}');
      </script>
-     
-     {#<script>
-         $('.sortable').each(function(){
-             var t = $(this);
-             t.sortable({ connectWith: t.attr('id') })
-                //.on('sortable:receive', function(e, ui) {
-                .on('sortable:change', function(e, ui) {
-                  console.log(e);
-                  console.log(ui);
-                  ui.item.removeClass('draggable');
-                });
-         });
-         
-     </script>#}
 {% endblock %}
 
 {% block styleSelector %}
@@ -65,7 +51,7 @@
     UIModals.init();
             
     CustomClient.init();
-    PerformanceCustom.init();
+    //PerformanceCustom.init(); // fnDrawCallback
 {% endblock %}
 
 {% block admin_content %}
@@ -188,6 +174,10 @@
         </div>
     {% endif %}
     
+    
+<a href="#paymentEntitiesTable" class="btn btn-info">
+	Vai ai pagamenti
+</a>
     
 {% import "macro/entityDataTable.html" as entityDataTable %}
 {% if entity is defined %}
