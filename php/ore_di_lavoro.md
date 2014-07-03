@@ -46,6 +46,7 @@ phpmyadmin: https://php-mftr.rhcloud.com/phpmyadmin/
 GIT:
 ADD: git add .
 COMMIT: git commit -m 'first release'
+git push
 DEPLOY: usa tasto di C9
 URL DI ESEMPIO: http://php-mftr.rhcloud.com/test
 http://php-mftr.rhcloud.com/entity/client
@@ -64,7 +65,7 @@ paginazione - > non aggiorna il dettaglio pagamenti
 ********************************************************************************
 !!! IMPLEMENTAZIONI
 ********************************************************************************
-
+cron dump db a l122124x@gmail.com + csv l122124x@gmail.com
 
 
 
