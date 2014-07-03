@@ -34,6 +34,7 @@
 03/06/2014 1:
 12/06/2014 6
 17/06/2014 6
+25/06/2014 6
 
 OPEN SHIFT
 http://php-mftr.rhcloud.com/
@@ -52,32 +53,18 @@ http://php-mftr.rhcloud.com/entity/client
 ********************************************************************************
 !!! BUGS
 ********************************************************************************
-url delle risorse senza php
 paginazione - > non aggiorna il dettaglio pagamenti
-paginazione se faccio + ne mette 4
-report
-
-
-
 
 
 ********************************************************************************
 !!! BUGS RISOLTI
 ********************************************************************************
 
-https://mftr3-c9-langeli.c9.io/php/entity/rate/3
-Tabella di relazione tariffe pacchetto manca il nome del group
-
-
-https://mftr3-c9-langeli.c9.io/php/entity/client/10
-https://mftr3-c9-langeli.c9.io/php/entity/client/5
-dati tabelle relazionate
 
 ********************************************************************************
 !!! IMPLEMENTAZIONI
 ********************************************************************************
-editing in line
-https://datatables.net/release-datatables/examples/api/highlight.html
+
 
 
 

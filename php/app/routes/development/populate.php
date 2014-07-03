@@ -93,25 +93,7 @@ $app->get('/populate/grates', function () use ($app) {
             'rate_name' => 'Kinesio Tape',
             'rate_number' => '1',
             'amount' => '5'
-        ),
-        array(  
-            'group_name' => 'Non Standard',
-            'rate_name' => 'Massoterapia',
-            'rate_number' => '1',
-            'amount' => '30'
-        ),
-        array(  
-            'group_name' => 'Non Standard',
-            'rate_name' => 'Massoterapia',
-            'rate_number' => '5',
-            'amount' => '110'
-        ),
-        array(  
-            'group_name' => 'Non Standard',
-            'rate_name' => 'Kinesio Tape',
-            'rate_number' => '1',
-            'amount' => '10'
-        ),
+        )
     );
     
     foreach($rows as $value){
@@ -170,12 +152,24 @@ $app->get('/populate/rates', function () use ($app) {
             'performance_number' => '1',
         ),
         array(  
-            'name' => 'Stretching Posturale',
+            'name' => 'Ginnastica Posturale',
             'performance_number' => '1',
         ),
         array(  
             'name' => 'Completo',
             'performance_number' => '1',
+        ),
+        array(  
+            'name' => 'Spirotiger',
+            'performance_number' => '1',
+        ),
+        array(  
+            'name' => 'Spirotiger',
+            'performance_number' => '5',
+        ),
+        array(  
+            'name' => 'Spirotiger',
+            'performance_number' => '10',
         ),
     );
     
@@ -199,7 +193,8 @@ $app->get('/populate/groups', function () use ($app) {
         'Pesisti',
         'Standard',
         'Ghetto',
-        'Non Standard'
+        'Thriathlon',
+        'Cipriani'
     );
     
     foreach($rows as $value){
@@ -223,7 +218,8 @@ $app->get('/populate/groups', function () use ($app) {
 
 $app->get('/populate/ptype', function () use ($app) {
     
-    $rows = array(    'Massoterapia',
+    $rows = array(    
+        'Massoterapia',
         'Mobilizzazione',
         'Digitopressione',
         'Kinesio Tape',
@@ -234,7 +230,8 @@ $app->get('/populate/ptype', function () use ($app) {
         'Personal Training',
         'Drenaggio Manuale',
         'Stretching Posturale',
-        'Rieducazione Funzionale'
+        'Rieducazione Funzionale',
+        'Spirotiger'
     );
     
     foreach($rows as $value){
@@ -252,8 +249,6 @@ $app->get('/populate/ptype', function () use ($app) {
 
 $app->get('/populate/locations', function () use ($app) {
     
-    
-    
     $rows = array(
         array(  
             'name' => 'Tripoli',
@@ -261,19 +256,14 @@ $app->get('/populate/locations', function () use ($app) {
             'address' => 'via Tripoli 98'
         ),
         array(  
-            'name' => 'Leptis',
-            'city' => 'Rimini',
-            'address' => 'via Leptis Magna 4/e'
-        ),
-        array(  
             'name' => 'Pesisti',
             'city' => 'Rimini',
             'address' => 'via A. da Brescia 8'
         ),
         array(  
-            'name' => 'Atletica',
-            'city' => 'Rimini',
-            'address' => 'via A. da Brescia 8'
+            'name' => 'Domiciliare',
+            'city' => 'citta del cliente',
+            'address' => 'via del cliente'
         )
     );
     
@@ -467,7 +457,7 @@ $app->get('/populate/clients', function () use ($app) {
             $client->name = $data[0];
             $client->surname = $data[1];
             
-        
+        /*
             if($data[6] != ''){
                 
                 $anamnesis = R::dispense('anamnesis');
@@ -475,15 +465,8 @@ $app->get('/populate/clients', function () use ($app) {
                     $anamnesis->creation_datetime = date( 'Y-m-d H:i:s');
                 $client->ownAnamnesis = array($anamnesis);
                 
-                /*$memos = R::dispense('memo',2);
-                foreach ($memos as $memo) {
-                    $memo->value = 'memo';
-                    $memo->type = 2;
-                    $memo->creation_datetime = date( 'Y-m-d H:i:s');
-                }
-                $client->ownMemo = $memos;*/
             }
-            
+            */
             R::store($client); 
         }
     }

@@ -11,7 +11,7 @@
                 },
                 "Apache & PHP": {
                     "runner": "Apache httpd (PHP, HTML)",
-                    "command": "php hello_world.php",
+                    "command": "",
                     "name": "Apache & PHP",
                     "default": true,
                     "debug": true,
