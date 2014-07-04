@@ -376,7 +376,7 @@
 		        {% endif %}
 		    </td>
     		<td>
-    		    <a href="#" data-min-year="2012" data-smart-days="true" data-emptytext="Vuoto" class="performanceEditable "{# {{ EC.datetime.defaultValue }} #} data-type="combodate" data-pk="{{ relatedEntity.id  }}" data-name="datetime" date-format="DD/MM/YYYY" data-template="DD/MM/YYYY" data-viewformat="DD/MM/YYYY" data-original-title="Inserisci Data">
+    		    <a href="#" data-min-year="2012" data-smart-days="true" data-emptytext="Vuoto" class="performanceEditable "{# {{ EC.datetime.defaultValue }} #} data-type="combodate" data-pk="{{ relatedEntity.id  }}" data-name="datetime" data-format="DD/MM/YYYY" data-default-value="01/01/2014" data-template="DD/MM/YYYY" data-viewformat="DD/MM/YYYY" data-original-title="Inserisci Data">
 		        {% if relatedEntity.datetime %}
 		            {{ relatedEntity.datetime|date("m/d/Y") }}
 		        {% endif %}

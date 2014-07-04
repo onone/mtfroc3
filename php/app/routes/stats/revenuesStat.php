@@ -21,7 +21,7 @@ $app->get('/stats/revenues', $authAdmin('admin'), function () use ($app) {
             foreach ($RBPaymentEntity as $e) {
                 $p = $e->export();
                 $payments[$p['id']] = $p;
-    
+                
                 $months = range(1,12);
     
                 if(!is_null($p['collection_date'])){
@@ -48,7 +48,7 @@ $app->get('/stats/revenues', $authAdmin('admin'), function () use ($app) {
                             $data[$name]['name'] = $name;
                             $data[$name]['data'] = array_fill(0, 12, 0);
                         }
-                        $data[$name]['data'][$monthIndex] = $val;
+                        $data[$name]['data'][$monthIndex] += $val;
                     }
                 }else{
                     $val = intval($p['amount']);

@@ -28,7 +28,9 @@ var DefaultEntity = function () {
                     if(toDelete) delete params.name;
                     delete params.value;
                     
-                    params._METHOD = 'PUT';
+                    if(typeof params.pk  !=  "undefined"){
+                        params._METHOD = 'PUT';
+                    }
                     
                     return params;
                 },

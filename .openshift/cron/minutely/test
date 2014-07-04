@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "cron  works" | mail -s "a subject" fslepko@gmail.com

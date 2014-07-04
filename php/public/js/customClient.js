@@ -380,7 +380,7 @@ function performanceInsertInTable(data,paymentDetail){
        if(dataTable.length > 0){
             var tableFields = [];
             tableFields.push(data.id);
-            tableFields.push('<a href="#" data-emptytext="Vuoto" class="performanceEditable" date-format="DD/MM/YYYY" data-template="DD/MM/YYYY" data-viewformat="DD/MM/YYYY" data-smartDays="true" id="performance_datetime" data-type="combodate" data-pk="' + data.id + '" data-name="datetime" data-original-title="Inserisci Data"></a>');
+            tableFields.push('<a href="#" data-emptytext="Vuoto" class="performanceEditable"  data-default-value="01/01/2014" data-format="DD/MM/YYYY" data-template="DD/MM/YYYY" data-viewformat="DD/MM/YYYY" data-smartDays="true" id="performance_datetime" data-type="combodate" data-pk="' + data.id + '" data-name="datetime" data-original-title="Inserisci Data"></a>');
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="textarea" data-pk="' + data.id + '" data-name="pre_note">' + (data.pre_note?data.pre_note:'') + '</a>');
             tableFields.push('');
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="textarea" data-pk="' + data.id + '" data-name="post_note">' + (data.post_note?data.post_note:'') + '</a>');
