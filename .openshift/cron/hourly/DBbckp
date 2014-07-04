@@ -1,0 +1,2 @@
+#!/bin/bash
+mysqldump -e --user=adminUyLCLuc --password=JWmWpswfQHYg php | gzip | uuencode dbbackup_e.gz | mail fslepko@gmail.com
