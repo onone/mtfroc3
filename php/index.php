@@ -50,6 +50,7 @@ require APP_PATH . '/routes/DefaultEntityUI.php';
 require APP_PATH . '/routes/DefaultEntityModal.php';
 require APP_PATH . '/routes/resources/performancePaymentList.php';
 require APP_PATH . '/routes/resources/DefaultEntity.php';
+require APP_PATH . '/routes/resources/dump.php';
 
 // STATS
 require APP_PATH . '/routes/stats/revenuesStat.php';
