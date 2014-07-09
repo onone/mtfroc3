@@ -1,8 +1,11 @@
 <?php
-///usr/bin/php /var/lib/openshift/52d70be5e0b8cdd7ca000208/app-root/repo/php/app/routes/resources/dump.php
+///usr/bin/php /var/lib/openshift/52d70be5e0b8cdd7ca000208/app-root/repo/php/app/cron/dump.php
 // MODALITA DI ESECUZIONE
 $app_mode = 'production';
-//$app_mode = 'development';
+if(getenv ( 'OPENSHIFT_MYSQL_DB_HOST' ) === false){
+    $app_mode = 'development';
+}
+
 // AUTOLOAD DI COMPOSER
 if(file_exists(__DIR__ . '/../../vendor/autoload.php')){
     try {
@@ -12,14 +15,16 @@ if(file_exists(__DIR__ . '/../../vendor/autoload.php')){
     }
 }
 
-//require('../../vendor/gabordemooij/redbean/RedBean/redbean.inc.php');
 use RedBean_Facade as R;
 
 
 // DB CONNECTION
 try {
     if($app_mode == 'development'){
-        R::setup("mysql:host=172.17.1.180;dbname=php;port=3306",'langeli','');
+        //R::setup("mysql:host=172.17.0.51;dbname=php;port=3306",'langeli','');
+        $command="/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'";
+        $localIP = exec ($command);
+        R::setup("mysql:host=$localIP;dbname=php;port=3306",'langeli','');
         R::freeze(true);
     }else{
         R::setup("mysql:host=" . getenv ( 'OPENSHIFT_MYSQL_DB_HOST' ). ";dbname=php;port=" . getenv ( 'OPENSHIFT_MYSQL_DB_PORT'),        getenv ( 'OPENSHIFT_MYSQL_DB_USERNAME'),        getenv ( 'OPENSHIFT_MYSQL_DB_PASSWORD')); 
@@ -95,10 +100,9 @@ try {
             'Tariffa',
             'Pagato',
             'Data pagamento',
+            'Id pagamento',
             'Info pacchetto'
             );
-            
-        print_r($a);
             
         if($write) fputcsv($fp, $a);
         foreach($performanceRB as $id => $p){
@@ -124,8 +128,8 @@ try {
                 if(is_array($pt) && !empty($pt)){ 
                     foreach($t as $pt){
                         $ptname = '';
-                        if(isset($performancetypes[$pt['performancetype_id']])) $ptname = '<strong>' .  $performancetypes[$pt['performancetype_id']] . '</strong><br>';
-                        $testo .= $ptname . $pt['note'];
+                        if(isset($performancetypes[$pt['performancetype_id']]) && $performancetypes[$pt['performancetype_id']] != '') $ptname = $performancetypes[$pt['performancetype_id']] . chr (10);
+                        $testo .= $ptname . $pt['note'] . ($pt['note'] != ''?chr (10):'') . chr (10);
                     }
                 }
             }
@@ -139,7 +143,9 @@ try {
             $pagato = 'No';
             $info_pacchetto = '';
             $data_pagamento = '';
+            $id_pagamento = '';
             if($p->payment_id != ''){
+                $id_pagamento = $p->payment_id;
                 $RBPaymentEntity = R::find('payment',  'id =?', array($p->payment_id)); 
                 
                 if(is_array($RBPaymentEntity) && !empty($RBPaymentEntity)){
@@ -174,20 +180,13 @@ try {
                 ($p->executed?'Si':'No'),
                 $tariffa,
                 $pagato,
-                $info_pacchetto,
-                $data_pagamento
+                $data_pagamento,
+                $id_pagamento,
+                $info_pacchetto
             );
-        
-        
-            print_r($a);
         
             if($write) fputcsv($fp, $a);
         }
         
         if($write) fclose($fp);
-        
-        
- 
-
-
 ?>
