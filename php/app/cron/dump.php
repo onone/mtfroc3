@@ -1,15 +1,38 @@
 <?php
+///usr/bin/php /var/lib/openshift/52d70be5e0b8cdd7ca000208/app-root/repo/php/app/routes/resources/dump.php
+// MODALITA DI ESECUZIONE
+$app_mode = 'production';
+//$app_mode = 'development';
+// AUTOLOAD DI COMPOSER
+if(file_exists(__DIR__ . '/../../vendor/autoload.php')){
+    try {
+        require __DIR__ . '/../../vendor/autoload.php';
+    } catch (Exception $e ) {
+        echo $e->getMessage();
+    }
+}
 
+//require('../../vendor/gabordemooij/redbean/RedBean/redbean.inc.php');
 use RedBean_Facade as R;
 
-$app->get('/dump', $authAdmin('admin'), function () use ($app) {  
+
+// DB CONNECTION
+try {
+    if($app_mode == 'development'){
+        R::setup("mysql:host=172.17.1.180;dbname=php;port=3306",'langeli','');
+        R::freeze(true);
+    }else{
+        R::setup("mysql:host=" . getenv ( 'OPENSHIFT_MYSQL_DB_HOST' ). ";dbname=php;port=" . getenv ( 'OPENSHIFT_MYSQL_DB_PORT'),        getenv ( 'OPENSHIFT_MYSQL_DB_USERNAME'),        getenv ( 'OPENSHIFT_MYSQL_DB_PASSWORD')); 
+        R::freeze(true);
+    }
     
-    try {
+    
+} catch (Exception $e ) {
+    echo $e->getMessage();
+}
+
+        //echo 'dump<pre>';
         
-        
-        echo 'dump<pre>';
-        print_r($_SERVER);
-        die();
         /****************************************************************** 
         PType
         ******************************************************************/
@@ -164,30 +187,7 @@ $app->get('/dump', $authAdmin('admin'), function () use ($app) {
         if($write) fclose($fp);
         
         
-        
-        /*
-        $r = exec('echo "cron  works sotto dir" | mail -s "a subject" fslepko@gmail.com');
-        echo "<pre>";
-        var_dump($r);
-        */
-        
-        //exec('mysqldump -e --user=langeli php',$o);
-        //https://api.sendgrid.com/api/mail.send.json?api_user=l904&api_key=sgp904&to=fslepko@gmail.com&toname=Destination&subject=Example_Subject&text=testingtextbody&from=l122124x@gmail.com
-        //print_r($o);
-        //passthru
-        //mysqldump -e --user=$OPENSHIFT_MYSQL_DB_USERNAME --password=$OPENSHIFT_MYSQL_DB_PASSWORD --protocol=socket -S $OPENSHIFT_MYSQL_DB_SOCKET php
-
-
-        //mysqldump -e --user=$OPENSHIFT_MYSQL_DB_USERNAME --password=$OPENSHIFT_MYSQL_DB_PASSWORD --protocol=socket -S $OPENSHIFT_MYSQL_DB_SOCKET php > /tmp/db_dump.sql
-        //curl https://api.sendgrid.com/api/mail.send.json -F to=fslepko@gmail.com -F toname=Federico -F subject="DB Dump" -F text="DB DUMP" --form-string html="<strong>testing html body</strong>" -F from=l122124x@gmail.com -F api_user=l904 -F api_key=sgp904 -F files[db_dump.sql]=\/tmp/db_dump.sql https://api.sendgrid.com/api/mail.send.json
-
-        //print_r(mail('federico.slepko@titanka.com', 'My Subject', 'uguuhuh'));
-  } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header('X-Status-Reason', $e->getMessage());
-  }
-  
-});
+ 
 
 
 ?>
