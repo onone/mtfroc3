@@ -386,7 +386,7 @@ function performanceInsertInTable(data,paymentDetail){
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="textarea" data-pk="' + data.id + '" data-name="post_note">' + (data.post_note?data.post_note:'') + '</a>');
             
             tableFields.push('<a href="#" class="performanceEditable" data-emptytext="Vuoto" data-type="number" data-pk="' + data.id + '" data-name="duration" data-original-title="Inserisci durata">' + (data.duration?data.duration:'') + '</a>');
-            tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + data.executed + '" data-source="' + "[{'text':'Si','value':1},{'text':'No','value':0}]"  + '" class="performanceEditable" id="performance_executed" data-type="select" data-pk="' + data.id + '" data-name="executed" data-original-title="Inserisci Eseguita">' + 
+            tableFields.push('<a href="#" data-emptytext="Vuoto" data-value="' + (typeof data.executed != "object"?data.executed:0) + '" data-source="' + "[{'text':'Si','value':1},{'text':'No','value':0}]"  + '" class="performanceEditable" id="performance_executed" data-type="select" data-pk="' + data.id + '" data-name="executed" data-original-title="Inserisci Eseguita">' + 
             '</a>');
             tableFields.push(' <a href="#" data-emptytext="Vuoto" data-value="' + (data.payment_id?data.payment_id:'') + '" data-source="' + BASE_URL  + '/resources/performancepaymentlist/' + (data.client_id?data.client_id:'')  + (data.payment_id?'/' + data.payment_id:'') + '" class="performanceEditable" id="performance_payment_id" data-type="select" data-pk="' + data.id + '" data-name="payment_id"></a>'); //paymentDetail
 

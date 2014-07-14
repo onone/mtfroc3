@@ -51,7 +51,7 @@ DEPLOY: usa tasto di C9
 URL DI ESEMPIO: http://php-mftr.rhcloud.com/test
 http://php-mftr.rhcloud.com/entity/client
 mysqldump -e --user=$OPENSHIFT_MYSQL_DB_USERNAME --password=$OPENSHIFT_MYSQL_DB_PASSWORD --protocol=socket -S $OPENSHIFT_MYSQL_DB_SOCKET php > /tmp/db_dump.sql
-curl https://api.sendgrid.com/api/mail.send.json -F to=fslepko@gmail.com -F toname=Federico -F subject="DB Dump" -F text="DB DUMP" --form-string html="<strong>DB DUMP</strong>" -F from=l122124x@gmail.com -F api_user=l904 -F api_key=sgp904 -F files[db_dump.sql]=\@/tmp/db_dump.sql
+curl https://api.sendgrid.com/api/mail.send.json -F to[]=fslepko@gmail.com -F to[]=l122124x@gmail.com -F subject="DB Dump" -F text="DB DUMP" --form-string html="<strong>DB DUMP</strong>" -F from=l122124x@gmail.com -F api_user=l904 -F api_key=sgp904 -F files[db_dump.sql]=\@/tmp/db_dump.sql -F files[prestazioni.csv]=\@/tmp/dump.csv
 ********************************************************************************
 !!! BUGS
 ********************************************************************************
