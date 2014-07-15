@@ -522,11 +522,11 @@ $.fn.dataTableExt.oSort['date-performance-asc']  = function(x,y) {
 $.fn.dataTableExt.oSort['date-performance-desc'] = function(x,y) {  
     var xt = $(x).html().trim();
     if(xt !== ''){
-        xm = moment(xt);
+        xm = moment(xt,'DD/MM/YYYY');
     }
     var yt = $(y).html().trim();
     if(yt !== ''){
-        ym = moment(yt);
+        ym = moment(yt,'DD/MM/YYYY');
     }
     
     
