@@ -44,7 +44,10 @@ $entities['client'] =  array(
             'label' => 'data_di_nascita',
             'customConfig'=> array(
                 'xeditable' => array(
-                        'type'     => 'combodate'
+                        'type'     => 'combodate',
+                        'otherAttribute' => array(
+                            'data-minYear' => '1900'
+                        )
                 )
             )
         ),
@@ -57,11 +60,8 @@ $entities['client'] =  array(
             ),*/
         ),
         'note' => array(
-            'customConfig'=> array(
-                'xeditable' => array(
-                        'type'     => 'email'
-                )
-            )),
+            'label' => 'note'
+        ),
         'email' => array(
             'label' => 'email',
             'customConfig'=> array(

@@ -1,5 +1,6 @@
 <?php
 
+header('Content-type: text/html; charset=utf-8');
 session_cache_limiter(false);
 session_start();
 

@@ -196,7 +196,7 @@ DROP TABLE IF EXISTS php.memo ;
 
 CREATE  TABLE IF NOT EXISTS php.memo (
   id INT NOT NULL AUTO_INCREMENT ,
-  value VARCHAR(45) NULL ,
+  value VARCHAR(512) NULL ,
   type INT NULL ,
   creation_datetime DATETIME NULL ,
   client_id INT NULL ,
