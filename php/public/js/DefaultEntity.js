@@ -47,7 +47,12 @@ var DefaultEntity = function () {
                 error: function(response){
                     console.log(this);
                     console.log(response);
-                }
+                },
+                combodate: {
+                    minYear: 1900,
+                    maxYear: 2020,
+                    minuteStep: 1
+               }
             };
             
             
