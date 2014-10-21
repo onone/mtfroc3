@@ -101,7 +101,6 @@ var PerformanceCustom = function () {
             var h = generatePaymentHtml($('#' + idNew));
             var els = $('#performanceEntitiesTable').find('.' + idNew);
             var elsLenght = els.length;
-            console.log(els.length);
             if(elsLenght){
                 els.each(function(index){
                     var i = (parseInt(index) + 1);
@@ -415,9 +414,6 @@ var PerformanceCustom = function () {
         t.on('click', '.PTCopySingle', function (event) {
             var li = $(this).parent().parent();
             var ptid = li.find('a.ptTitle');
-            console.log(ptid);
-            console.log(ptid.data('pk'));
-            console.log(ptid.data('value'));
             var data = {
                 type: ptid.html(),
                 note: li.find('a.ptNote').html(),

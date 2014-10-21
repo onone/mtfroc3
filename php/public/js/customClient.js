@@ -180,7 +180,6 @@ var CustomClient = function () {
     var initPaymentTD = function(td,data){
         var td = $(td);
         var value = td.find('a').data('value');
-        console.log(value);
         if(value){
             td.addClass("PP" + value);
             PerformanceCustom.refreshPaymentData("PP" + value);
@@ -554,7 +553,6 @@ $.fn.dataTableExt.oSort['date-performance-asc']  = function(x,y) {
 };
 
 $.fn.dataTableExt.oSort['date-performance-desc'] = function(x,y) {  
-    console.log('date-performance-desc');
     var xt = $(x).html().trim();
     if(xt !== ''){
         xm = moment(xt,'DD/MM/YYYY');
@@ -563,8 +561,6 @@ $.fn.dataTableExt.oSort['date-performance-desc'] = function(x,y) {
     if(yt !== ''){
         ym = moment(yt,'DD/MM/YYYY');
     }
-    console.log(xm);
-    console.log(ym);
     
   var r = 0;
   if(xt === ""){
