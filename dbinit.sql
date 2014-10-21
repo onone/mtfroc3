@@ -38,6 +38,9 @@ CREATE  TABLE IF NOT EXISTS php.client (
   update_datetime DATETIME NULL ,
   indirizzo VARCHAR(100) NULL ,
   email VARCHAR(100) NULL ,
+  piva VARCHAR(50) NULL ,
+  codicefiscale VARCHAR(50) NULL ,
+  provenienza VARCHAR(512) NULL ,
   PRIMARY KEY (id) ,
   INDEX group_fk (group_id ASC) ,
   CONSTRAINT group_fk

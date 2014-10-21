@@ -1,6 +1,5 @@
 <?php
 
-header('Content-type: text/html; charset=utf-8');
 session_cache_limiter(false);
 session_start();
 
@@ -32,6 +31,8 @@ if(strpos($_SERVER['HTTP_HOST'],'mftr3-c9-langeli.c9.io') !== FALSE){ // VARIABI
 $app = new \Slim\Slim(array(
     'mode' => $app_mode
 ));
+
+$app->response->headers->set('Content-Type', 'text/html; charset=utf-8');
 
 // CONFIGURAZIONE
 include __DIR__ . '/app/config/config.php';

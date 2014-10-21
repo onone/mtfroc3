@@ -39,9 +39,9 @@
 OPEN SHIFT
 http://php-mftr.rhcloud.com/
 l12...@gmail.com
-manga..
+ma........o
 
-phpmyadmin: https://php-mftr.rhcloud.com/phpmyadmin/
+phpmyadmin: https://php-mftr.rhcloud.com/phpmyadmin/   user e pwd vai su openshit
 
 GIT:
 ADD: git add .

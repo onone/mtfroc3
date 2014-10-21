@@ -44,10 +44,11 @@ $entities['client'] =  array(
             'label' => 'data_di_nascita',
             'customConfig'=> array(
                 'xeditable' => array(
-                        'type'     => 'combodate',
+                        'type'     => 'combodate'
+                        /*,
                         'otherAttribute' => array(
-                            'data-minYear' => '1900'
-                        )
+                            'data-minYear' => '1900' // non prende questo parametro
+                        )*/
                 )
             )
         ),
@@ -61,6 +62,15 @@ $entities['client'] =  array(
         ),
         'note' => array(
             'label' => 'note'
+        ),
+        'piva' => array(
+            'label' => 'partita_iva'
+        ),
+        'codicefiscale' => array(
+            'label' => 'codice_fiscale'
+        ),
+        'provenienza' => array(
+            'label' => 'provenienza'
         ),
         'email' => array(
             'label' => 'email',
