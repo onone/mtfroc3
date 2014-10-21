@@ -107,11 +107,11 @@ var CustomClient = function () {
                     
                     //
                     [1, 'desc'],
-                    [0, "asc" ]
+                    //[0, "asc" ]
                     
                 ],
                 "aoColumns": [
-                    { "sType": 'date-id' },
+                    null,//{ "sType": 'date-id' },
 			        { "sType": 'date-performance' },
                     null,
                     null,
@@ -140,7 +140,7 @@ var CustomClient = function () {
                 "iDisplayLength": 10,
                 "fnDrawCallback": function( oSettings ) {
                     PerformanceCustom.justRefreshed = new Array();
-                    console.log('fnDrawCallback');
+                    //console.log('fnDrawCallback');
                     initPerformanceEditable();
                     PerformanceCustom.init();
                     /*
@@ -501,6 +501,7 @@ function anamnesisInsert(data){
 }
 
 $.fn.dataTableExt.oSort['date-performance-asc']  = function(x,y) {
+  /*
   
   var r = 0;
   if(x === ""){
@@ -517,10 +518,8 @@ $.fn.dataTableExt.oSort['date-performance-asc']  = function(x,y) {
     }
   }
   return r;
-};
-
-$.fn.dataTableExt.oSort['date-performance-desc'] = function(x,y) {  
-    var xt = $(x).html().trim();
+  */
+  var xt = $(x).html().trim();
     if(xt !== ''){
         xm = moment(xt,'DD/MM/YYYY');
     }
@@ -529,6 +528,43 @@ $.fn.dataTableExt.oSort['date-performance-desc'] = function(x,y) {
         ym = moment(yt,'DD/MM/YYYY');
     }
     
+    
+  var r = 0;
+  if(xt === ""){
+    if(yt === ""){
+      r = 0;
+    }else{
+       r = 1;  
+    }
+  }else{
+    if(yt === ""){
+      r = -1;
+    }else{
+        if(xm.isSame(ym)){
+            return 0;
+        }
+        if(xm.isAfter(ym)){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+  }
+  return r;
+};
+
+$.fn.dataTableExt.oSort['date-performance-desc'] = function(x,y) {  
+    console.log('date-performance-desc');
+    var xt = $(x).html().trim();
+    if(xt !== ''){
+        xm = moment(xt,'DD/MM/YYYY');
+    }
+    var yt = $(y).html().trim();
+    if(yt !== ''){
+        ym = moment(yt,'DD/MM/YYYY');
+    }
+    console.log(xm);
+    console.log(ym);
     
   var r = 0;
   if(xt === ""){
