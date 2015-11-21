@@ -1,7 +1,7 @@
 {
     "require": {
-	    "slim/views": "dev-master",
-        "slim/slim": "dev-master",
+	    "slim/views": "0.1.3",
+        "slim/slim": "2.4.*",
         "gabordemooij/redbean": "v3.5",
         "twig/twig": "1.*"
     }

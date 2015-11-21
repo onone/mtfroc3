@@ -8,7 +8,7 @@ GIT_WORK_TREE_SAVE=$GIT_WORK_TREE ; unset GIT_WORK_TREE
 
  
 
-if [ ! -f "${OPENSHIFT_DATA_DIR}composer/bin/composero" ]; then
+if [ ! -f "${OPENSHIFT_DATA_DIR}composer/bin/composer" ]; then
 
   export COMPOSER_HOME="${OPENSHIFT_DATA_DIR}.composer"
 
