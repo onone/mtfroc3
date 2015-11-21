@@ -32,23 +32,23 @@ if [ ! -f "${OPENSHIFT_DATA_DIR}composer/bin/composer" ]; then
 
 else
 
-  echo "Updating composer"
+  echo "Updating composer commentato"
 
-  cd ${OPENSHIFT_DATA_DIR}composer
+#  cd ${OPENSHIFT_DATA_DIR}composer
 
-  git pull --quiet
+#  git pull --quiet
 
-  php ${OPENSHIFT_DATA_DIR}composer/bin/composer install >/dev/null
+ # php ${OPENSHIFT_DATA_DIR}composer/bin/composer install >/dev/null
 
 fi
 
  
 
-echo "Running composer install"
+echo "Running composer install commentato"
 
-cd $OPENSHIFT_REPO_DIR/php
+#cd $OPENSHIFT_REPO_DIR/php
 
-php $OPENSHIFT_DATA_DIR/bin/composer install
+#php $OPENSHIFT_DATA_DIR/bin/composer install
 
  
 
