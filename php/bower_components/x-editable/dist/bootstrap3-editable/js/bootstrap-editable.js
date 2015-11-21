@@ -4418,7 +4418,7 @@ $(function(){
         //initial value, can be `new Date()`    
         value: null,                       
         minYear: 1970,
-        maxYear: 2015,
+        maxYear: 2020,
         yearDescending: true,
         minuteStep: 5,
         secondStep: 1,
@@ -4458,7 +4458,7 @@ $(function(){
         template: 'D / MMMM / YYYY',    
         combodate: {
                 minYear: 2000,
-                maxYear: 2015,
+                maxYear: 2020,
                 minuteStep: 1
            }
         }

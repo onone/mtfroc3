@@ -1,51 +1,56 @@
 {
-    "run": {
-        "@path": "/.c9/runners",
-        "configs": {
-            "json()": {
-                "PHP": {
-                    "runner": "Apache httpd (PHP, HTML)",
-                    "command": "",
-                    "name": "Apache & PHP",
-                    "default": true
-                },
-                "Apache & PHP": {
-                    "runner": "Apache httpd (PHP, HTML)",
-                    "command": "",
-                    "name": "Apache & PHP",
-                    "default": true,
-                    "debug": true,
-                    "env": {},
-                    "cwd": "/"
-                }
-            },
-            "@inited": "true"
-        },
-        "@runner": "Apache httpd (PHP, HTML)"
-    },
-    "share": {
-        "@preview": false,
-        "@app": false,
-        "@useOwnerSettings": false
-    },
     "ace": {
+        "@guessTabSize": "true",
         "@newLineMode": "unix",
         "@tabSize": "4",
-        "@useSoftTabs": "true",
-        "@guessTabSize": "true"
-    },
-    "language": {
-        "@warnLevel": "info",
-        "@instanceHighlight": "true",
-        "@undeclaredVars": "true",
-        "@unusedFunctionArgs": "false"
+        "@useSoftTabs": "true"
     },
     "build": {
+        "@builder": "auto",
         "@path": "/.c9/builders",
-        "@saveall": true,
-        "@builder": "auto"
+        "@saveall": true
     },
     "find.nak": {
         "@searchLimit": 100
+    },
+    "general": {
+        "@stripws": false
+    },
+    "language": {
+        "@eslintrc": "true",
+        "@instanceHighlight": "true",
+        "@semi": "true",
+        "@undeclaredVars": "true",
+        "@unusedFunctionArgs": "false",
+        "@warnLevel": "info"
+    },
+    "run": {
+        "@path": "/.c9/runners",
+        "@runner": "Apache httpd (PHP, HTML)",
+        "configs": {
+            "@inited": "true",
+            "json()": {
+                "Apache & PHP": {
+                    "command": "",
+                    "cwd": "/",
+                    "debug": true,
+                    "default": true,
+                    "env": {},
+                    "name": "Apache & PHP",
+                    "runner": "Apache httpd (PHP, HTML)"
+                },
+                "PHP": {
+                    "command": "",
+                    "default": true,
+                    "name": "Apache & PHP",
+                    "runner": "Apache httpd (PHP, HTML)"
+                }
+            }
+        }
+    },
+    "share": {
+        "@app": false,
+        "@preview": false,
+        "@useOwnerSettings": false
     }
 }
