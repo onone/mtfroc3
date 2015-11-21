@@ -1,1 +1,9 @@
-my
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_FILENAME} !index.php
+RewriteCond %{REQUEST_URI} !.*/bower_components/
+RewriteCond %{REQUEST_URI} !.*/public/
+RewriteRule ^ forbidden.php [QSA,L]

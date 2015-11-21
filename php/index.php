@@ -1,5 +1,6 @@
 <?php
-
+echo 'ciao';
+die();
 session_cache_limiter(false);
 session_start();
 
