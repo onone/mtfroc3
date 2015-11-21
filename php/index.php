@@ -19,6 +19,7 @@ echo '<br>'  . __LINE__;
 
 use RedBean_Facade as R;
 
+echo '<br>'  . __LINE__;
 
 
 // MODALITA DI ESECUZIONE
@@ -28,11 +29,13 @@ if(strpos($_SERVER['HTTP_HOST'],'mftr3-c9-langeli.c9.io') !== FALSE){ // VARIABI
     $app_mode = 'development';
 }
 
+echo '<br>'  . __LINE__;
 // INIZIALIZZO  APP
 $app = new \Slim\Slim(array(
     'mode' => $app_mode
 ));
 
+echo '<br>'  . __LINE__;
 $app->response->headers->set('Content-Type', 'text/html; charset=utf-8');
 
 echo '<br>'  . __LINE__;
