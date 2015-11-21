@@ -7,12 +7,20 @@ $GLOBALS['timings'][] = array('start' => microtime(TRUE));
 
 echo '<br>'  . __LINE__;
 // AUTOLOAD DI COMPOSER
+echo '<br>' . __DIR__ . '/vendor/autoload.php';
 if(file_exists(__DIR__ . '/vendor/autoload.php')){
+    
+    
+echo '<br>File esiste';
+    echo file_get_contents(__DIR__ . '/vendor/autoload.php');
     try {
         require __DIR__ . '/vendor/autoload.php';
     } catch (Exception $e ) {
         echo $e->getMessage();
     }
+}else{
+    
+echo '<br>File non esiste';
 }
 echo '<br>'  . __LINE__;
 

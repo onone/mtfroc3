@@ -46,8 +46,8 @@ fi
 
 echo "Running composer install commentato"
 
-#cd $OPENSHIFT_REPO_DIR/php
-
+cd $OPENSHIFT_REPO_DIR/php
+php $OPENSHIFT_DATA_DIR/bin/composer dump-autoload
 #php $OPENSHIFT_DATA_DIR/bin/composer install
 
  
